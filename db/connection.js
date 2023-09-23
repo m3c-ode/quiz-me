@@ -11,6 +11,14 @@ const dbParams = {
 
 const db = new Pool(dbParams);
 
+// Not necessary with pools?
 db.connect();
 
-module.exports = db;
+const query = (queryString, queryParams, callback) => {
+  console.log('executed query: ', queryString);
+  return pool.query(queryString, queryParams, callback)
+    .then(res => res.rows)
+    .catch(error => console.log('error querying', error.message));
+};
+
+module.exports = { db, query };
