@@ -7,6 +7,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
+const { generateRandomString } = require('./lib/helper-functions');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -37,15 +38,18 @@ app.use(express.static('public'));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
+const quizzesApiRoutes = require('./routes/quizzes-api');
 const usersRoutes = require('./routes/users');
-const authRoutes = require('./routes/authentication');
+const { authMiddleware, router: authRoutes } = require('./routes/authentication');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
+
+// m3Note: use authMiddleware later to secure routes.
+// app.use('/api/users', authMiddleware, userApiRoutes);
 app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
+app.use('/api/quizzes', quizzesApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
 // Note: mount other resources here, using the same pattern above
