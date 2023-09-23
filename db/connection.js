@@ -11,14 +11,14 @@ const dbParams = {
 
 const db = new Pool(dbParams);
 
-// Not necessary with pools?
+// m3: Not necessary with pools?
 db.connect();
 
-const query = (queryString, queryParams, callback) => {
+const dbQuery = (queryString, queryParams, callback) => {
   console.log('executed query: ', queryString);
-  return pool.query(queryString, queryParams, callback)
+  return db.query(queryString, queryParams, callback)
     .then(res => res.rows)
     .catch(error => console.log('error querying', error.message));
 };
 
-module.exports = { db, query };
+module.exports = { db, dbQuery };
