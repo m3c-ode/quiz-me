@@ -74,3 +74,38 @@ VALUES
     2,
     'How long is a standard period in professional ice hockey?'
   );
+
+-- BLOODBOWL
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (3, 'What type of game is Warhammer Blood Bowl?');
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    3,
+    'How many players are typically on a Blood Bowl team during a match?'
+  );
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (3, 'What is the objective of a Blood Bowl match?');
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    3,
+    'Which of the following is NOT a playable team in Blood Bowl?'
+  );
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    3,
+    'What does a "Blitz" action in Blood Bowl allow a player to do?'
+  );
