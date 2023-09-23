@@ -10,11 +10,11 @@ const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
 
 router.get('/', (req, res) => {
-  const queryString = `SELECT * FROM quizzes`;
+  const queryString = `SELECT * FROM quizzes;`;
   console.log(queryString);
   dbQuery(queryString)
     .then(data => {
-      const quizzes = data.rows;
+      const quizzes = data;
       res.json({ quizzes });
     })
     .catch(err => {
@@ -35,7 +35,8 @@ router.post('/', (req, res) => {
   console.log(queryString, queryParams);
   dbQuery(queryString, queryParams)
     .then(data => {
-      const quizzes = data.rows;
+      console.log("🚀 ~ file: quizzes-api.js:38 ~ router.post ~ data:", data);
+      const quizzes = data;
       res.json({ quizzes });
     })
     .catch(err => {
