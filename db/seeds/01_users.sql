@@ -1,6 +1,6 @@
 -- Users table seeds here (Example)
 INSERT INTO
-  users (username, PASSWORD, email)
+  users (username, password, email)
 VALUES
   (
     'm3',
@@ -9,7 +9,7 @@ VALUES
   );
 
 INSERT INTO
-  users (username, PASSWORD, email)
+  users (username, password, email)
 VALUES
   (
     'jt',
@@ -18,7 +18,7 @@ VALUES
   );
 
 INSERT INTO
-  users (username, PASSWORD, email)
+  users (username, password, email)
 VALUES
   (
     'hinali',
