@@ -44,3 +44,33 @@ VALUES
     1,
     'What is the purpose of the "for" loop in JavaScript?'
   );
+
+-- HOCKEY
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (2, 'What is the primary objective in ice hockey?');
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    2,
+    'How many players are typically on the ice for each team during a standard ice hockey game?'
+  );
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    2,
+    'Which of the following is NOT a piece of equipment commonly used in ice hockey?'
+  );
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    2,
+    'How long is a standard period in professional ice hockey?'
+  );
