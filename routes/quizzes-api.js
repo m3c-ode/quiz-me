@@ -10,7 +10,19 @@ const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
 
 router.get('/', (req, res) => {
-  const queryString = `SELECT * FROM quizzes;`;
+  const queryString = `
+  SELECT
+  quizzes.id AS quiz_id,
+  quizzes.title AS quiz_title,
+  questions.text AS question,
+  answers.text AS answer,
+  answers.is_correct
+  FROM quizzes
+  JOIN questions ON quizzes.id = questions.quiz_id
+  JOIN answers ON questions.id = answers.question_id
+  GROUP BY quizzes.id, questions.id, answers.id
+  ORDER BY quiz_id, questions.id, answers.is_correct DESC
+  ;`;
   dbQuery(queryString)
     .then(data => {
       const quizzes = data;
@@ -46,14 +58,28 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const queryString = `SELECT * FROM quizzes WHERE id=$1`;
+  const queryString = `
+  SELECT
+  quizzes.id AS quiz_id,
+  quizzes.title AS quiz_title,
+  questions.text AS question,
+  answers.text AS answer,
+  answers.is_correct
+  FROM quizzes
+  JOIN questions ON quizzes.id = questions.quiz_id
+  JOIN answers ON questions.id = answers.question_id
+  WHERE quizzes.id=$1
+  GROUP BY quizzes.id, questions.id, answers.id
+  `;
   const queryParams = [req.params.id];
   dbQuery(queryString, queryParams)
     .then(data => {
-      const quizzes = data[0];
+      console.log("🚀 ~ file: quizzes-api.js:77 ~ router.get ~ data:", data);
+      const quizzes = data;
       res.json({ quizzes });
     })
     .catch(err => {
+      console.log("🚀 ~ file: quizzes-api.js:81 ~ router.get ~ err:", err);
       res
         .status(500)
         .json({ error: err.message });
