@@ -72,6 +72,14 @@ INSERT INTO
 VALUES
   (
     2,
+    'What is the area called where a goaltender defends the net?'
+  );
+
+INSERT INTO
+  questions (quiz_id, text)
+VALUES
+  (
+    2,
     'How long is a standard period in professional ice hockey?'
   );
 
