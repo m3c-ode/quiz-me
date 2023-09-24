@@ -1,7 +1,7 @@
-const db = require('../connection');
+const { dbQuery } = require('../connection');
 
 const getUsers = () => {
-  return db.query('SELECT * FROM users;')
+  return dbQuery('SELECT * FROM users;')
     .then(data => {
       return data.rows;
     });
