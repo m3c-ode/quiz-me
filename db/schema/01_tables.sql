@@ -55,6 +55,7 @@ CREATE TABLE
 CREATE TABLE
   attempt_answers (
     id SERIAL PRIMARY KEY NOT NULL,
-    answer_id INTEGER REFERENCES answers (id) ON DELETE CASCADE,
-    attempt_id INTEGER REFERENCES attempts (id) ON DELETE CASCADE
+    attempt_id INTEGER REFERENCES attempts (id) ON DELETE CASCADE,
+    question_id INTEGER REFERENCES questions (id) ON DELETE CASCADE,
+    answer_id INTEGER REFERENCES answers (id) ON DELETE CASCADE
   );
