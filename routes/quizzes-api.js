@@ -35,20 +35,51 @@ router.get('/', (req, res) => {
     });
 });
 
+// m3: Insert all the questions and answers in appropriate tables as well.
 router.post('/', (req, res) => {
-  const { owner_id, is_public, title } = req.body;
+  // m3: note for frontend: send quizz in "quizz" object so that req.body.quizz...
+  const { owner_id, is_public, title } = req.body.quizz;
   const queryParams = [owner_id, is_public, title];
   // m3: Add the joins later when needed
   const queryString = `
   INSERT INTO quizzes (owner_id, is_public, title)
   VALUES ($1, $2, $3)
-  RETURNING *;
-  `;
+  RETURNING id
+  ;`;
   dbQuery(queryString, queryParams)
-    .then(data => {
-      console.log("🚀 ~ file: quizzes-api.js:38 ~ router.post ~ data:", data);
-      const quizzes = data;
-      res.json({ quizzes });
+    .then(quizzData => {
+      console.log("🚀 ~ file: quizzes-api.js:51 ~ router.post ~ quizzData:", quizzData);
+      quiz_id = quizzData[0].id;
+      // res.json({ quiz_id });
+      // })
+      // .then(quiz_id => {
+      const questions = req.body.questions;
+      for (const question of questions) {
+        const questionText = question.text;
+        const questionQuery = `
+        INSERT INTO questions (quiz_id, text)
+        VALUES ($1, $2)
+        RETURNING id
+        ;`;
+        const questionParams = [quiz_id, questionText];
+        dbQuery(questionQuery, questionParams)
+          .then(questionData => {
+            const question_id = questionData[0].id;
+            const answers = question.answers;
+            for (const answer of answers) {
+              const answerText = answer.text;
+              const answerQuery = `
+              INSERT INTO answers (question_id, text, is_correct)
+              VALUES ($1, $2, $3)
+              RETURNING *
+              ;`;
+              const answerParam = [question_id, answerText, answer.is_correct];
+              dbQuery(answerQuery, answerParam)
+                .then(answerData => console.log("added answer: ", answerData));
+            }
+          });
+      }
+      res.json({ quizzData });
     })
     .catch(err => {
       res
