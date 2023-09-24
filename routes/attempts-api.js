@@ -35,12 +35,12 @@ router.get("/", (req, res) => {
   const queryParams = [hardcodedUserID];
   // const queryParams = [user_id];
 
-  // LEFT JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
   const queryString = `
   SELECT
     *
   FROM
     attempts
+  JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
   WHERE attempts.user_id = $1
   ORDER BY TIMESTAMP DESC
   ;`;
