@@ -291,7 +291,7 @@
         <mxCell id="PxQhh79GDoiSBeWon5ka-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERzeroToMany;endFill=0;" parent="1" source="PxQhh79GDoiSBeWon5ka-28" target="PxQhh79GDoiSBeWon5ka-47" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="PxQhh79GDoiSBeWon5ka-70" value="answers_attempts" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" parent="1" vertex="1">
+        <mxCell id="PxQhh79GDoiSBeWon5ka-70" value="attempt_answers" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" parent="1" vertex="1">
           <mxGeometry x="410" y="410" width="180" height="120" as="geometry" />
         </mxCell>
         <mxCell id="PxQhh79GDoiSBeWon5ka-71" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" parent="PxQhh79GDoiSBeWon5ka-70" vertex="1">
