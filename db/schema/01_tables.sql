@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS answers CASCADE;
 
 DROP TABLE IF EXISTS attempts CASCADE;
 
-DROP TABLE IF EXISTS answers_attempts CASCADE;
+DROP TABLE IF EXISTS attempt_answers CASCADE;
 
 CREATE TABLE
   users (
@@ -53,7 +53,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  answers_attempts (
+  attempt_answers (
     id SERIAL PRIMARY KEY NOT NULL,
     answer_id INTEGER REFERENCES answers (id) ON DELETE CASCADE,
     attempt_id INTEGER REFERENCES attempts (id) ON DELETE CASCADE
