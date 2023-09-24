@@ -1,0 +1,51 @@
+{
+  "quizz": {
+    "owner_id": 1,
+    "title": "new test",
+    "is_public": true
+  },
+  "questions": [
+    {
+      "text": "Question 1",
+      "answers": [
+        {
+          "text": "Q1a1",
+          "is_correct": true
+        },
+        {
+          "text": "Q1a2",
+          "is_correct": false
+        },
+        {
+          "text": "Q1a3",
+          "is_correct": false
+        },
+        {
+          "text": "Q1a4",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "text": "Question 2",
+      "answers": [
+        {
+          "text": "Q2a1",
+          "is_correct": true
+        },
+        {
+          "text": "Q2a2",
+          "is_correct": false
+        },
+        {
+          "text": "Q2a3",
+          "is_correct": false
+        },
+        {
+          "text": "Q2a4",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}
