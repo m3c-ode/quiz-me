@@ -64,20 +64,20 @@ router.get("/:id", (req, res) => {
   SELECT
     *
   FROM
-    attempts
-  LEFT JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
+    attempt_answers
+  LEFT JOIN attempts ON attempts.id = attempt_answers.attempt_id
   WHERE
     attempts.user_id = $1 AND
-    attempts.id = $2
+    attempt_answers.id = $2;
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:96 ~ router.get ~ data:", data);
+      console.log("🚀 ~ file: attempt_answers.api.js:96 ~ router.get ~ data:", data);
       const attempts = data;
       res.json({ attempts });
     })
     .catch((err) => {
-      console.log("🚀 ~ file: attempts-api.js:101 ~ router.get ~ err:", err);
+      console.log("🚀 ~ file: attempt_answers.api.js:101 ~ router.get ~ err:", err);
       res.status(500).json({ error: err.message });
     });
 });
@@ -97,7 +97,7 @@ router.delete("/:id", (req, res) => {
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:131 ~ router.delete ~ data:", data);
+      console.log("🚀 ~ file: attempt_answers.api.js:131 ~ router.delete ~ data:", data);
       res.json("Attempt successfully deleted");
     })
     .catch((err) => {
