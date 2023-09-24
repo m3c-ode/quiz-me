@@ -39,6 +39,7 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
 const quizzesApiRoutes = require('./routes/quizzes-api');
+const attemptsApiRoutes = require('./routes/attempts-api');
 const usersRoutes = require('./routes/users');
 const { authMiddleware, router: authRoutes } = require('./routes/authentication');
 
@@ -50,6 +51,7 @@ const { authMiddleware, router: authRoutes } = require('./routes/authentication'
 // app.use('/api/users', authMiddleware, userApiRoutes);
 app.use('/api/users', userApiRoutes);
 app.use('/api/quizzes', quizzesApiRoutes);
+app.use('/api/attempts', attemptsApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
 // Note: mount other resources here, using the same pattern above
