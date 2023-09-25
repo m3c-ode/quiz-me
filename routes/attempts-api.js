@@ -36,12 +36,17 @@ router.get("/", (req, res) => {
 
   const queryString = `
   SELECT
-    *
+    *,
+    quizzes.title AS quiz_title,
+    questions.text AS question
   FROM
     attempts
   JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
+  JOIN quizzes ON attempts.quiz_id = quizzes.id
+  JOIN questions ON attempt_answers.question_id = questions.id
+  JOIN answers ON attempt_answers.answer_id = answers.id
   WHERE attempts.user_id = $1
-  ORDER BY TIMESTAMP DESC
+  ORDER BY attempts.TIMESTAMP DESC
   ;`;
   dbQuery(queryString, queryParams)
     .then((data) => {
@@ -50,10 +55,17 @@ router.get("/", (req, res) => {
       let attempts = {};
 
       data.forEach((attemptAnswer) => {
-        if (!Array.isArray(attempts[attemptAnswer.attempt_id])) {
-          attempts[attemptAnswer.attempt_id] = [];
+        if (!attempts.hasOwnProperty(attemptAnswer.attempt_id)) {
+          attempts[attemptAnswer.attempt_id] = {};
+          attempts[attemptAnswer.attempt_id].answers = [];
+          attempts[attemptAnswer.attempt_id].score = 0;
         }
-        attempts[attemptAnswer.attempt_id].push(attemptAnswer);
+
+        attempts[attemptAnswer.attempt_id].answers.push(attemptAnswer);
+
+        if (attemptAnswer.is_correct) {
+          attempts[attemptAnswer.attempt_id].score++;
+        }
       });
 
       console.log("🚀 ~ file: attempts-api.js:56 ~ js ~ attempts:", attempts);
@@ -98,22 +110,42 @@ router.get("/:id", (req, res) => {
 
   const queryString = `
   SELECT
-    *
+    *,
+    quizzes.title AS quiz_title,
+    questions.text AS question
   FROM
     attempts
-  LEFT JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
+  JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
+  JOIN quizzes ON attempts.quiz_id = quizzes.id
+  JOIN questions ON attempt_answers.question_id = questions.id
+  JOIN answers ON attempt_answers.answer_id = answers.id
   WHERE
     attempts.user_id = $1 AND
-    attempts.id = $2
+    attempts.id = $2;
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:96 ~ router.get ~ data:", data);
-      const attempts = data;
+      console.log("🚀 ~ file: attempts-api.js:112 ~ router.post ~ data:", data);
+
+      let attempts = {};
+      attempts[req.params.id] = {};
+      attempts[req.params.id].answers = [];
+      attempts[req.params.id].score = 0;
+
+      data.forEach((attemptAnswer) => {
+        attempts[req.params.id].answers.push(attemptAnswer);
+
+        if (attemptAnswer.is_correct) {
+          attempts[req.params.id].score++;
+        }
+      });
+
+      console.log("🚀 ~ file: attempts-api.js:123 ~ js ~ attempts:", attempts);
+
       res.json({ attempts });
     })
     .catch((err) => {
-      console.log("🚀 ~ file: attempts-api.js:101 ~ router.get ~ err:", err);
+      console.log("🚀 ~ file: attempts-api.js:129 ~ router.get ~ err:", err);
       res.status(500).json({ error: err.message });
     });
 });
