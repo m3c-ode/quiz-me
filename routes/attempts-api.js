@@ -50,7 +50,7 @@ router.get("/", (req, res) => {
   ;`;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:48 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:53 ~ router.post ~ data:", data);
 
       let attempts = {};
 
@@ -68,7 +68,7 @@ router.get("/", (req, res) => {
         }
       });
 
-      console.log("🚀 ~ file: attempts-api.js:56 ~ js ~ attempts:", attempts);
+      console.log("🚀 ~ file: attempts-api.js:71 ~ js ~ attempts:", attempts);
 
       res.json({ attempts });
     })
@@ -92,7 +92,7 @@ router.post("/", (req, res) => {
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:64 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:95 ~ router.post ~ data:", data);
       const attempts = data;
       res.json({ attempts });
     })
@@ -125,7 +125,7 @@ router.get("/:id", (req, res) => {
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:112 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:128 ~ router.post ~ data:", data);
 
       let attempts = {};
       attempts[req.params.id] = {};
@@ -140,12 +140,12 @@ router.get("/:id", (req, res) => {
         }
       });
 
-      console.log("🚀 ~ file: attempts-api.js:123 ~ js ~ attempts:", attempts);
+      console.log("🚀 ~ file: attempts-api.js:143 ~ js ~ attempts:", attempts);
 
       res.json({ attempts });
     })
     .catch((err) => {
-      console.log("🚀 ~ file: attempts-api.js:129 ~ router.get ~ err:", err);
+      console.log("🚀 ~ file: attempts-api.js:148 ~ router.get ~ err:", err);
       res.status(500).json({ error: err.message });
     });
 });
@@ -165,7 +165,7 @@ router.delete("/:id", (req, res) => {
   dbQuery(queryString, queryParams)
     .then((data) => {
       console.log(
-        "🚀 ~ file: attempts-api.js:131 ~ router.delete ~ data:",
+        "🚀 ~ file: attempts-api.js:168 ~ router.delete ~ data:",
         data
       );
       res.json("Attempt successfully deleted");
