@@ -13,6 +13,11 @@
 const express = require("express");
 const router = express.Router();
 const { db, dbQuery } = require("../db/connection");
+const {
+  createAttemptAnswer,
+  getAttemptAnswer,
+  deleteAttemptAnswer,
+} = require("../db/queries/attempt_answers");
 
 console.log("WARNING WARNING WARNING");
 console.log("WARNING WARNING WARNING");
@@ -31,19 +36,13 @@ router.post("/", (req, res) => {
   const { attempt_id, question_id, answer_id } = req.body;
 
   // TODO: REMOVE THE HARD CODED LINE
-  const queryParams = [hardcoded_attempt_id, 3, 11];
+  const queryParams = [hardcoded_attempt_id, 11, 11];
   // const queryParams = [answer_id, attempt_id];
 
-  // m3: Add the joins later when needed
-  const queryString = `
-  INSERT INTO attempt_answers (attempt_id, question_id, answer_id)
-  VALUES ($1, $2, $3)
-  RETURNING *;
-  `;
-  dbQuery(queryString, queryParams)
+  createAttemptAnswer(queryParams)
     .then((data) => {
       console.log(
-        "🚀 ~ file: attempt_answers-api.js:46 ~ router.post ~ data:",
+        "🚀 ~ file: attempt_answers-api.js:44 ~ router.post ~ data:",
         data
       );
       const attempts = data;
@@ -61,20 +60,10 @@ router.get("/:id", (req, res) => {
   const queryParams = [hardcoded_attempt_id, req.params.id];
   // const queryParams = [user_id, req.params.id];
 
-  const queryString = `
-  SELECT
-    *
-  FROM
-    attempt_answers
-  LEFT JOIN attempts ON attempts.id = attempt_answers.attempt_id
-  WHERE
-    attempts.user_id = $1 AND
-    attempt_answers.id = $2;
-  `;
-  dbQuery(queryString, queryParams)
+  getAttemptAnswer(queryParams)
     .then((data) => {
       console.log(
-        "🚀 ~ file: attempt_answers.api.js:96 ~ router.get ~ data:",
+        "🚀 ~ file: attempt_answers.api.js:65 ~ router.get ~ data:",
         data
       );
       const attempts = data;
@@ -82,7 +71,7 @@ router.get("/:id", (req, res) => {
     })
     .catch((err) => {
       console.log(
-        "🚀 ~ file: attempt_answers.api.js:101 ~ router.get ~ err:",
+        "🚀 ~ file: attempt_answers.api.js:73 ~ router.get ~ err:",
         err
       );
       res.status(500).json({ error: err.message });
@@ -96,15 +85,10 @@ router.delete("/:id", (req, res) => {
   const queryParams = [req.params.id, hardcoded_attempt_id];
   // const queryParams = [user_id, req.params.id];
 
-  const queryString = `
-  DELETE FROM attempts
-  WHERE id = $1 AND user_id = $2
-  ;
-  `;
-  dbQuery(queryString, queryParams)
+  deleteAttemptAnswer(queryParams)
     .then((data) => {
       console.log(
-        "🚀 ~ file: attempt_answers.api.js:131 ~ router.delete ~ data:",
+        "🚀 ~ file: attempt_answers.api.js:91 ~ router.delete ~ data:",
         data
       );
       res.json("Attempt successfully deleted");
