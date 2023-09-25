@@ -108,5 +108,27 @@ router.patch('/:id', (req, res) => {
     });
 });
 
+// Route to delete a question by ID
+router.delete('/:id', (req, res) => {
+  const questionId = req.params.id;
+
+  // Delete the question from the database
+  const queryString = `
+    DELETE FROM questions
+    WHERE id = $1
+  `;
+
+  const queryParams = [questionId];
+
+  dbQuery(queryString, queryParams)
+    .then(() => {
+      res.status(204).end(); // 204 No Content for successful deletion
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+
 
 module.exports = router;
