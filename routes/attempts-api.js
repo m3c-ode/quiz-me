@@ -19,25 +19,18 @@ const {
   deleteAttempt,
 } = require("../db/queries");
 
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
 const hardcodedUserID = 2;
-// DO A FIND/REPLACE FOR "TODO" TO FIND ALL OF THE SPOTS THAT NEED TO BE FIXED
 
 router.get("/", (req, res) => {
   const { user_id } = req.body;
 
-  // TODO: Remove hard coded user id
-  const queryParams = [hardcodedUserID];
-  // const queryParams = [user_id];
+  // Set default data
+  let queryParams = [hardcodedUserID];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [user_id];
+  }
 
   getAllAttemptsForUser(queryParams)
     .then((data) => {
@@ -71,9 +64,13 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const { quiz_id, user_id } = req.body;
 
-  // TODO: REMOVE THE HARD CODED LINE
-  const queryParams = [1, hardcodedUserID];
-  // const queryParams = [quiz_id, user_id];
+  // Set some default data
+  let queryParams = [1, hardcodedUserID];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [quiz_id, user_id];
+  }
 
   startNewAttempt(queryParams)
     .then((data) => {
@@ -89,9 +86,13 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { user_id } = req.body;
 
-  // TODO: Remove hard coded user id
+  // Set some default data
   const queryParams = [hardcodedUserID, req.params.id];
-  // const queryParams = [user_id, req.params.id];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [user_id, req.params.id];
+  }
 
   getSpecificAttempt(queryParams)
     .then((data) => {
@@ -122,9 +123,13 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { user_id } = req.body;
 
-  // TODO: Remove hard coded user id
+  // Set some default data
   const queryParams = [req.params.id, hardcodedUserID];
-  // const queryParams = [user_id, req.params.id];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [user_id, req.params.id];
+  }
 
   deleteAttempt(queryParams)
     .then((data) => {
