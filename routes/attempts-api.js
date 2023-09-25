@@ -13,6 +13,12 @@
 const express = require("express");
 const router = express.Router();
 const { db, dbQuery } = require("../db/connection");
+const {
+  getAllAttemptsForUser,
+  startNewAttempt,
+  getSpecificAttempt,
+  deleteAttempt,
+} = require("../db/queries/attempts");
 
 console.log("WARNING WARNING WARNING");
 console.log("WARNING WARNING WARNING");
@@ -34,23 +40,9 @@ router.get("/", (req, res) => {
   const queryParams = [hardcodedUserID];
   // const queryParams = [user_id];
 
-  const queryString = `
-  SELECT
-    *,
-    quizzes.title AS quiz_title,
-    questions.text AS question
-  FROM
-    attempts
-  JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
-  JOIN quizzes ON attempts.quiz_id = quizzes.id
-  JOIN questions ON attempt_answers.question_id = questions.id
-  JOIN answers ON attempt_answers.answer_id = answers.id
-  WHERE attempts.user_id = $1
-  ORDER BY attempts.TIMESTAMP DESC
-  ;`;
-  dbQuery(queryString, queryParams)
+  getAllAttemptsForUser(queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:53 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
 
       let attempts = {};
 
@@ -84,15 +76,9 @@ router.post("/", (req, res) => {
   const queryParams = [1, hardcodedUserID];
   // const queryParams = [quiz_id, user_id];
 
-  // m3: Add the joins later when needed
-  const queryString = `
-  INSERT INTO attempts (quiz_id, user_id)
-  VALUES ($1, $2)
-  RETURNING *;
-  `;
-  dbQuery(queryString, queryParams)
+  startNewAttempt(queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:95 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
       const attempts = data;
       res.json({ attempts });
     })
@@ -108,24 +94,9 @@ router.get("/:id", (req, res) => {
   const queryParams = [hardcodedUserID, req.params.id];
   // const queryParams = [user_id, req.params.id];
 
-  const queryString = `
-  SELECT
-    *,
-    quizzes.title AS quiz_title,
-    questions.text AS question
-  FROM
-    attempts
-  JOIN attempt_answers ON attempts.id = attempt_answers.attempt_id
-  JOIN quizzes ON attempts.quiz_id = quizzes.id
-  JOIN questions ON attempt_answers.question_id = questions.id
-  JOIN answers ON attempt_answers.answer_id = answers.id
-  WHERE
-    attempts.user_id = $1 AND
-    attempts.id = $2;
-  `;
-  dbQuery(queryString, queryParams)
+  getSpecificAttempt(queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:128 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:98 ~ router.post ~ data:", data);
 
       let attempt = {};
       attempt.answers = [];
@@ -139,12 +110,12 @@ router.get("/:id", (req, res) => {
         }
       });
 
-      console.log("🚀 ~ file: attempts-api.js:143 ~ js ~ attempt:", attempt);
+      console.log("🚀 ~ file: attempts-api.js:112 ~ js ~ attempt:", attempt);
 
       res.json({ attempt });
     })
     .catch((err) => {
-      console.log("🚀 ~ file: attempts-api.js:148 ~ router.get ~ err:", err);
+      console.log("🚀 ~ file: attempts-api.js:117 ~ router.get ~ err:", err);
       res.status(500).json({ error: err.message });
     });
 });
@@ -156,12 +127,7 @@ router.delete("/:id", (req, res) => {
   const queryParams = [req.params.id, hardcodedUserID];
   // const queryParams = [user_id, req.params.id];
 
-  const queryString = `
-  DELETE FROM attempts
-  WHERE id = $1 AND user_id = $2
-  ;
-  `;
-  dbQuery(queryString, queryParams)
+  deleteAttempt(queryParams)
     .then((data) => {
       console.log(
         "🚀 ~ file: attempts-api.js:168 ~ router.delete ~ data:",
