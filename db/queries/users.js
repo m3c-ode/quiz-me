@@ -1,9 +1,9 @@
 const { dbQuery } = require('../connection');
 
 const getUsers = () => {
-  return dbQuery('SELECT * FROM users;')
+  return dbQuery('SELECT id, username, avatar_url, email FROM users; ')
     .then(data => {
-      return data.rows;
+      return data;
     });
 };
 
@@ -18,4 +18,15 @@ const getUserQuizzes = (userParams) => {
     .then(data => data);
 };
 
-module.exports = { getUsers, getUserQuizzes };
+const getUserInfo = (userParam) => {
+  const queryString = `
+    SELECT id, username, avatar_url, email FROM users
+    WHERE id=$1
+  ;`;
+  return dbQuery(queryString, userParam)
+    .then(data => {
+      return data;
+    });
+};
+
+module.exports = { getUsers, getUserQuizzes, getUserInfo };
