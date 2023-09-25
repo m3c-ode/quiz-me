@@ -12,12 +12,11 @@
 
 const express = require("express");
 const router = express.Router();
-const { db, dbQuery } = require("../db/connection");
 const {
   createAttemptAnswer,
   getAttemptAnswer,
   deleteAttemptAnswer,
-} = require("../db/queries/attempt_answers");
+} = require("../db/queries");
 
 console.log("WARNING WARNING WARNING");
 console.log("WARNING WARNING WARNING");
