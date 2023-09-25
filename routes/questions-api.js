@@ -49,11 +49,6 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const questionId = req.params.id;
 
-  // Ensure questionId is a positive integer
-  if (!Number.isInteger(+questionId) || +questionId <= 0) {
-    return res.status(400).json({ error: 'Invalid question ID.' });
-  }
-
   // Query the database to retrieve the question
   const queryString = `
     SELECT * FROM questions
@@ -112,5 +107,6 @@ router.patch('/:id', (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
+
 
 module.exports = router;
