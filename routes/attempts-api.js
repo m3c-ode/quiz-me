@@ -14,19 +14,18 @@ const express = require("express");
 const router = express.Router();
 const { db, dbQuery } = require("../db/connection");
 
-console.log('WARNING WARNING WARNING');
-console.log('WARNING WARNING WARNING');
-console.log('WARNING WARNING WARNING');
-console.log('USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE');
-console.log('USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE');
-console.log('USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE');
-console.log('USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE');
-console.log('WARNING WARNING WARNING');
-console.log('WARNING WARNING WARNING');
-console.log('WARNING WARNING WARNING');
+console.log("WARNING WARNING WARNING");
+console.log("WARNING WARNING WARNING");
+console.log("WARNING WARNING WARNING");
+console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
+console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
+console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
+console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
+console.log("WARNING WARNING WARNING");
+console.log("WARNING WARNING WARNING");
+console.log("WARNING WARNING WARNING");
 const hardcodedUserID = 2;
 // DO A FIND/REPLACE FOR "TODO" TO FIND ALL OF THE SPOTS THAT NEED TO BE FIXED
-
 
 router.get("/", (req, res) => {
   const { user_id } = req.body;
@@ -46,8 +45,19 @@ router.get("/", (req, res) => {
   ;`;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      const attempts = data;
-      console.log("🚀 ~ file: attempts-api.js:42 ~ router.post ~ data:", data);
+      console.log("🚀 ~ file: attempts-api.js:48 ~ router.post ~ data:", data);
+
+      let attempts = {};
+
+      data.forEach((attemptAnswer) => {
+        if (!Array.isArray(attempts[attemptAnswer.attempt_id])) {
+          attempts[attemptAnswer.attempt_id] = [];
+        }
+        attempts[attemptAnswer.attempt_id].push(attemptAnswer);
+      });
+
+      console.log("🚀 ~ file: attempts-api.js:56 ~ js ~ attempts:", attempts);
+
       res.json({ attempts });
     })
     .catch((err) => {
@@ -86,7 +96,6 @@ router.get("/:id", (req, res) => {
   const queryParams = [hardcodedUserID, req.params.id];
   // const queryParams = [user_id, req.params.id];
 
-
   const queryString = `
   SELECT
     *
@@ -116,7 +125,6 @@ router.delete("/:id", (req, res) => {
   const queryParams = [req.params.id, hardcodedUserID];
   // const queryParams = [user_id, req.params.id];
 
-
   const queryString = `
   DELETE FROM attempts
   WHERE id = $1 AND user_id = $2
@@ -124,7 +132,10 @@ router.delete("/:id", (req, res) => {
   `;
   dbQuery(queryString, queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:131 ~ router.delete ~ data:", data);
+      console.log(
+        "🚀 ~ file: attempts-api.js:131 ~ router.delete ~ data:",
+        data
+      );
       res.json("Attempt successfully deleted");
     })
     .catch((err) => {
