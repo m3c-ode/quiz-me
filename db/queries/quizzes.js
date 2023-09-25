@@ -69,12 +69,10 @@ const getAllPublicQuizzes = (queryParams) => {
       SELECT
       quizzes.id AS quiz_id,
       quizzes.title AS quiz_title,
-      questions.text AS question
       FROM quizzes
-      JOIN questions ON quizzes.id = questions.quiz_id
       WHERE is_public=true
-      GROUP BY quizzes.id, questions.id
-      ORDER BY quiz_id, questions.id
+      GROUP BY quizzes.id
+      ORDER BY quiz_id
   ;`;
   return dbQuery(queryString, queryParams)
     .then(data => {
