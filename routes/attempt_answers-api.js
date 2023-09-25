@@ -18,25 +18,18 @@ const {
   deleteAttemptAnswer,
 } = require("../db/queries");
 
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("USER ID IS HARDCODED IN ATTEMPTS-API - REMOVE BEFORE FINAL USAGE");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
-console.log("WARNING WARNING WARNING");
 const hardcoded_attempt_id = 2;
-// DO A FIND/REPLACE FOR "TODO" TO FIND ALL OF THE SPOTS THAT NEED TO BE FIXED
 
 router.post("/", (req, res) => {
   const { attempt_id, question_id, answer_id } = req.body;
 
-  // TODO: REMOVE THE HARD CODED LINE
-  const queryParams = [hardcoded_attempt_id, 11, 11];
-  // const queryParams = [answer_id, attempt_id];
+  // Set some default data
+  let queryParams = [hardcoded_attempt_id, 5, 25];
+
+  if (attempt_id && question_id && answer_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [attempt_id, question_id, answer_id];
+  }
 
   createAttemptAnswer(queryParams)
     .then((data) => {
@@ -55,9 +48,13 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { user_id } = req.body;
 
-  // TODO: Remove hard coded user id
-  const queryParams = [hardcoded_attempt_id, req.params.id];
-  // const queryParams = [user_id, req.params.id];
+  // Set some default data
+  let queryParams = [2, req.params.id];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [user_id, req.params.id];
+  }
 
   getAttemptAnswer(queryParams)
     .then((data) => {
@@ -80,9 +77,13 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { user_id } = req.body;
 
-  // TODO: Remove hard coded user id
-  const queryParams = [req.params.id, hardcoded_attempt_id];
-  // const queryParams = [user_id, req.params.id];
+  // Set some default data
+  let queryParams = [hardcoded_attempt_id, 2];
+
+  if (user_id) {
+    // Real data was sent so replace the fake data with the actual
+    queryParams = [req.params.id, user_id];
+  }
 
   deleteAttemptAnswer(queryParams)
     .then((data) => {
