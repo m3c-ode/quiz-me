@@ -64,19 +64,17 @@ const getQuiz = (queryParams) => {
  * @param {any[]} queryParams
  * @returns {Promise}
  */
-const getAllQuizzes = (queryParams) => {
+const getAllPublicQuizzes = (queryParams) => {
   const queryString = `
       SELECT
       quizzes.id AS quiz_id,
       quizzes.title AS quiz_title,
-      questions.text AS question,
-      answers.text AS answer,
-      answers.is_correct
+      questions.text AS question
       FROM quizzes
       JOIN questions ON quizzes.id = questions.quiz_id
-      JOIN answers ON questions.id = answers.question_id
-      GROUP BY quizzes.id, questions.id, answers.id
-      ORDER BY quiz_id, questions.id, answers.is_correct DESC
+      WHERE is_public=true
+      GROUP BY quizzes.id, questions.id
+      ORDER BY quiz_id, questions.id
   ;`;
   return dbQuery(queryString, queryParams)
     .then(data => {
@@ -105,4 +103,4 @@ const editQuiz = (queryParams) => {
 
 
 
-module.exports = { createQuiz, deleteQuiz, getQuiz, editQuiz, getAllQuizzes };
+module.exports = { createQuiz, deleteQuiz, getQuiz, editQuiz, getAllPublicQuizzes };
