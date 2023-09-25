@@ -127,22 +127,21 @@ router.get("/:id", (req, res) => {
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:128 ~ router.post ~ data:", data);
 
-      let attempts = {};
-      attempts[req.params.id] = {};
-      attempts[req.params.id].answers = [];
-      attempts[req.params.id].score = 0;
+      let attempt = {};
+      attempt.answers = [];
+      attempt.score = 0;
 
       data.forEach((attemptAnswer) => {
-        attempts[req.params.id].answers.push(attemptAnswer);
+        attempt.answers.push(attemptAnswer);
 
         if (attemptAnswer.is_correct) {
-          attempts[req.params.id].score++;
+          attempt.score++;
         }
       });
 
-      console.log("🚀 ~ file: attempts-api.js:143 ~ js ~ attempts:", attempts);
+      console.log("🚀 ~ file: attempts-api.js:143 ~ js ~ attempt:", attempt);
 
-      res.json({ attempts });
+      res.json({ attempt });
     })
     .catch((err) => {
       console.log("🚀 ~ file: attempts-api.js:148 ~ router.get ~ err:", err);
