@@ -1,7 +1,7 @@
 const { createQuestion } = require("./questions");
 const { createAnswer } = require("./answers");
 const { createQuiz, deleteQuiz, getQuiz, editQuiz, getAllQuizzes } = require("./quizzes");
-
+const { getUserQuizzes, getUsers } = require("./users");
 
 module.exports = {
   createAnswer,
@@ -10,5 +10,7 @@ module.exports = {
   deleteQuiz,
   getQuiz,
   getAllQuizzes,
-  editQuiz
+  editQuiz,
+  getUserQuizzes,
+  getUsers
 };
