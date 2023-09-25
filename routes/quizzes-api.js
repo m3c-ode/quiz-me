@@ -8,6 +8,8 @@
 const express = require('express');
 const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
+const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllQuizzes } = require("../db/queries");
+const { handleNotFound } = require('../lib/middlewares');
 
 router.get('/', (req, res) => {
   const queryString = `
@@ -23,8 +25,12 @@ router.get('/', (req, res) => {
   GROUP BY quizzes.id, questions.id, answers.id
   ORDER BY quiz_id, questions.id, answers.is_correct DESC
   ;`;
-  dbQuery(queryString)
+  // dbQuery(queryString)
+  getAllQuizzes()
     .then(data => {
+      if (data.length === 0) {
+        return res.status(404).json({ message: "Quizzes Not found" });
+      }
       const quizzes = data;
       res.json({ quizzes });
     })
@@ -35,22 +41,34 @@ router.get('/', (req, res) => {
     });
 });
 
+// m3: Insert all the questions and answers in appropriate tables as well.
 router.post('/', (req, res) => {
-  const { owner_id, is_public, title } = req.body;
-  const queryParams = [owner_id, is_public, title];
-  // m3: Add the joins later when needed
-  const queryString = `
-  INSERT INTO quizzes (owner_id, is_public, title)
-  VALUES ($1, $2, $3)
-  RETURNING *;
-  `;
-  dbQuery(queryString, queryParams)
-    .then(data => {
-      console.log("🚀 ~ file: quizzes-api.js:38 ~ router.post ~ data:", data);
-      const quizzes = data;
-      res.json({ quizzes });
+  // m3: note for frontend: send quizz in "quizz" object so that req.body.quizz...
+  const { owner_id, is_public, title } = req.body.quizz;
+  const quizzParams = [owner_id, is_public, title];
+  createQuiz(quizzParams)
+    .then(quizzData => {
+      quiz_id = quizzData[0].id;
+      const questions = req.body.questions;
+      for (const question of questions) {
+        const questionText = question.text;
+        const questionParams = [quiz_id, questionText];
+        createQuestion(questionParams)
+          .then(questionData => {
+            //  m3: Had an error here (because returning data.rows in createQuestion instead of data, but it was not caught: why?)
+            const question_id = questionData[0].id;
+            const answers = question.answers;
+            for (const answer of answers) {
+              const answerParam = [question_id, answer.text, answer.is_correct];
+              createAnswer(answerParam)
+                .then(answerData => console.log("added answer: ", answerData));
+            }
+          });
+      }
+      res.status(201).json({ quizzData });
     })
     .catch(err => {
+      console.log("🚀 ~ file: quizzes-api.js:66 ~ router.post ~ err:", err);
       res
         .status(500)
         .json({ error: err.message });
@@ -58,22 +76,12 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const queryString = `
-  SELECT
-  quizzes.id AS quiz_id,
-  quizzes.title AS quiz_title,
-  questions.text AS question,
-  answers.text AS answer,
-  answers.is_correct
-  FROM quizzes
-  JOIN questions ON quizzes.id = questions.quiz_id
-  JOIN answers ON questions.id = answers.question_id
-  WHERE quizzes.id=$1
-  GROUP BY quizzes.id, questions.id, answers.id
-  `;
   const queryParams = [req.params.id];
-  dbQuery(queryString, queryParams)
+  getQuiz(queryParams)
     .then(data => {
+      if (data.length === 0) {
+        return res.status(404).json({ message: "Quizz Not found" });
+      }
       console.log("🚀 ~ file: quizzes-api.js:77 ~ router.get ~ data:", data);
       const quizzes = data;
       res.json({ quizzes });
@@ -86,19 +94,17 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  const queryString = `
-  DELETE FROM quizzes
-  WHERE id=$1
-  ;
-  `;
+
+router.delete('/:id', (req, res, next) => {
   const queryParams = [req.params.id];
-  dbQuery(queryString, queryParams)
+  deleteQuiz(queryParams)
     .then(data => {
-      const quizzes = data[0];
-      res.json("Entry successfully deleted");
+      if (data.length === 0) {
+        return res.status(404).json({ message: "Quizz Not found" });
+      }
     })
     .catch(err => {
+      console.log("🚀 ~ file: quizzes-api.js:124 ~ router.delete ~ err:", err);
       res
         .status(500)
         .json({ error: err.message });
@@ -106,19 +112,13 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  const queryString = `
-  UPDATE quizzes
-  SET owner_id = $1, is_public=$2, title=$3
-  WHERE id=$4
-  RETURNING *
-  ;
-  `;
   const { owner_id, is_public, title } = req.body;
   const queryParams = [owner_id, is_public, title, req.params.id];
-
-  console.log(queryString);
-  dbQuery(queryString, queryParams)
+  editQuiz(queryParams)
     .then(data => {
+      if (data.length === 0) {
+        return res.status(404).json({ message: "Quizz Not found" });
+      }
       const quizzes = data[0];
       res.json({ quizzes });
     })
@@ -128,7 +128,6 @@ router.put('/:id', (req, res) => {
         .json({ error: err.message });
     });
 });
-
 
 
 module.exports = router;

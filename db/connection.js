@@ -18,8 +18,13 @@ const dbQuery = (queryString, queryParams, callback) => {
   console.log('executed query: ', queryString);
   queryParams && console.log('with params : ', queryParams);
   return db.query(queryString, queryParams, callback)
-    .then(res => res.rows)
-    .catch(error => console.log('error querying', error.message));
+    .then(res => {
+      return res.rows;
+    })
+    .catch(error => {
+      console.log('error querying', error.message);
+      throw new Error('error querying', error.message);
+    });
 };
 
 module.exports = { db, dbQuery };
