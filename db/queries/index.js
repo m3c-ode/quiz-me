@@ -13,6 +13,7 @@ const {
   getSpecificAttempt,
   deleteAttempt,
 } = require("./attempts");
+const { getUserQuizzes, getUsers } = require("./users");
 
 module.exports = {
   createAnswer,
@@ -31,4 +32,6 @@ module.exports = {
   startNewAttempt,
   getSpecificAttempt,
   deleteAttempt,
+  getUserQuizzes,
+  getUsers
 };
