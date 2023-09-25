@@ -67,7 +67,7 @@ router.post("/", (req, res) => {
   // Set some default data
   let queryParams = [1, hardcodedUserID];
 
-  if (user_id) {
+  if (quiz_id && user_id) {
     // Real data was sent so replace the fake data with the actual
     queryParams = [quiz_id, user_id];
   }
