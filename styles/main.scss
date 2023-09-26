@@ -44,24 +44,35 @@ body {
     justify-content: space-between;
 
     li {
-      padding: 2px
-    }
-
-    a {
+      padding: 2px;
       cursor: pointer;
       // padding: 2px;
       font-family: 'DrMarz';
       font-weight: 600;
-      font-size: 2em;
+      font-size: 1.5em;
       color: azure;
 
       &:hover {
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        text-shadow: 2px 2px 10px rgba(238, 255, 1, 0.532);
         // border-radius: 20px;
       }
     }
+
+    // a {
+    //   cursor: pointer;
+    //   // padding: 2px;
+    //   font-family: 'DrMarz';
+    //   font-weight: 600;
+    //   font-size: 2em;
+    //   color: azure;
+
+    //   &:hover {
+    //     text-shadow: 2px 2px 10px rgba(238, 255, 1, 0.532);
+    //     // border-radius: 20px;
+    //   }
   }
 }
+
 
 .quiz-card {
   background-color: aliceblue;
@@ -90,6 +101,7 @@ h1 {
   font-weight: 800;
   font-family: 'Pokemon';
   padding-bottom: .75em;
+  text-align: center;
 }
 
 footer {

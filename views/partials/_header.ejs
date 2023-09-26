@@ -30,9 +30,10 @@
     </ul>
     <% }  else { %>
     <ul>
-      <li>Home</li>
-      <li>MyQuizzes</li>
-      <li>MyAttempts</li>
+      <li><a href="/">QuizMe</a></li>
+      <li><a href="/quizzes">MyQuizzes</a></li>
+      <li><a href="/attempts">MyAttempts</a></li>
+      <!-- TODO: add avatar pic, name, and logout -->
       <li><%= user.username %></li>
     </ul>
     <% }%>
