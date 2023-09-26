@@ -66,7 +66,7 @@ app.use('/auth', authRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { user: undefined });
 });
 
 app.listen(PORT, () => {
