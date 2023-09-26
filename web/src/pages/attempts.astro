@@ -1,0 +1,57 @@
+---
+const response = await fetch("http://localhost:8080/api/attempts");
+const data = await response.json();
+const attempts = data.attempts;
+console.log(attempts);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Attempts</title>
+  </head>
+  <body class="bg-slate-100 text-slate-900 min-h-screen min-w-screen mx-auto flex flex-col">
+    <header>
+      <nav class="px-8 py-4" x-data="{headerOpen: false}">
+        <ul class="md:flex shadow-lg w-full border border-slate-500 bg-slate-600 text-slate-100 justify-between rounded-lg px-8 relative">
+          <li class="px-2 py-4 hover:text-slate-400 transition"><a href="#">QuizMe</a></li>
+
+          <li x-show="headerOpen" class="px-2 py-4 hover:text-slate-400 transition"><a href="#">MyQuizzes</a></li>
+          <li class="hidden md:block px-2 py-4 hover:text-slate-400 transition"><a href="#">MyQuizzes</a></li>
+          
+          <li x-show="headerOpen" class="px-2 py-4 hover:text-slate-400 transition"><a href="#">MyAttempts</a></li>
+          <li class="hidden md:block px-2 py-4 hover:text-slate-400 transition"><a href="#">MyAttempts</a></li>
+          
+          <li x-show="headerOpen" class="px-2 py-4 hover:text-slate-400 transition"><a href="#">JT</a></li>
+          <li class="hidden md:block px-2 py-4 hover:text-slate-400 transition"><a href="#">JT</a></li>
+          
+          <li class="absolute top-4 right-8 md:hidden">
+            <button class="lg:hidden" x-bind:class="headerOpen ? 'rotate-90 transition' : 'transition'" @click="headerOpen = !headerOpen" class="px-2 py-4  hover:text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="p-8 flex-grow space-y-8">
+      {
+        attempts.map((attempt) => {
+          return (
+            <div class="border-16 border-slate-400 rounded-lg p-6 text-center space-y-8 bg-slate-200 shadow-lg">
+              <h2 class="text-2xl font-bold">Quiz: {attempt.quiz_title}</h2>
+              <p class="text-xl">Score: {attempt.score}</p>
+              <p class="px-4 py-2">
+                <a href=`/attempts/${attempt.attempt_id}` class="border border-slate-300 px-4 py-2 bg-slate-600 hover:bg-slate-800 transition rounded-md text-slate-300">View details</a>
+              </p>
+            </div>
+          );
+        })
+      }
+    </main>
+    <footer class="text-center my-auto">&copy; 2023 QuizMe Inc.</footer>
+  </body>
+</html>

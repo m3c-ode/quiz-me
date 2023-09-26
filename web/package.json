@@ -1,0 +1,23 @@
+{
+  "name": "astroquizme",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astro-github-elements/clipboard-copy": "^0.0.4",
+    "@astrojs/alpinejs": "^0.3.0",
+    "@astrojs/tailwind": "^5.0.0",
+    "@astrojs/vercel": "^5.0.1",
+    "@github/clipboard-copy-element": "^1.2.1",
+    "@types/alpinejs": "^3.0.0",
+    "alpinejs": "^3.0.0",
+    "astro": "^3.1.4",
+    "tailwindcss": "^3.0.24"
+  }
+}

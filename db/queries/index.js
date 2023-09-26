@@ -17,6 +17,7 @@ const {
   startNewAttempt,
   getSpecificAttempt,
   deleteAttempt,
+  getQuizWithGroupedAnswers,
 } = require("./attempts");
 
 const { getUserQuizzes, getUsers } = require("./users");
@@ -39,4 +40,5 @@ module.exports = {
   startNewAttempt,
   getSpecificAttempt,
   deleteAttempt,
+  getQuizWithGroupedAnswers,
 };
