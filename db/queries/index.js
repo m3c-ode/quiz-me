@@ -18,6 +18,7 @@ const {
   getSpecificAttempt,
   deleteAttempt,
   getQuizWithGroupedAnswers,
+  getNumberOfQuestionsForQuiz,
 } = require("./attempts");
 
 const { getUserQuizzes, getUsers, getUserInfo } = require("./users");
@@ -41,5 +42,6 @@ module.exports = {
   getSpecificAttempt,
   deleteAttempt,
   getQuizWithGroupedAnswers,
-  getUserInfo
+  getUserInfo,
+  getNumberOfQuestionsForQuiz
 };
