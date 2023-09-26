@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Pokemon';
-  src: url('/fonts/PokemonSolid.ttf') format('truetype');
+  font-family: "Pokemon";
+  src: url("/fonts/PokemonSolid.ttf") format("truetype");
 }
 
 body {
@@ -11,13 +11,15 @@ body {
   min-height: 100vh;
 
   background: rgb(163, 208, 219);
-  background: linear-gradient(227deg,
-      rgba(163, 208, 219, 1) 0%,
-      rgba(163, 176, 219, 1) 20%,
-      rgba(163, 173, 219, 1) 34%,
-      rgba(163, 219, 208, 1) 59%,
-      rgba(163, 208, 219, 1) 74%,
-      rgba(163, 208, 219, 1) 100%);
+  background: linear-gradient(
+    227deg,
+    rgba(163, 208, 219, 1) 0%,
+    rgba(163, 176, 219, 1) 20%,
+    rgba(163, 173, 219, 1) 34%,
+    rgba(163, 219, 208, 1) 59%,
+    rgba(163, 208, 219, 1) 74%,
+    rgba(163, 208, 219, 1) 100%
+  );
 }
 
 #main-content {
@@ -38,6 +40,15 @@ body {
   align-items: center;
 }
 
+#questions-content {
+  // border: 1px solid red;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #header {
   width: 100%;
   padding: 2em 3em;
@@ -48,7 +59,7 @@ body {
     justify-content: space-between;
 
     li {
-      padding: 2px
+      padding: 2px;
     }
 
     a {
@@ -64,6 +75,63 @@ body {
       }
     }
   }
+}
+
+#title {
+  display: block;
+  justify-content: center;
+}
+
+#title-score {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.question-card {
+  background-color: aliceblue;
+  width: 70%;
+  border-radius: 10px;
+  margin: 2em 0;
+  padding: 2em;
+  text-align: center;
+
+  h2 {
+    padding-bottom: 0.5em;
+    font-size: 2em;
+    // margin-top: 1em;
+  }
+
+  button {
+    // margin-top: 1em;
+    background-color: aqua;
+    padding: 0.2em;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 5px blue;
+  }
+}
+
+.answers {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 2em;
+}
+
+.correct {
+  color: rgb(22 163 74);
+}
+
+.incorrect {
+  color: rgb(220 38 38);
+}
+
+.score {
+  font-size: x-large;
+  font-weight: 600;
+  display: flex;
+  justify-content: end;
+  padding: 1em;
 }
 
 .quiz-card {
@@ -92,12 +160,12 @@ body {
 h1 {
   font-size: 4em;
   font-weight: 800;
-  font-family: 'Pokemon';
-  padding-bottom: .75em;
+  font-family: "Pokemon";
+  padding-bottom: 0.75em;
 }
 
 footer {
-  font-family: 'Pokemon';
+  font-family: "Pokemon";
   padding-bottom: 1.5em;
   font-size: 1.3em;
 }
