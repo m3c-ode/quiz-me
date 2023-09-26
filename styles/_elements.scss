@@ -1,0 +1,15 @@
+@mixin basicCard ($width, $marginY: 2em) {
+  background-color: aliceblue;
+  width: $width;
+  border-radius: 10px;
+  margin: $marginY 0;
+  padding: 1.5em;
+  text-align: center;
+}
+
+@mixin yellowGlow () {
+  &:hover {
+    text-shadow: 2px 2px 20px $yellow-shadow;
+    box-shadow: 0 0 20px 10px $yellow-shadow;
+  }
+}
