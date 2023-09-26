@@ -66,7 +66,13 @@ app.use('/auth', authRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index', { user: undefined });
+  const userId = req.session.userId;
+  let user;
+  if (!userId) {
+    user = undefined;
+  }
+  // Else: fetch the user info
+  res.render('index', { user });
 });
 
 app.listen(PORT, () => {
