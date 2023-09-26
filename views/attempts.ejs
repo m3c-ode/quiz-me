@@ -1,7 +1,26 @@
 <%- include('partials/_header') %>
   <script type="text/javascript" src="/scripts/attempts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+    integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <h1>My Attempts</h1>
   <main id="attempts-content">
   </main>
+  <script>
+    let clipboard = new ClipboardJS('.shareAttempt');
+
+    clipboard.on('success', function(e) {
+      let originalText = e.trigger.innerText;
+
+      e.trigger.innerText = 'Copied!';
+      e.trigger.disabled = true;
+
+      setTimeout(() => {
+        e.trigger.innerText = originalText;
+        e.trigger.disabled = false;
+      }, 3000);
+    });
+
+  </script>
 
   <%- include('partials/_footer') %>

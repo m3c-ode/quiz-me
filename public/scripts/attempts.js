@@ -10,11 +10,20 @@
 
   const createAttemptElement = function (attempt) {
 
-    const $attemptCard = $("<article class='quiz-card'>")
+    const $attemptCard = $("<article class='attempt-card'>")
       .append($("<h2>").text(`Quiz Title: ${attempt.quiz_title}`))
-      .append($("<p>").text(`Score: ${attempt.score}`))
+      .append($("<p>").text(`Score: ${attempt.score} / ${attempt.total_possible_score}`))
       .append(`<a href='/attempts/${attempt.attempt_id}'>View details</a>`)
-      .append(`<form class="deleteAttempt" attempt="${attempt.attempt_id}"><button type="submit">Delete Me</button></form>`);
+      .append(`
+      <div class='attemptButtons'>
+        <form class="deleteAttempt" attempt="${attempt.attempt_id}">
+          <button type="submit" class="attemptButton">Delete Me</button>
+        </form>
+        <button class="shareAttempt attemptButton" data-clipboard-text="I just took the ${attempt.quiz_title} quiz at QuizMe, and scored ${attempt.score} out of ${attempt.total_possible_score}!  Check out my results and try it out yourself at ${window.location.href}/${attempt.attempt_id}">
+            Share link to your results!
+        </button>
+      </div>
+      `);
 
     return $attemptCard;
   };
@@ -46,8 +55,5 @@
       });
     };
     loadAttempts();
-
-
-
   });
 }
