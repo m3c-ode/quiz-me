@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 const { generateRandomString } = require('./lib/helper-functions');
+const { getUserInfo } = require('./db/queries/index');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -71,8 +72,38 @@ app.get('/', (req, res) => {
   if (!userId) {
     user = undefined;
   }
+  if (!req.session.user) {
+    user = undefined;
+  } else {
+    user = req.session.user;
+  }
   // Else: fetch the user info
   res.render('index', { user });
+});
+
+app.get('/login', (req, res) => {
+  let userId = req.session.userId;
+  let user;
+  if (!userId) {
+    userId = 1;
+  }
+  getUserInfo([userId])
+    .then(data => {
+      console.log("🚀 ~ file: server.js:87 ~ app.get ~ data:", data);
+      console.log("🚀 ~ file: users-api.js:50 ~ router.get ~ data:", data);
+      // res.json({ user: data[0] });
+      req.session.user = data[0];
+      // res.render('index', { user: data[0] });
+      res.redirect("/");
+
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  // Else: fetch the user info
+  // res.render('index', { user });
 });
 
 app.listen(PORT, () => {

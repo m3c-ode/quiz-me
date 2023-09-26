@@ -1,6 +1,11 @@
 @font-face {
   font-family: 'Pokemon';
-  src: url('/fonts/PokemonSolid.ttf') format('truetype');
+  src: url('/fonts/Pokemon.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DrMarz';
+  src: url('/fonts/DrMarz.otf') format('opentype');
 }
 
 body {
@@ -45,8 +50,9 @@ body {
     a {
       cursor: pointer;
       // padding: 2px;
+      font-family: 'DrMarz';
       font-weight: 600;
-      font-size: 1.2em;
+      font-size: 2em;
       color: azure;
 
       &:hover {
@@ -68,11 +74,10 @@ body {
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
-    // margin-top: 1em;
+    font-family: 'DrMarz';
   }
 
   button {
-    // margin-top: 1em;
     background-color: aqua;
     padding: 0.2em;
     border-radius: 10px;
@@ -81,7 +86,7 @@ body {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 6em;
   font-weight: 800;
   font-family: 'Pokemon';
   padding-bottom: .75em;
@@ -90,5 +95,5 @@ h1 {
 footer {
   font-family: 'Pokemon';
   padding-bottom: 1.5em;
-  font-size: 1.3em;
+  font-size: 2em;
 }
