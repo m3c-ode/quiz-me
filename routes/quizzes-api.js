@@ -8,25 +8,12 @@
 const express = require('express');
 const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
-const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllQuizzes } = require("../db/queries");
+const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllPublicQuizzes } = require("../db/queries");
 const { handleNotFound } = require('../lib/middlewares');
 
+// Filter for private - all public quizzes
 router.get('/', (req, res) => {
-  const queryString = `
-  SELECT
-  quizzes.id AS quiz_id,
-  quizzes.title AS quiz_title,
-  questions.text AS question,
-  answers.text AS answer,
-  answers.is_correct
-  FROM quizzes
-  JOIN questions ON quizzes.id = questions.quiz_id
-  JOIN answers ON questions.id = answers.question_id
-  GROUP BY quizzes.id, questions.id, answers.id
-  ORDER BY quiz_id, questions.id, answers.is_correct DESC
-  ;`;
-  // dbQuery(queryString)
-  getAllQuizzes()
+  getAllPublicQuizzes()
     .then(data => {
       if (data.length === 0) {
         return res.status(404).json({ message: "Quizzes Not found" });
@@ -63,13 +50,20 @@ router.post('/', (req, res) => {
               createAnswer(answerParam)
                 .then(answerData => console.log("added answer: ", answerData));
             }
+            res.status(201).json({ quizzData });
           });
+        // .catch(err => {
+        //   console.log("🚀 ~ file: quizzes-api.js:68 ~ router.post ~ err:", err);
+        //   return res
+        //     .status(500)
+        //     .json({ error: err.message });
+        // });
       }
-      res.status(201).json({ quizzData });
+      // res.status(201).json({ quizzData });
     })
     .catch(err => {
-      console.log("🚀 ~ file: quizzes-api.js:66 ~ router.post ~ err:", err);
-      res
+      console.log("🚀 ~ file: quizzes-api.js:77 ~ router.post ~ err:", err);
+      return res
         .status(500)
         .json({ error: err.message });
     });

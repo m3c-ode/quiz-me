@@ -5,7 +5,7 @@ const {
   deleteQuiz,
   getQuiz,
   editQuiz,
-  getAllQuizzes,
+  getAllPublicQuizzes
 } = require("./quizzes");
 const {
   createAttemptAnswer,
@@ -19,14 +19,19 @@ const {
   deleteAttempt,
 } = require("./attempts");
 
+const { getUserQuizzes, getUsers } = require("./users");
+
+
 module.exports = {
   createAnswer,
   createQuestion,
   createQuiz,
   deleteQuiz,
   getQuiz,
-  getAllQuizzes,
+  getAllPublicQuizzes,
   editQuiz,
+  getUserQuizzes,
+  getUsers,
   createAttemptAnswer,
   getAttemptAnswer,
   deleteAttemptAnswer,
