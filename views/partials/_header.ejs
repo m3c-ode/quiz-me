@@ -23,16 +23,18 @@
 
 <body>
   <header id="header">
+    <% if(!user) { %>
     <ul>
       <li><a href="/">QuizMe</a></li>
-      <% if(!user) { %>
-        <li><a href="/login">Login</a></li>
-        <% } else { %>
-          <li>MyQuizzes</li>
-          <li>MyAttempts</li>
-          <li>
-            <%= user.username %>
-          </li>
-          <% }%>
+      <li><a href="/login">Login</a></li>
     </ul>
+    <% }  else { %>
+    <ul>
+      <li><a href="/">QuizMe</a></li>
+      <li><a href="/quizzes">MyQuizzes</a></li>
+      <li><a href="/attempts">MyAttempts</a></li>
+      <!-- TODO: add avatar pic, name, and logout -->
+      <li><%= user.username %></li>
+    </ul>
+    <% }%>
   </header>

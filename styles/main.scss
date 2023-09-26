@@ -1,6 +1,11 @@
 @font-face {
-  font-family: "Pokemon";
-  src: url("/fonts/PokemonSolid.ttf") format("truetype");
+  font-family: 'Pokemon';
+  src: url('/fonts/Pokemon.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DrMarz';
+  src: url('/fonts/DrMarz.otf') format('opentype');
 }
 
 body {
@@ -11,15 +16,13 @@ body {
   min-height: 100vh;
 
   background: rgb(163, 208, 219);
-  background: linear-gradient(
-    227deg,
-    rgba(163, 208, 219, 1) 0%,
-    rgba(163, 176, 219, 1) 20%,
-    rgba(163, 173, 219, 1) 34%,
-    rgba(163, 219, 208, 1) 59%,
-    rgba(163, 208, 219, 1) 74%,
-    rgba(163, 208, 219, 1) 100%
-  );
+  background: linear-gradient(227deg,
+      rgba(163, 208, 219, 1) 0%,
+      rgba(163, 176, 219, 1) 20%,
+      rgba(163, 173, 219, 1) 34%,
+      rgba(163, 219, 208, 1) 59%,
+      rgba(163, 208, 219, 1) 74%,
+      rgba(163, 208, 219, 1) 100%);
 }
 
 #main-content {
@@ -60,20 +63,31 @@ body {
 
     li {
       padding: 2px;
-    }
-
-    a {
       cursor: pointer;
       // padding: 2px;
+      font-family: 'DrMarz';
       font-weight: 600;
-      font-size: 1.2em;
+      font-size: 1.5em;
       color: azure;
 
       &:hover {
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        text-shadow: 2px 2px 10px rgba(238, 255, 1, 0.532);
         // border-radius: 20px;
       }
     }
+
+    // a {
+    //   cursor: pointer;
+    //   // padding: 2px;
+    //   font-family: 'DrMarz';
+    //   font-weight: 600;
+    //   font-size: 2em;
+    //   color: azure;
+
+    //   &:hover {
+    //     text-shadow: 2px 2px 10px rgba(238, 255, 1, 0.532);
+    //     // border-radius: 20px;
+    //   }
   }
 }
 
@@ -145,11 +159,10 @@ body {
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
-    // margin-top: 1em;
+    font-family: 'DrMarz';
   }
 
   button {
-    // margin-top: 1em;
     background-color: aqua;
     padding: 0.2em;
     border-radius: 10px;
@@ -158,14 +171,15 @@ body {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 6em;
   font-weight: 800;
-  font-family: "Pokemon";
-  padding-bottom: 0.75em;
+  font-family: 'Pokemon';
+  padding-bottom: .75em;
+  text-align: center;
 }
 
 footer {
   font-family: "Pokemon";
   padding-bottom: 1.5em;
-  font-size: 1.3em;
+  font-size: 2em;
 }
