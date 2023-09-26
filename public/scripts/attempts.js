@@ -9,6 +9,7 @@
   };
 
   const createAttemptElement = function (attempt) {
+
     const $attemptCard = $("<article class='quiz-card'>")
       .append($("<h2>").text(`Quiz Title: ${attempt.quiz_title}`))
       .append($("<p>").text(`Score: ${attempt.score}`))
