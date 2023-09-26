@@ -23,19 +23,16 @@
 
 <body>
   <header id="header">
-    <% if(!user) { %>
-      <ul>
-        <li><a href="/">QuizMe</a></li>
+    <ul>
+      <li><a href="/">QuizMe</a></li>
+      <% if(!user) { %>
         <li><a href="/login">Login</a></li>
-      </ul>
-      <% } else { %>
-        <ul>
-          <li>Home</li>
+        <% } else { %>
           <li>MyQuizzes</li>
           <li>MyAttempts</li>
           <li>
             <%= user.username %>
           </li>
-        </ul>
-        <% }%>
+          <% }%>
+    </ul>
   </header>
