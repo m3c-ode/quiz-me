@@ -69,6 +69,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// GET single quizz
 router.get('/:id', (req, res) => {
   const queryParams = [req.params.id];
   getQuiz(queryParams)
@@ -77,8 +78,8 @@ router.get('/:id', (req, res) => {
         return res.status(404).json({ message: "Quizz Not found" });
       }
       console.log("🚀 ~ file: quizzes-api.js:77 ~ router.get ~ data:", data);
-      const quizzes = data;
-      res.json({ quizzes });
+      const quizz = data[0];
+      res.json({ quizz });
     })
     .catch(err => {
       console.log("🚀 ~ file: quizzes-api.js:81 ~ router.get ~ err:", err);

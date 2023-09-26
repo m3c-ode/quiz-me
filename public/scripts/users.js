@@ -5,13 +5,14 @@ $(() => {
       method: 'GET',
       url: '/api/users'
     })
-    .done((response) => {
-      const $usersList = $('#users');
-      $usersList.empty();
+      .done((response) => {
+        console.log("🚀 ~ file: users.js:9 ~ .done ~ response:", response);
+        const $usersList = $('#users');
+        $usersList.empty();
 
-      for(const user of response.users) {
-        $(`<li class="user">`).text(user.name).appendTo($usersList);
-      }
-    });
+        for (const user of response.users) {
+          $(`<li class="user">`).text(user.username).appendTo($usersList);
+        }
+      });
   });
 });

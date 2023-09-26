@@ -7,13 +7,48 @@
 
 const express = require('express');
 const router = express.Router();
-const { getUserQuizzes, getUsers } = require('../db/queries');
+const { getUserQuizzes, getUsers, getUserInfo } = require('../db/queries');
 
 // Protected route for admins? Necessary?
 router.get('/', (req, res) => {
   getUsers()
     .then(users => {
       res.json({ users });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+// GET /users/me -> gets logged-in user info
+// TODO: implement when session auth is implemented
+router.get("/me", (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    return res.send({ message: "not logged in" });
+  }
+  getUserInfo([userId])
+    .then(data => res.json({ user: data[0] }))
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+// GET /users/:id -> gets logged-in user info
+// TODO: temporary while no auth implemented
+router.get("/:id", (req, res) => {
+  const userId = req.params.id;
+  if (!userId) {
+    return res.send({ message: "not logged in" });
+  }
+  getUserInfo([userId])
+    .then(data => {
+      console.log("🚀 ~ file: users-api.js:50 ~ router.get ~ data:", data);
+      res.json({ user: data[0] });
     })
     .catch(err => {
       res

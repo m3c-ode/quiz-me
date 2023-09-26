@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Pokemon';
+  src: url('/fonts/PokemonSolid.ttf') format('truetype');
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -6,13 +11,84 @@ body {
   min-height: 100vh;
 
   background: rgb(163, 208, 219);
-  background: linear-gradient(
-    227deg,
-    rgba(163, 208, 219, 1) 0%,
-    rgba(163, 176, 219, 1) 20%,
-    rgba(163, 173, 219, 1) 34%,
-    rgba(163, 219, 208, 1) 59%,
-    rgba(163, 208, 219, 1) 74%,
-    rgba(163, 208, 219, 1) 100%
-  );
+  background: linear-gradient(227deg,
+      rgba(163, 208, 219, 1) 0%,
+      rgba(163, 176, 219, 1) 20%,
+      rgba(163, 173, 219, 1) 34%,
+      rgba(163, 219, 208, 1) 59%,
+      rgba(163, 208, 219, 1) 74%,
+      rgba(163, 208, 219, 1) 100%);
+}
+
+#main-content {
+  // border: 1px solid red;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#header {
+  width: 100%;
+  padding: 2em 3em;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    li {
+      padding: 2px
+    }
+
+    a {
+      cursor: pointer;
+      // padding: 2px;
+      font-weight: 600;
+      font-size: 1.2em;
+      color: azure;
+
+      &:hover {
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        // border-radius: 20px;
+      }
+    }
+  }
+}
+
+.quiz-card {
+  background-color: aliceblue;
+  width: 70%;
+  border-radius: 10px;
+  margin: 2em 0;
+  padding: 1em;
+  text-align: center;
+
+  h2 {
+    padding-bottom: 0.5em;
+    font-size: 2em;
+    // margin-top: 1em;
+  }
+
+  button {
+    // margin-top: 1em;
+    background-color: aqua;
+    padding: 0.2em;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 5px blue;
+  }
+}
+
+h1 {
+  font-size: 4em;
+  font-weight: 800;
+  font-family: 'Pokemon';
+  padding-bottom: .75em;
+}
+
+footer {
+  font-family: 'Pokemon';
+  padding-bottom: 1.5em;
+  font-size: 1.3em;
 }
