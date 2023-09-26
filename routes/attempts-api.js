@@ -18,6 +18,7 @@ const {
   getSpecificAttempt,
   deleteAttempt,
   getQuizWithGroupedAnswers,
+  getNumberOfQuestionsForQuiz,
 } = require("../db/queries");
 
 const hardcodedUserID = 2;
@@ -37,33 +38,39 @@ router.get("/", (req, res) => {
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
 
-      let attemptsObj = {};
+      getNumberOfQuestionsForQuiz(data[0].quiz_id).then((questions) => {
+        let attemptsObj = {};
 
-      data.forEach((attemptAnswer) => {
-        if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
-          attemptsObj[attemptAnswer.attempt_id] = {};
-          attemptsObj[attemptAnswer.attempt_id].attempt_id =
+        data.forEach((attemptAnswer) => {
+          if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
+            attemptsObj[attemptAnswer.attempt_id] = {};
+            attemptsObj[attemptAnswer.attempt_id].attempt_id =
             attemptAnswer.attempt_id;
-          attemptsObj[attemptAnswer.attempt_id].quiz_title = data[0].quiz_title;
-          attemptsObj[attemptAnswer.attempt_id].answers = [];
-          attemptsObj[attemptAnswer.attempt_id].score = 0;
+            attemptsObj[attemptAnswer.attempt_id].quiz_title = data[0].quiz_title;
+            attemptsObj[attemptAnswer.attempt_id].quiz_id = data[0].quiz_id;
+            attemptsObj[attemptAnswer.attempt_id].answers = [];
+            attemptsObj[attemptAnswer.attempt_id].score = 0;
+            attemptsObj[attemptAnswer.attempt_id].total_possible_score = Number(questions[0].count);
+          }
+
+          attemptsObj[attemptAnswer.attempt_id].answers.push(attemptAnswer);
+
+          if (attemptAnswer.is_correct) {
+            attemptsObj[attemptAnswer.attempt_id].score++;
+          }
+        });
+
+
+        let attempts = [];
+        for (let attempt in attemptsObj) {
+          attempts.push(attemptsObj[attempt]);
         }
 
-        attemptsObj[attemptAnswer.attempt_id].answers.push(attemptAnswer);
+        console.log("🚀 ~ file: attempts-api.js:71 ~ js ~ attempts:", attempts);
 
-        if (attemptAnswer.is_correct) {
-          attemptsObj[attemptAnswer.attempt_id].score++;
-        }
+        res.json({ attempts });
+
       });
-
-      let attempts = [];
-      for (let attempt in attemptsObj) {
-        attempts.push(attemptsObj[attempt]);
-      }
-
-      console.log("🚀 ~ file: attempts-api.js:71 ~ js ~ attempts:", attempts);
-
-      res.json({ attempts });
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
