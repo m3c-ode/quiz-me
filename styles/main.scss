@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Pokemon';
+  src: url('/fonts/PokemonSolid.ttf') format('truetype');
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -59,12 +64,7 @@ body {
   margin: 2em 0;
   padding: 1em;
   text-align: center;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-around;
-  // align-items: flex-end;
 
-  // box-shadow: ;
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
@@ -81,6 +81,14 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 4em;
   font-weight: 800;
+  font-family: 'Pokemon';
+  padding-bottom: .75em;
+}
+
+footer {
+  font-family: 'Pokemon';
+  padding-bottom: 1.5em;
+  font-size: 1.3em;
 }
