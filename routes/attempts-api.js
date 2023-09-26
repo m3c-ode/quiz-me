@@ -17,6 +17,7 @@ const {
   startNewAttempt,
   getSpecificAttempt,
   deleteAttempt,
+  getQuizWithGroupedAnswers,
 } = require("../db/queries");
 
 const hardcodedUserID = 2;
@@ -36,21 +37,29 @@ router.get("/", (req, res) => {
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
 
-      let attempts = {};
+      let attemptsObj = {};
 
       data.forEach((attemptAnswer) => {
-        if (!attempts.hasOwnProperty(attemptAnswer.attempt_id)) {
-          attempts[attemptAnswer.attempt_id] = {};
-          attempts[attemptAnswer.attempt_id].answers = [];
-          attempts[attemptAnswer.attempt_id].score = 0;
+        if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
+          attemptsObj[attemptAnswer.attempt_id] = {};
+          attemptsObj[attemptAnswer.attempt_id].attempt_id =
+            attemptAnswer.attempt_id;
+          attemptsObj[attemptAnswer.attempt_id].quiz_title = data[0].quiz_title;
+          attemptsObj[attemptAnswer.attempt_id].answers = [];
+          attemptsObj[attemptAnswer.attempt_id].score = 0;
         }
 
-        attempts[attemptAnswer.attempt_id].answers.push(attemptAnswer);
+        attemptsObj[attemptAnswer.attempt_id].answers.push(attemptAnswer);
 
         if (attemptAnswer.is_correct) {
-          attempts[attemptAnswer.attempt_id].score++;
+          attemptsObj[attemptAnswer.attempt_id].score++;
         }
       });
+
+      let attempts = [];
+      for (let attempt in attemptsObj) {
+        attempts.push(attemptsObj[attempt]);
+      }
 
       console.log("🚀 ~ file: attempts-api.js:71 ~ js ~ attempts:", attempts);
 
@@ -104,15 +113,64 @@ router.get("/:id", (req, res) => {
 
       data.forEach((attemptAnswer) => {
         attempt.answers.push(attemptAnswer);
+        attempt.quiz_title = attemptAnswer.quiz_title;
+        attempt.quiz_id = attemptAnswer.quiz_id;
 
         if (attemptAnswer.is_correct) {
           attempt.score++;
         }
       });
 
-      console.log("🚀 ~ file: attempts-api.js:112 ~ js ~ attempt:", attempt);
+      let quizParams = [attempt.quiz_id];
+      getQuizWithGroupedAnswers(quizParams).then((answers) => {
+        let questions = [];
+        let score = 0;
+        let quiz_title = "";
+        let quiz_id = attempt.quiz_id;
 
-      res.json({ attempt });
+        answers.forEach((answer) => {
+          quiz_title = answer.title;
+
+          // Create the template of a question
+          let question = {
+            id: answer.question_id,
+            text: answer.question,
+            user_guessed_right: false,
+            answers: [],
+          };
+
+          // If this question doesn't exist in our list of known questions, add it
+          if (!questions.some((q) => q.id === answer.question_id)) {
+            questions.push(question);
+          }
+
+          // Since they are not ordered, find the question that we either
+          // just created or that was created earlier
+          let findQuestion = questions.find((q) => q.id === answer.question_id);
+          findQuestion.answers.push(answer);
+
+          // First we assume the user didn't choose this option
+          answer.user_chose = false;
+
+          attempt.answers.forEach((attemptedAnswer) => {
+            // The user actually DID choose this option
+            if (answer.answer_id === attemptedAnswer.answer_id) {
+              // Flag it on the object
+              answer.user_chose = true;
+              if (answer.is_correct) {
+                // And if it's right answer, increase their score
+                score++;
+                // And note it on the question
+                findQuestion.user_guessed_right = true;
+              }
+            }
+          });
+        });
+
+        let question_count = questions.length;
+
+        res.json({ quiz_id, quiz_title, score, question_count, questions });
+      });
     })
     .catch((err) => {
       console.log("🚀 ~ file: attempts-api.js:117 ~ router.get ~ err:", err);
