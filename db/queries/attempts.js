@@ -18,6 +18,12 @@ const getAllAttemptsForUser = (queryParams) => {
   WHERE attempts.user_id = $1
   ORDER BY attempts.TIMESTAMP DESC
     ;`;
+
+  console.log('DEBUGGING!!!!!');
+  console.log('DEBUGGING!!!!!');
+  console.log('DEBUGGING!!!!!');
+  console.log('DEBUGGING!!!!!');
+  console.log('DEBUGGING!!!!!');
   return dbQuery(answerQuery, queryParams).then((data) => data);
 };
 
@@ -53,8 +59,7 @@ const getSpecificAttempt = (queryParams) => {
   JOIN questions ON attempt_answers.question_id = questions.id
   JOIN answers ON attempt_answers.answer_id = answers.id
   WHERE
-    attempts.user_id = $1 AND
-    attempts.id = $2;
+    attempts.id = $1;
     ;`;
   return dbQuery(answerQuery, queryParams).then((data) => data);
 };

@@ -21,28 +21,31 @@ const {
   getNumberOfQuestionsForQuiz,
 } = require("../db/queries");
 
-const hardcodedUserID = 2;
-
 router.get("/", (req, res) => {
-  const { user_id } = req.body;
+  const user = req.session.user.id;
+
+  console.log('userID:', user);
 
   // Set default data
-  let queryParams = [hardcodedUserID];
+  let queryParams;
 
-  if (user_id) {
+  if (user) {
     // Real data was sent so replace the fake data with the actual
-    queryParams = [user_id];
+    queryParams = [user];
   }
 
   getAllAttemptsForUser(queryParams)
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
+      if (data.length === 0) {
+        return res.json({attempts: data, user_id: user})
+      }
 
       getNumberOfQuestionsForQuiz(data[0].quiz_id).then((questions) => {
         let attemptsObj = {};
 
         data.forEach((attemptAnswer) => {
-          if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
+            if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
             attemptsObj[attemptAnswer.attempt_id] = {};
             attemptsObj[attemptAnswer.attempt_id].attempt_id =
             attemptAnswer.attempt_id;
@@ -78,14 +81,15 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { quiz_id, user_id } = req.body;
+  const user = req.session.user.id;
+  const { quiz_id } = req.body;
 
   // Set some default data
-  let queryParams = [1, hardcodedUserID];
+  let queryParams;
 
-  if (quiz_id && user_id) {
+  if (quiz_id && user) {
     // Real data was sent so replace the fake data with the actual
-    queryParams = [quiz_id, user_id];
+    queryParams = [quiz_id, user];
   }
 
   startNewAttempt(queryParams)
@@ -100,15 +104,7 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  const { user_id } = req.body;
-
-  // Set some default data
-  const queryParams = [hardcodedUserID, req.params.id];
-
-  if (user_id) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [user_id, req.params.id];
-  }
+  const queryParams = [req.params.id];
 
   getSpecificAttempt(queryParams)
     .then((data) => {
@@ -186,14 +182,14 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const { user_id } = req.body;
+  const user = req.session.user.id;
 
   // Set some default data
-  const queryParams = [req.params.id, hardcodedUserID];
+  let queryParams;
 
-  if (user_id) {
+  if (user) {
     // Real data was sent so replace the fake data with the actual
-    queryParams = [user_id, req.params.id];
+    queryParams = [req.params.id, user];
   }
 
   deleteAttempt(queryParams)
