@@ -55,8 +55,6 @@ const attemptsRoutes = require("./routes/attempts");
 const quizzesRoutes = require("./routes/quizzes");
 
 // Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-// Note: Endpoints that return data (eg. JSON) usually start with `/api`
 
 // m3Note: use authMiddleware later to secure routes.
 // app.use('/api/users', authMiddleware, userApiRoutes);
@@ -92,17 +90,12 @@ app.get("/", (req, res) => {
 
 app.get('/login', (req, res) => {
   let userId = req.session.userId;
-  let user;
   if (!userId) {
     userId = 1;
   }
   getUserInfo([userId])
     .then(data => {
-      console.log("🚀 ~ file: server.js:87 ~ app.get ~ data:", data);
-      console.log("🚀 ~ file: users-api.js:50 ~ router.get ~ data:", data);
-      // res.json({ user: data[0] });
       req.session.user = data[0];
-      // res.render('index', { user: data[0] });
       res.redirect("/");
 
     })
