@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
 
 
   const formattedBodyData = {
-    quizz: {
+    quiz: {
       owner_id: req.session.user.id,
       is_public: req.body.is_public === 'true' ? true : false,
       title: req.body.title
@@ -72,42 +72,42 @@ router.post('/', (req, res) => {
   };
   console.log("🚀 ~ file: quizzes-api.js:49 ~ router.post ~ bodyData:", util.inspect(formattedBodyData, { depth: 4, colors: true }));
 
-  // const { owner_id, is_public, title } = req.body.quizz;
-  // const quizzParams = [owner_id, is_public, title];
-  // createQuiz(quizzParams)
-  //   .then(quizzData => {
-  //     quiz_id = quizzData[0].id;
-  //     const questions = req.body.questions;
-  //     for (const question of questions) {
-  //       const questionText = question.text;
-  //       const questionParams = [quiz_id, questionText];
-  //       createQuestion(questionParams)
-  //         .then(questionData => {
-  //           //  m3: Had an error here (because returning data.rows in createQuestion instead of data, but it was not caught: why?)
-  //           const question_id = questionData[0].id;
-  //           const answers = question.answers;
-  //           for (const answer of answers) {
-  //             const answerParam = [question_id, answer.text, answer.is_correct];
-  //             createAnswer(answerParam)
-  //               .then(answerData => console.log("added answer: ", answerData));
-  //           }
-  //           res.status(201).json({ quizzData });
-  //         });
-  //       // .catch(err => {
-  //       //   console.log("🚀 ~ file: quizzes-api.js:68 ~ router.post ~ err:", err);
-  //       //   return res
-  //       //     .status(500)
-  //       //     .json({ error: err.message });
-  //       // });
-  //     }
-  //     // res.status(201).json({ quizzData });
-  //   })
-  //   .catch(err => {
-  //     console.log("🚀 ~ file: quizzes-api.js:77 ~ router.post ~ err:", err);
-  //     return res
-  //       .status(500)
-  //       .json({ error: err.message });
-  //   });
+  const { owner_id, is_public, title } = formattedBodyData.quiz;
+  const quizParams = [owner_id, is_public, title];
+  createQuiz(quizParams)
+    .then(quizData => {
+      quiz_id = quizData[0].id;
+      const questions = formattedBodyData.questions;
+      for (const question of questions) {
+        const questionText = question.text;
+        const questionParams = [quiz_id, questionText];
+        createQuestion(questionParams)
+          .then(questionData => {
+            //  m3: Had an error here (because returning data.rows in createQuestion instead of data, but it was not caught: why?)
+            const question_id = questionData[0].id;
+            const answers = question.answers;
+            for (const answer of answers) {
+              const answerParam = [question_id, answer.text, answer.is_correct];
+              createAnswer(answerParam)
+                .then(answerData => console.log("added answer: ", answerData));
+            }
+          });
+        // .catch(err => {
+        //   console.log("🚀 ~ file: quizzes-api.js:68 ~ router.post ~ err:", err);
+        //   return res
+        //     .status(500)
+        //     .json({ error: err.message });
+        // });
+      }
+      // res.status(201).json({ quizData });
+      res.status(201).json({ quizData });
+    })
+    .catch(err => {
+      console.log("🚀 ~ file: quizzes-api.js:77 ~ router.post ~ err:", err);
+      return res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 // GET single quizz
@@ -118,8 +118,8 @@ router.get('/:id', (req, res) => {
       if (data.length === 0) {
         return res.status(404).json({ message: "Quizz Not found" });
       }
-      console.log("🚀 ~ file: quizzes-api.js:77 ~ router.get ~ data:", data);
-      const quizz = data[0];
+      // Gets quizz with all the information in it (including questions and answers)
+      const quizz = data;
       res.json({ quizz });
     })
     .catch(err => {
