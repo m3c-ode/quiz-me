@@ -3,15 +3,16 @@
   const renderQuestions = function (title, questions) {
     addHeader(title);
 
+    $("#questions-content").append('<div class="splide__track">');
+    $(".splide__track").append('<div class="splide__list">');
+
     for (const question of questions) {
       console.log(
         "🚀 ~ file: Attempts.js:6 ~ renderQuestions ~ quiz:",
         question
       );
-      $("#questions-content").append(createQuestionElement(question));
+      $('.splide__list').append(createQuestionElement(question));
     }
-
-    addFooter();
   };
 
   const addHeader = function (data) {
@@ -28,10 +29,10 @@
     let $answers = $("<div class='answers'>");
 
     for (let answer of question.answers) {
-      $answers.append(`<div><input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"> ${answer.answer}</div>`);
+      $answers.append(`<div><label><input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"> ${answer.answer}</label></div>`);
     }
 
-    const $questionCard = $("<article class='question-card'>")
+    const $questionCard = $("<article class='question-card splide__slide' style='width: 100%;'>")
       .append($("<h2>").text(`Question: ${question.question.text}`))
       .append("<h2>Answers</h2>")
       .append($answers);
@@ -73,6 +74,21 @@
 
         console.log(questions)
         renderQuestions(title, questions);
+
+        $(":radio").on('change', function() {
+          let names = {};
+          $(':radio').each(function() {
+            names[$(this).attr('name')] = true;
+          });
+          let count = 0;
+          $.each(names, function() {
+            count++;
+          });
+          if ($(':radio:checked').length === count) {
+            $('.finish-attempt-button').attr('disabled', false);
+          }
+          console.log(names)
+        });
       });
     };
     loadQuestions();

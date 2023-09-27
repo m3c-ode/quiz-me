@@ -105,12 +105,13 @@ router.post("/", (req, res) => {
         createAttemptAnswer(queryParams);
       });
 
+      return attempt_id;
       // console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
       // const attempts = data;
       // res.json({ attempts });
     })
-    .then(() => {
-      res.redirect('/attempts');
+    .then((attempt_id) => {
+      res.redirect(`/attempts/${attempt_id}`);
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
