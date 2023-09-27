@@ -38,7 +38,7 @@ body {
 
 #attempts-content {
   // border: 1px solid red;
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,7 +47,7 @@ body {
 
 #questions-content {
   // border: 1px solid red;
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -121,6 +121,19 @@ body {
   padding: 1em;
 }
 
+.full-width {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+}
+
+.finish-attempt-button {
+  background-color: aqua;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 5px blue;
+}
 
 .attempt-card {
   background-color: aliceblue;
