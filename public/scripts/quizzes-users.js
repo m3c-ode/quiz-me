@@ -22,16 +22,20 @@
     };
 
     const createUsersQuizElement = function(quizObj) {
+      const quizUrl = `${window.location.href}/${quizObj.quiz_id}/take`;
+      console.log("🚀 ~ file: quizzes-users.js:27 ~ createUsersQuizElement ~ quizUrl:", quizUrl);
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.title}`))
         .append($("<p>").text(`${quizObj.is_public ? "Public" : "Private"}`))
-        .append("<button>Share the quiz!</button>");
+        .append(`<button class="shareQuiz"
+        data-clipboard-text="I just made a Quiz on QuizMe! I'm challenging you to take it! ${quizUrl}. Good luck!"
+        >Share the quiz!</button>`);
 
       if (quizObj.is_public) {
         $quizCard.find("p").addClass("darker-green-tone");
       }
       else {
-        $quizCard.find("p").addClass("darker-blue-tone");
+        $quizCard.find("p").addClass("blue-tone");
 
       }
       return $quizCard;
