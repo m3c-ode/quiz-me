@@ -21,9 +21,32 @@
     const createPublicQuizElement = function(quizObj) {
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.quiz_title}`))
-        .append(`<a href='/quizzes/${quizObj.quiz_id}/take'>Take the Quiz!</a>`);
+        .append("<button>Take the Quiz!</button>");
+
+      const quizUrl = `${window.location.href}quizzes/${quizObj.quiz_id}/take`;
+      $quizCard.find("button").on('click', function(e) {
+        e.preventDefault();
+        // If no user, send to login page
+        if (!userId) {
+          return window.location.href = "/login";
+        }
+        else {
+          return window.location.href = quizUrl;
+        }
+      });
       return $quizCard;
     };
+
+    $("<article class='quiz-card'>").find("button").on('click', function(e) {
+      e.preventDefault();
+      // If no user, send to login page
+      if (!userId) {
+        return window.location.href = "/login";
+      }
+      else {
+        return $("<article class='quiz-card'>");
+      }
+    });
 
     const loadPublicQuizzes = function() {
       $.ajax({

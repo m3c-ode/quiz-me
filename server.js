@@ -89,6 +89,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+  // Need to define the login form page here, instead of automatic redirect
   let userId = req.session.userId;
   if (!userId) {
     userId = 1;
