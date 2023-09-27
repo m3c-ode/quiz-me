@@ -46,7 +46,8 @@ router.get("/new", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { quiz_id, user_id } = req.body;
+  // const { quiz_id, user_id } = req.body;
+  console.log("🚀 ~ file: quizzes.js:50 ~ router.post ~ req.body:", req.body);
 
   // Set some default data
   let queryParams = [1, hardcodedUserID];
@@ -56,15 +57,15 @@ router.post("/", (req, res) => {
     queryParams = [quiz_id, user_id];
   }
 
-  startNewAttempt(queryParams)
-    .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
-      const attempts = data;
-      res.json({ attempts });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+  // startNewAttempt(queryParams)
+  //   .then((data) => {
+  //     console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
+  //     const attempts = data;
+  //     res.json({ attempts });
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).json({ error: err.message });
+  //   });
 });
 
 // router.get("/:id", (req, res) => {
