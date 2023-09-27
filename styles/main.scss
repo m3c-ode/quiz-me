@@ -67,9 +67,9 @@ body {
 
 .question-card {
   background-color: aliceblue;
-  width: 70%;
+  // width: 70%;
   border-radius: 10px;
-  margin: 2em 0;
+  margin: 2em;
   padding: 2em;
   text-align: center;
 
@@ -133,6 +133,10 @@ body {
   padding: 1em;
   border-radius: 10px;
   box-shadow: 0 0 5px 5px blue;
+}
+
+.arrow_padding {
+  padding: 0.5em;
 }
 
 .attempt-card {
