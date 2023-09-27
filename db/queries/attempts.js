@@ -18,12 +18,6 @@ const getAllAttemptsForUser = (queryParams) => {
   WHERE attempts.user_id = $1
   ORDER BY attempts.TIMESTAMP DESC
     ;`;
-
-  console.log('DEBUGGING!!!!!');
-  console.log('DEBUGGING!!!!!');
-  console.log('DEBUGGING!!!!!');
-  console.log('DEBUGGING!!!!!');
-  console.log('DEBUGGING!!!!!');
   return dbQuery(answerQuery, queryParams).then((data) => data);
 };
 
