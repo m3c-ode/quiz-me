@@ -1,0 +1,87 @@
+@import 'colors';
+@import 'elements';
+
+#new-quizz {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    @include basicCard(80%, 1em);
+    font-family: 'Pokemon';
+    font-size: 2em;
+    display: block;
+
+    label {
+      // display: block;
+      // float: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 0 10px;
+      font-family: 'DrMarz';
+      box-shadow: 0 0 2px 2px #93909084;
+      border-radius: 10px;
+    }
+  }
+
+  .new-question {
+    @include basicCard(80%, 1em);
+    font-family: 'Pokemon';
+    font-size: 2em;
+    display: block;
+
+    label {
+      // display: block;
+      // float: left;
+      // max-width: 50%;
+    }
+
+    input {
+      width: 100%;
+      padding: 0 10px;
+      font-family: 'DrMarz';
+      box-shadow: 0 0 2px 2px #93909084;
+      border-radius: 10px;
+    }
+  }
+
+  .add-question {
+    @include basicCard(80%, .5em);
+    font-family: 'Pokemon';
+    font-size: 1.5em;
+    padding: .1em 0;
+    @include yellowGlow;
+  }
+
+  .new-answers {
+    margin: 1em 0;
+
+    div {
+      // overflow: hidden;
+    }
+
+    label {
+      float: left;
+      width: fit-content;
+      flex: 0 0 auto;
+    }
+
+    input {
+      // width: min-content;
+      // width: 100%;
+      flex: 1;
+    }
+  }
+
+  #submit-quizz {
+    @include basicCard(80%, .5em);
+    font-family: 'Pokemon';
+    font-size: 2.2em;
+    padding: .2em 0;
+    @include yellowGlow;
+  }
+}
