@@ -1,5 +1,6 @@
 <%- include('partials/_header') %>
 <script type="text/javascript" src="/scripts/quizzes-public.js"></script>
+<script>const userId = Number("<%= user ? user.id : undefined %>");</script>
 
 <h1>Welcome to Quizme</h1>
 <main id="main-content">

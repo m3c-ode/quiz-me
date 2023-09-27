@@ -12,9 +12,6 @@
 
     const renderPublicQuizzesCards = function(data) {
       $mainContent.empty();
-      // if (window.location.pathname === "/quizzes") {
-      //   $mainContent.append($newQuizElement);
-      // }
       for (const quiz of data) {
         console.log("🚀 ~ file: quizzes.js:6 ~ renderQuizzes ~ quiz:", quiz);
         $mainContent.append(createPublicQuizElement(quiz));
@@ -28,48 +25,21 @@
       return $quizCard;
     };
 
-
-
-
-    const addNewQuizElement = () => {
-      console.log('inside the function');
-      const newQuizElement = $("<article class='quiz-card new-quizz'>")
-        .append($("<h2>").text(`Create a New Quizz!`));
-      console.log("🚀 ~ file: quizzes.js:27 ~ addNewQuizElement ~ newQuizElement:", newQuizElement);
-      $("#main-content").prepend(newQuizElement);
-    };
-
-    // if (window.location.pathname === '/quizzes') {
-    //   const newQuizElement = $("<article class='quiz-card new-quizz'>")
-    //     .append($("<h2>").text(`Create a New Quizz!`));
-    //   $mainContent.append(newQuizElement);
-    //   // $mainContent.prepend(newQuizElement);
-    // }
-
-    // $(document).ready(function() {
     const loadPublicQuizzes = function() {
       $.ajax({
         url: "api/quizzes",
         method: 'GET'
       })
         .then(response => {
-          renderPublicQuizzesCards(response.quizzes);
+          console.log('have user id?', userId);
+          if (userId) {
+            renderPublicQuizzesCards(response.quizzes.filter(quiz => quiz.owner_id !== userId));
+          } else {
+            renderPublicQuizzesCards(response.quizzes);
+          }
         });
     };
 
-    // const loadUsersQuizzes = function() {
-    //   // Got userId from script in ejs template
-    //   $.ajax(`api/users/${userId}/quizzes`)
-    //     .then(response => {
-    //       console.log("🚀 ~ file: quizzes.js:65 ~ loadUsersQuizzes ~ response:", response);
-    //       renderQuizzesCards(response.userQuizzes);
-    //     });
-    // };
-    // if (window.location.pathname === "/quizzes") {
-    //   loadUsersQuizzes();
-    // } else {
     loadPublicQuizzes();
-    // }
   });
-  // });
 }
