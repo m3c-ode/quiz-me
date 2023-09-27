@@ -28,6 +28,17 @@
     }
   }
 
+  .privacy {
+    @include basicCard(80%, 0, 0);
+    font-size: 2em;
+    font-family: 'Pokemon';
+    text-align: center;
+
+    >input {
+      margin: 0 1em;
+    }
+  }
+
   .new-question {
     @include basicCard(80%, 1em);
     font-family: 'Pokemon';
