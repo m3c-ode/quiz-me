@@ -1,3 +1,5 @@
+@import 'colors';
+
 @font-face {
   font-family: 'Pokemon';
   src: url('/fonts/Pokemon.ttf') format('truetype');
@@ -149,4 +151,12 @@ h1 {
   margin-bottom: .2em;
   text-align: center;
   line-height: .7em;
+}
+
+.darker-blue-tone {
+  color: $darker-blue-tone;
+}
+
+.darker-green-tone {
+  color: $darker-green-tone;
 }
