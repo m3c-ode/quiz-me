@@ -22,23 +22,15 @@ const {
 } = require("../db/queries");
 
 router.get("/", (req, res) => {
-  const user = req.session.user.id;
+  const user = req.session.user;
 
-  console.log('userID:', user);
-
-  // Set default data
-  let queryParams;
-
-  if (user) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [user];
-  }
+  let queryParams = [user.id];
 
   getAllAttemptsForUser(queryParams)
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
       if (data.length === 0) {
-        return res.json({attempts: data, user_id: user})
+        return res.json({attempts: data, user: user.id})
       }
 
       getNumberOfQuestionsForQuiz(data[0].quiz_id).then((questions) => {
@@ -81,16 +73,10 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const user = req.session.user.id;
+  const user = req.session.user;
   const { quiz_id } = req.body;
 
-  // Set some default data
-  let queryParams;
-
-  if (quiz_id && user) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [quiz_id, user];
-  }
+  let queryParams = [quiz_id, user.id];
 
   startNewAttempt(queryParams)
     .then((data) => {
@@ -182,15 +168,9 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const user = req.session.user.id;
+  const user = req.session.user;
 
-  // Set some default data
-  let queryParams;
-
-  if (user) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [req.params.id, user];
-  }
+  let queryParams = [req.params.id, user.id];
 
   deleteAttempt(queryParams)
     .then((data) => {

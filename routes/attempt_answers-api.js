@@ -18,13 +18,11 @@ const {
   deleteAttemptAnswer,
 } = require("../db/queries");
 
-const hardcoded_attempt_id = 2;
-
 router.post("/", (req, res) => {
   const { attempt_id, question_id, answer_id } = req.body;
 
   // Set some default data
-  let queryParams = [hardcoded_attempt_id, 5, 25];
+  let queryParams;
 
   if (attempt_id && question_id && answer_id) {
     // Real data was sent so replace the fake data with the actual
@@ -46,15 +44,14 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  const { user_id } = req.body;
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+
+  let user = req.session.user;
 
   // Set some default data
-  let queryParams = [2, req.params.id];
-
-  if (user_id) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [user_id, req.params.id];
-  }
+  let queryParams = [user.id, req.params.id];
 
   getAttemptAnswer(queryParams)
     .then((data) => {
@@ -75,15 +72,13 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const { user_id } = req.body;
-
-  // Set some default data
-  let queryParams = [hardcoded_attempt_id, 2];
-
-  if (user_id) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [req.params.id, user_id];
+  if (!req.session.user) {
+    return res.redirect('/');
   }
+
+  let user = req.session.user;
+
+  let queryParams = [req.params.id, user.id];
 
   deleteAttemptAnswer(queryParams)
     .then((data) => {

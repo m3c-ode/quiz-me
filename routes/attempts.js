@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
     return res.redirect('/');
   }
 
-  let user = req.session.user.id;
+  let user = req.session.user;
 
   if (!user) {
     user = undefined;
@@ -34,7 +34,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const user = req.session.user.id;
+  const user = req.session.user;
   const { quiz_id } = req.body;
 
   // Set some default data
@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
 
   if (quiz_id && user) {
     // Real data was sent so replace the fake data with the actual
-    queryParams = [quiz_id, user];
+    queryParams = [quiz_id, user.id];
   }
 
   startNewAttempt(queryParams)
@@ -61,7 +61,7 @@ router.get("/:id", (req, res) => {
     return res.redirect('/');
   }
 
-  let user = req.session.user.id;
+  let user = req.session.user;
 
   if (!user) {
     user = undefined;
@@ -71,14 +71,14 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const user = req.session.user.id;
+  const user = req.session.user;
 
   // Set some default data
   let queryParams = [req.params.id, hardcodedUserID];
 
   if (user) {
     // Real data was sent so replace the fake data with the actual
-    queryParams = [user, req.params.id];
+    queryParams = [user.id, req.params.id];
   }
 
   deleteAttempt(queryParams)
