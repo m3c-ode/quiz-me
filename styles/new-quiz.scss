@@ -8,6 +8,11 @@
   justify-content: center;
   align-items: center;
 
+  .error {
+    color: red;
+    display: block;
+  }
+
   .title {
     @include basicCard(80%, 1em);
     font-family: 'Pokemon';
