@@ -95,10 +95,34 @@ const deleteAttempt = (queryParams) => {
   return dbQuery(answerQuery, queryParams).then((data) => data);
 };
 
+/**
+ *
+ * @param {int} quiz_id
+ * @returns {Promise}
+ */
+const getNumberOfQuestionsForQuiz = (quiz_id) => {
+  let queryParams = [quiz_id];
+
+  const answerQuery = `
+    SELECT
+      count(*)
+    FROM
+      questions
+    WHERE
+      quiz_id = $1
+    ;`;
+
+  return dbQuery(answerQuery, queryParams).then((data) => {
+    console.log(data)
+    return data;
+  });
+};
+
 module.exports = {
   getAllAttemptsForUser,
   startNewAttempt,
   getSpecificAttempt,
   deleteAttempt,
   getQuizWithGroupedAnswers,
+  getNumberOfQuestionsForQuiz,
 };
