@@ -16,7 +16,7 @@
     const $header = $("#questions-content")
       .empty()
       .append(
-        `<div id='title'><h1>${data.quiz_title}</h1><div id="title-score">Your Score: ${data.score} / ${data.question_count}<div></div>`
+        `<div id='title'><h1>${data.quiz_title}</h1><div id="title-score">Score: ${data.score} / ${data.question_count}<div></div>`
       );
 
     return $header;
