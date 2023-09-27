@@ -8,7 +8,7 @@
 const express = require('express');
 const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
-const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllPublicQuizzes } = require("../db/queries");
+const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllPublicQuizzes, getQuizQuestionsAndAnswers } = require("../db/queries");
 const { handleNotFound } = require('../lib/middlewares');
 const util = require('util');
 

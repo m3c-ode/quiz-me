@@ -19,6 +19,7 @@ const {
   deleteAttempt,
   getQuizWithGroupedAnswers,
   getNumberOfQuestionsForQuiz,
+  createAttemptAnswer,
 } = require("../db/queries");
 
 router.get("/", (req, res) => {
@@ -74,15 +75,42 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const user = req.session.user;
-  const { quiz_id } = req.body;
+
+  console.log(req.body);
+
+  let quiz_id = req.body.quiz_id;
+  let questions = [];
+
+  for (let property in req.body) {
+    if (property.startsWith('question-')) {
+      let question_id = property.slice(9);
+      let question = {
+        question_id: question_id,
+        answer_id: req.body[property],
+      };
+
+      questions.push(question);
+    }
+  }
 
   let queryParams = [quiz_id, user.id];
 
   startNewAttempt(queryParams)
     .then((data) => {
-      console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
-      const attempts = data;
-      res.json({ attempts });
+      let attempt_id = data[0].id;
+
+      questions.forEach(question => {
+        let queryParams = [attempt_id, question.question_id, question.answer_id];
+
+        createAttemptAnswer(queryParams);
+      });
+
+      // console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
+      // const attempts = data;
+      // res.json({ attempts });
+    })
+    .then(() => {
+      res.redirect('/attempts');
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });

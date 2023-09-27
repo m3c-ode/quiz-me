@@ -34,7 +34,6 @@
           return window.location.href = quizUrl;
         }
       });
-
       return $quizCard;
     };
 

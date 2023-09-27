@@ -45,9 +45,10 @@ const getQuiz = (queryParams) => {
     SELECT
     quizzes.id AS quiz_id,
     quizzes.title AS quiz_title,
+    questions.id AS question_id,
+    answers.id AS answer_id,
     questions.text AS question,
-    answers.text AS answer,
-    answers.is_correct
+    answers.text AS answer
     FROM quizzes
     JOIN questions ON quizzes.id = questions.quiz_id
     JOIN answers ON questions.id = answers.question_id
