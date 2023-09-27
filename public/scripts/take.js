@@ -10,8 +10,6 @@
       );
       $("#questions-content").append(createQuestionElement(question));
     }
-
-    addFooter();
   };
 
   const addHeader = function (data) {
