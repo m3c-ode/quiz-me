@@ -8,6 +8,11 @@
   justify-content: center;
   align-items: center;
 
+  .error {
+    color: red;
+    display: block;
+  }
+
   .title {
     @include basicCard(80%, 1em);
     font-family: 'Pokemon';
@@ -28,6 +33,17 @@
     }
   }
 
+  .privacy {
+    @include basicCard(80%, 0, 0);
+    font-size: 2em;
+    font-family: 'Pokemon';
+    text-align: center;
+
+    >input {
+      margin: 0 1em;
+    }
+  }
+
   .new-question {
     @include basicCard(80%, 1em);
     font-family: 'Pokemon';
@@ -41,11 +57,18 @@
     }
 
     input {
-      width: 100%;
       padding: 0 10px;
       font-family: 'DrMarz';
       box-shadow: 0 0 2px 2px #93909084;
       border-radius: 10px;
+    }
+
+    >input {
+      width: 100%;
+      // padding: 0 10px;
+      // font-family: 'DrMarz';
+      // box-shadow: 0 0 2px 2px #93909084;
+      // border-radius: 10px;
     }
   }
 
@@ -67,13 +90,26 @@
     label {
       float: left;
       width: fit-content;
-      flex: 0 0 auto;
+      // flex: 0 0 auto;
     }
 
-    input {
+    >input {
       // width: min-content;
-      // width: 100%;
-      flex: 1;
+      width: 100%;
+      // flex: 1;
+    }
+
+    .choose-answer {
+      float: right;
+    }
+
+    .radio-button {
+      box-shadow: none;
+      // accent-color: red;
+    }
+
+    .radio-label {
+      font-size: .75em;
     }
   }
 
