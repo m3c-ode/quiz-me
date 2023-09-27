@@ -68,7 +68,8 @@ const getAllPublicQuizzes = (queryParams) => {
   const queryString = `
       SELECT
       quizzes.id AS quiz_id,
-      quizzes.title AS quiz_title
+      quizzes.title AS quiz_title,
+      owner_id
       FROM quizzes
       WHERE is_public=true
       GROUP BY quizzes.id

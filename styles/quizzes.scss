@@ -7,24 +7,28 @@
   margin: 2em 0;
   padding: 1em;
   text-align: center;
+  font-family: 'DrMarz';
 
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
-    font-family: 'DrMarz';
   }
 
   button {
-    background-color: aqua;
+    background-color: rgba(0, 255, 255, 0.152);
     padding: 0.2em;
     border-radius: 10px;
-    box-shadow: 0 0 5px 5px blue;
+
+    &:hover {
+      background-color: rgba(0, 255, 255, 0.658);
+      box-shadow: 0 0 5px 5px blue;
+      text-shadow: 0 0 5px blue;
+    }
   }
 
   p {
     padding-bottom: 0.7em;
     font-size: 1.5em;
-    font-family: 'DrMarz';
   }
 }
 
