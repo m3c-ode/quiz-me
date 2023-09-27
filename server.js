@@ -115,6 +115,11 @@ app.get('/login', (req, res) => {
   // res.render('index', { user });
 });
 
+app.post('/logout', (req, res) => {
+  req.session = null;
+  res.redirect('/');
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
