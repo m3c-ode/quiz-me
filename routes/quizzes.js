@@ -68,6 +68,17 @@ router.post("/", (req, res) => {
   //   });
 });
 
+router.get('/:id/take', (req, res) => {
+  const user = req.session.user;
+  const quiz_id = req.params.id;
+
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+
+  return res.render('take', { user, quiz_id });
+});
+
 // router.get("/:id", (req, res) => {
 //   const userId = req.session.userId;
 //   let user;

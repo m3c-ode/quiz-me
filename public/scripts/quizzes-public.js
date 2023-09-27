@@ -21,7 +21,7 @@
     const createPublicQuizElement = function(quizObj) {
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.quiz_title}`))
-        .append("<button>Take the Quiz!</button>");
+        .append(`<a href='/quizzes/${quizObj.quiz_id}/take'>Take the Quiz!</a>`);
       return $quizCard;
     };
 
