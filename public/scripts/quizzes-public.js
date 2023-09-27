@@ -10,23 +10,24 @@
       window.location.href = "/quizzes/new";
     });
 
-    const renderQuizzesCards = function(data) {
+    const renderPublicQuizzesCards = function(data) {
       $mainContent.empty();
-      if (window.location.pathname === "/quizzes") {
-        $mainContent.append($newQuizElement);
-      }
+      // if (window.location.pathname === "/quizzes") {
+      //   $mainContent.append($newQuizElement);
+      // }
       for (const quiz of data) {
         console.log("🚀 ~ file: quizzes.js:6 ~ renderQuizzes ~ quiz:", quiz);
-        $mainContent.append(createQuizElement(quiz));
+        $mainContent.append(createPublicQuizElement(quiz));
       }
     };
 
-    const createQuizElement = function(quizObj) {
+    const createPublicQuizElement = function(quizObj) {
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.quiz_title}`))
         .append("<button>Take the Quiz!</button>");
       return $quizCard;
     };
+
 
 
 
@@ -46,17 +47,29 @@
     // }
 
     // $(document).ready(function() {
-    const loadQuizzes = function() {
+    const loadPublicQuizzes = function() {
       $.ajax({
         url: "api/quizzes",
         method: 'GET'
       })
         .then(response => {
-          renderQuizzesCards(response.quizzes);
+          renderPublicQuizzesCards(response.quizzes);
         });
     };
 
-    loadQuizzes();
+    // const loadUsersQuizzes = function() {
+    //   // Got userId from script in ejs template
+    //   $.ajax(`api/users/${userId}/quizzes`)
+    //     .then(response => {
+    //       console.log("🚀 ~ file: quizzes.js:65 ~ loadUsersQuizzes ~ response:", response);
+    //       renderQuizzesCards(response.userQuizzes);
+    //     });
+    // };
+    // if (window.location.pathname === "/quizzes") {
+    //   loadUsersQuizzes();
+    // } else {
+    loadPublicQuizzes();
+    // }
   });
   // });
 }

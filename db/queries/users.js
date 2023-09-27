@@ -9,7 +9,7 @@ const getUsers = () => {
 
 const getUserQuizzes = (userParams) => {
   const queryString = `
-    SELECT users.id as user_id, q.title, q.id as quiz_id
+    SELECT users.id as user_id, q.title, q.id as quiz_id, q.is_public
     FROM users
     JOIN quizzes q on owner_id = users.id
     WHERE users.id = $1
