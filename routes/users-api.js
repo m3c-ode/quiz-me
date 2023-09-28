@@ -8,9 +8,10 @@
 const express = require('express');
 const router = express.Router();
 const { getUserQuizzes, getUsers, getUserInfo } = require('../db/queries');
+const { authMiddleware } = require('./authentication');
 
 // Protected route for admins? Necessary?
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
   getUsers()
     .then(users => {
       res.json({ users });
@@ -24,8 +25,8 @@ router.get('/', (req, res) => {
 
 // GET /users/me -> gets logged-in user info
 // TODO: implement when session auth is implemented
-router.get("/me", (req, res) => {
-  const userId = req.session.userId;
+router.get("/me", authMiddleware, (req, res) => {
+  const userId = req.session.user.id;
   if (!userId) {
     return res.send({ message: "not logged in" });
   }
@@ -40,7 +41,7 @@ router.get("/me", (req, res) => {
 
 // GET /users/:id -> gets logged-in user info
 // TODO: temporary while no auth implemented
-router.get("/:id", (req, res) => {
+router.get("/:id", authMiddleware, (req, res) => {
   const userId = req.params.id;
   if (!userId) {
     return res.send({ message: "not logged in" });
@@ -58,7 +59,7 @@ router.get("/:id", (req, res) => {
 });
 
 // GET user's quizzes
-router.get("/:id/quizzes", (req, res) => {
+router.get("/:id/quizzes", authMiddleware, (req, res) => {
   const userQueryParams = [req.params.id];
   getUserQuizzes(userQueryParams)
     .then(userQuizzes => {

@@ -17,8 +17,9 @@ const {
   getAttemptAnswer,
   deleteAttemptAnswer,
 } = require("../db/queries");
+const { authMiddleware } = require('./authentication');
 
-router.post("/", (req, res) => {
+router.post("/", authMiddleware, (req, res) => {
   const { attempt_id, question_id, answer_id } = req.body;
 
   // Set some default data
@@ -43,7 +44,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authMiddleware, (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
@@ -71,7 +72,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authMiddleware, (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
