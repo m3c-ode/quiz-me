@@ -59,7 +59,7 @@ router.post("/", authRedirectMiddleware, (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authRedirectMiddleware, (req, res) => {
   let user = req.session.user;
 
   if (!user) {
