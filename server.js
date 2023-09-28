@@ -6,6 +6,8 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcryptjs');
+
 const methodOverride = require('method-override');
 const { generateRandomString } = require('./lib/helper-functions');
 const { getUserInfo } = require('./db/queries/index');
@@ -107,6 +109,47 @@ app.get('/login', (req, res) => {
     });
   // Else: fetch the user info
   // res.render('index', { user });
+});
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // Query the database to check if the user exists with the given email
+  const loginQuery = `
+    SELECT id, username, email, password
+    FROM users
+    WHERE email = $1;
+  `;
+
+  const queryParams = [email];
+
+  db.query(loginQuery, queryParams)
+    .then(data => {
+      if (data.rows.length === 1) {
+        const user = data.rows[0];
+        const hashedPassword = user.password;
+
+        // Compare the hashed password from the database with the provided password
+        bcrypt.compare(password, hashedPassword, (err, result) => {
+          if (err || !result) {
+            // Authentication failed, render the login page with an error message
+            res.render('login', { error: 'Invalid credentials', showRegistrationLink: true });
+          } else {
+            // User is authenticated, set session
+            req.session.userId = user.id;
+            req.session.user = user;
+            res.redirect('/');
+          }
+        });
+      } else {
+        // No user found with the provided email, render the login page with an error message and registration link
+        res.render('login', { error: 'User not found', showRegistrationLink: true });
+      }
+    })
+    .catch(err => {
+      console.error('Error during login:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
 });
 
 app.post('/logout', (req, res) => {
