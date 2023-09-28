@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 const { generateRandomString } = require('./lib/helper-functions');
 const { getUserInfo } = require('./db/queries/index');
+//const { db } = require('../db/connection');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -90,6 +91,7 @@ app.get("/", (req, res) => {
   res.render("index", { user });
 });
 
+
 app.get('/login', (req, res) => {
   // Need to define the login form page here, instead of automatic redirect
   let userId = req.session.userId;
@@ -99,7 +101,7 @@ app.get('/login', (req, res) => {
   getUserInfo([userId])
     .then(data => {
       req.session.user = data[0];
-      res.redirect("/");
+      res.render('login', { user: data[0] }); // Pass the user data to the login view
 
     })
     .catch(err => {
@@ -107,8 +109,6 @@ app.get('/login', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
-  // Else: fetch the user info
-  // res.render('index', { user });
 });
 
 app.post('/login', (req, res) => {
@@ -132,8 +132,10 @@ app.post('/login', (req, res) => {
         // Compare the hashed password from the database with the provided password
         bcrypt.compare(password, hashedPassword, (err, result) => {
           if (err || !result) {
-            // Authentication failed, render the login page with an error message
-            res.render('login', { error: 'Invalid credentials', showRegistrationLink: true });
+            // Set the error message for rendering
+            const error = 'Invalid credentials';
+            console.log('Error:', error); // Log the error message
+            res.render('login', { error, showRegistrationLink: true });
           } else {
             // User is authenticated, set session
             req.session.userId = user.id;
@@ -142,8 +144,10 @@ app.post('/login', (req, res) => {
           }
         });
       } else {
-        // No user found with the provided email, render the login page with an error message and registration link
-        res.render('login', { error: 'User not found', showRegistrationLink: true });
+        // No user found with the provided email, set the error message for rendering
+        const error = 'User not found';
+        console.log('Error:', error); // Log the error message
+        res.render('login', { error, showRegistrationLink: true });
       }
     })
     .catch(err => {
