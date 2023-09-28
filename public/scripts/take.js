@@ -3,16 +3,30 @@
   const renderQuestions = function (title, questions) {
     addHeader(title);
 
-    $("#questions-content").append('<div class="splide__track">');
-    $(".splide__track").append('<div class="splide__list">');
+    $("#questions-content").append('<div class="glide__track flex items-center">');
+    $('.glide__track').append(`<a class="prev">&#10094;&#10094;</a>`);
 
-    for (const question of questions) {
+    $(".glide__track").append('<div class="glide__slides">');
+
+
+    for (let question of questions) {
       console.log(
         "🚀 ~ file: Attempts.js:6 ~ renderQuestions ~ quiz:",
         question
       );
-      $('.splide__list').append(createQuestionElement(question));
+      $('.glide__slides').append(createQuestionElement(question));
     }
+
+    $('.glide__slides').append('<div class="dot-container">');
+
+    let questionCount = 1;
+    for (let question of questions) {
+      $('.dot-container').append(`<span class="dot" data-bullet-num="${questionCount}"></span>`);
+      questionCount++;
+    }
+
+    $('.glide__track').append(`<a class="next">&#10095;&#10095;</a>`);
+
   };
 
   const addHeader = function (data) {
@@ -32,10 +46,11 @@
       $answers.append(`<div><label><input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"> ${answer.answer}</label></div>`);
     }
 
-    const $questionCard = $("<article class='question-card splide__slide' style='width: 100%;'>")
-      .append($("<h2>").text(`Question: ${question.question.text}`))
-      .append("<h2>Answers</h2>")
+    const $questionCard = $(`<article class='question-card glide__slide flex'>`)
+      .append($("<h2>")
+      .text(`Question: ${question.question.text}`))
       .append($answers);
+
     return $questionCard;
   };
 
@@ -85,10 +100,54 @@
             count++;
           });
           if ($(':radio:checked').length === count) {
-            $('.finish-attempt-button').attr('disabled', false);
+            $('.finish-attempt-button').addClass('block').removeClass('hidden');
           }
-          console.log(names)
         });
+
+        $('.dot-container').on('click', (e) => {
+          e.preventDefault();
+          currentSlide(e.target.getAttribute('data-bullet-num'));
+        });
+
+        $('.prev').on('click', (e) => {
+          e.preventDefault();
+          plusSlides(-1);
+        });
+
+        $('.next').on('click', (e) => {
+          e.preventDefault();
+          plusSlides(1);
+        });
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+          let i;
+          let slides = document.getElementsByClassName("glide__slide");
+          let dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = slides.length}
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";
+          dots[slideIndex-1].className += " active";
+        }
+
       });
     };
     loadQuestions();
