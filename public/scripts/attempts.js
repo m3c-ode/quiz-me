@@ -46,7 +46,7 @@
       }).then((response) => {
         renderAttempts(response.attempts);
 
-        $('form').on('submit', function(event) {
+        $('.deleteAttempt').on('submit', function(event) {
           event.preventDefault();
           let attemptID = event.target.getAttribute('attempt');
 
