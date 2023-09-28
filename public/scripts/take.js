@@ -8,13 +8,17 @@
 
     $(".glide__track").append('<div class="glide__slides">');
 
-
-    for (let question of questions) {
+    for (let [index, question] of questions.entries()) {
       console.log(
         "🚀 ~ file: Attempts.js:6 ~ renderQuestions ~ quiz:",
         question
       );
-      $('.glide__slides').append(createQuestionElement(question));
+
+      let active = false;
+      if (index === 0) {
+        active = true;
+      }
+      $('.glide__slides').append(createQuestionElement(question, active));
     }
 
     $('.glide__slides').append('<div class="dot-container">');
@@ -39,20 +43,22 @@
     return $header;
   };
 
-  const createQuestionElement = function (question) {
+  const createQuestionElement = function (question, active) {
     let $answers = $("<div class='answers'>");
 
     for (let answer of question.answers) {
       $answers.append(`<div><label><input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"> ${answer.answer}</label></div>`);
     }
 
-    const $questionCard = $(`<article class='question-card glide__slide flex'>`)
+    const $questionCard = $(`<article class='question-card glide__slide flex ${active ? 'active' : ''}'>`)
       .append($("<h2>")
       .text(`Question: ${question.question.text}`))
       .append($answers);
 
     return $questionCard;
   };
+
+  let slideIndex = 1;
 
   $(() => {
     const loadQuestions = function () {
@@ -119,37 +125,38 @@
           plusSlides(1);
         });
 
-        let slideIndex = 1;
         showSlides(slideIndex);
-
-        // Next/previous controls
-        function plusSlides(n) {
-          showSlides(slideIndex += n);
-        }
-
-        // Thumbnail image controls
-        function currentSlide(n) {
-          showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-          let i;
-          let slides = document.getElementsByClassName("glide__slide");
-          let dots = document.getElementsByClassName("dot");
-          if (n > slides.length) {slideIndex = 1}
-          if (n < 1) {slideIndex = slides.length}
-          for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-          }
-          for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-          }
-          slides[slideIndex-1].style.display = "block";
-          dots[slideIndex-1].className += " active";
-        }
-
       });
     };
     loadQuestions();
   });
+
+  // Next/previous controls
+  const plusSlides = function(n) {
+    showSlides(slideIndex += n);
+  }
+
+  const currentSlide = function(n) {
+    showSlides(slideIndex = n);
+  }
+
+  const showSlides = function(n) {
+    let i;
+    let slides = document.getElementsByClassName("glide__slide");
+    let dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].classList.remove('active');
+    }
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].classList.add('active');
+  }
 }
