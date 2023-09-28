@@ -94,7 +94,7 @@ app.get('/login', (req, res) => {
   if (userId) {
     res.redirect('/');
   }
-  
+
   // We don't have a logged in user so show them the login form
   res.render('login', {
     user: undefined,
@@ -148,14 +148,83 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/register', (req, res) => {
+  res.render('register', { user: undefined, errors: [] });
+});
+
+app.post('/register', (req, res) => {
+  const { username, email, password, confirmPassword } = req.body;
+
+  // Check if the provided password and confirm password match
+  // if (password !== confirmPassword) {
+  //   const error = 'Passwords do not match';
+  //   console.log('Error:', error); // Log the error message
+  //   res.render('register', { errors: [error], user: undefined });
+  //   return; 
+  // }
+
+  // Query the database to check if the email is already in use
+  const checkEmailQuery = `
+    SELECT email
+    FROM users
+    WHERE email = $1;
+  `;
+
+  const emailCheckParams = [email];
+
+  db.query(checkEmailQuery, emailCheckParams)
+    .then(data => {
+      if (data.rows.length > 0) {
+        // Email is already in use, set the error message for rendering
+        const error = 'Email is already registered';
+        console.log('Error:', error); // Log the error message
+        res.render('register', { errors: [error], user: undefined });
+      } else {
+        // Email is not in use, hash the password and insert a new user record into the database
+        bcrypt.hash(password, 10, (err, hashedPassword) => {
+          if (err) {
+            console.error('Error hashing password:', err);
+            res.status(500).json({ error: 'Internal server error' });
+          } else {
+            const insertUserQuery = `
+              INSERT INTO users (username, email, password)
+              VALUES ($1, $2, $3)
+              RETURNING id;
+            `;
+
+            const insertUserParams = [username, email, hashedPassword];
+
+            db.query(insertUserQuery, insertUserParams)
+              .then(newUser => {
+                const user = {
+                  id: newUser.rows[0].id,
+                  username,
+                  email,
+                };
+
+                // User registration successful, set session
+                req.session.userId = user.id;
+                req.session.user = user;
+
+                res.redirect('/');
+              })
+              .catch(err => {
+                console.error('Error inserting user:', err);
+                res.status(500).json({ error: 'Internal server error' });
+              });
+          }
+        });
+      }
+    })
+    .catch(err => {
+      console.error('Error checking email:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
 app.post('/logout', (req, res) => {
   req.session = null;
   res.redirect('/');
-});
-
-
-app.get('/register', (req, res) => {
-  res.render('register', { user: undefined, errors: [] });
 });
 
 app.listen(PORT, () => {
