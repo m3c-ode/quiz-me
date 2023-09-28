@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 const { generateRandomString } = require('./lib/helper-functions');
 const { getUserInfo } = require('./db/queries/index');
-//const { db } = require('../db/connection');
+const { db } = require('./db/connection');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -95,20 +95,15 @@ app.get("/", (req, res) => {
 app.get('/login', (req, res) => {
   // Need to define the login form page here, instead of automatic redirect
   let userId = req.session.userId;
-  if (!userId) {
-    userId = 1;
+  if (userId) {
+    res.redirect('/');
   }
-  getUserInfo([userId])
-    .then(data => {
-      req.session.user = data[0];
-      res.render('login', { user: data[0] }); // Pass the user data to the login view
 
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+  res.render('login', {
+    user: undefined,
+    errorMessages: [],
+    showRegistrationLink: false
+  }); // Pass the user data to the login view
 });
 
 app.post('/login', (req, res) => {
@@ -135,7 +130,7 @@ app.post('/login', (req, res) => {
             // Set the error message for rendering
             const error = 'Invalid credentials';
             console.log('Error:', error); // Log the error message
-            res.render('login', { error, showRegistrationLink: true });
+            res.render('login', { errorMessages: [error], user: undefined, showRegistrationLink: true });
           } else {
             // User is authenticated, set session
             req.session.userId = user.id;
@@ -147,7 +142,7 @@ app.post('/login', (req, res) => {
         // No user found with the provided email, set the error message for rendering
         const error = 'User not found';
         console.log('Error:', error); // Log the error message
-        res.render('login', { error, showRegistrationLink: true });
+        res.render('login', { errorMessages: [error], user: undefined, showRegistrationLink: true });
       }
     })
     .catch(err => {
