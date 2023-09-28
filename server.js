@@ -155,14 +155,6 @@ app.get('/register', (req, res) => {
 app.post('/register', (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
 
-  // Check if the provided password and confirm password match
-  // if (password !== confirmPassword) {
-  //   const error = 'Passwords do not match';
-  //   console.log('Error:', error); // Log the error message
-  //   res.render('register', { errors: [error], user: undefined });
-  //   return; 
-  // }
-
   // Query the database to check if the email is already in use
   const checkEmailQuery = `
     SELECT email

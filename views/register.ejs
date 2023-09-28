@@ -9,23 +9,24 @@
 
 <body>
   <%- include('partials/_header') %>
+  <div class="container">
 <h1>Register</h1>
-<form  class="question-card" action="/register" method="POST">
-  <div>
+<form action="/register" method="POST">
+  
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
-  </div>
-  <div>
+  
+  
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
-  </div>
-  <div>
+  
+  
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
-  </div>
-  <div>
+  
+  
     <button type="submit">Register</button>
-  </div>
+  
 </form>
 
 <!-- Display registration errors, if any -->
@@ -36,6 +37,7 @@
     <% }); %>
   </ul>
 <% } %>
+</div>
 <%- include('partials/_footer') %>
 </body>
 
