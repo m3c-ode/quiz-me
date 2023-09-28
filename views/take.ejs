@@ -3,28 +3,11 @@
   <script type="text/javascript" src="/scripts/take.js"></script>
   <form action="/api/attempts" method="post">
     <input type="hidden" name="quiz_id" value="<%= quiz_id %>" />
-    <main id="questions-content" class="splide" aria-labelledby="title">
+    <main id="questions-content" class="glide" aria-labelledby="title">
     </main>
+
     <div class="full-width">
-      <button type="submit" class="finish-attempt-button" disabled>I'm done!</button>
+      <button type="submit" class="hidden finish-attempt-button">I'm done!</button>
     </div>
   </form>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let splide;
-
-      let loadSplide = setTimeout(() => {
-        if (!splide) {
-          let splide = new Splide('.splide', {
-            classes: {
-              arrow: 'arrow_padding'
-            },
-            autoWidth: true
-          });
-          splide.mount();
-        }
-      }, 1000);
-
-    });
-  </script>
   <%- include('partials/_footer') %>
