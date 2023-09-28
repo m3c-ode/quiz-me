@@ -21,7 +21,7 @@
     const createPublicQuizElement = function(quizObj) {
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.quiz_title}`))
-        .append("<button>Take the Quiz!</button>");
+        .append("<button class='card-button'>Take the Quiz!</button>");
 
       const quizUrl = `${window.location.href}quizzes/${quizObj.quiz_id}/take`;
       $quizCard.find("button").on('click', function(e) {
