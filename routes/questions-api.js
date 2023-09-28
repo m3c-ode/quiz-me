@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { dbQuery } = require('../db/connection');
+const { authMiddleware } = require('./authentication');
+
+//TODO: unused routes?
 
 // GET /api/questions
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
   const queryString = `
     SELECT * FROM questions;
   `;
@@ -15,11 +18,11 @@ router.get('/', (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
-    }); 
+    });
 });
 
 // Route to create a new question
-router.post('/', (req, res) => {
+router.post('/', authMiddleware, (req, res) => {
   const { quiz_id, text } = req.body;
 
   if (!quiz_id || !text) {
@@ -46,7 +49,7 @@ router.post('/', (req, res) => {
 });
 
 // Route to get a question by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', authMiddleware, (req, res) => {
   const questionId = req.params.id;
 
   // Query the database to retrieve the question
@@ -72,7 +75,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Route to update a question by ID
-router.patch('/:id', (req, res) => {
+router.patch('/:id', authMiddleware, (req, res) => {
   const questionId = req.params.id;
   const { text } = req.body;
 
@@ -109,7 +112,7 @@ router.patch('/:id', (req, res) => {
 });
 
 // Route to delete a question by ID
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authMiddleware, (req, res) => {
   const questionId = req.params.id;
 
   // Delete the question from the database

@@ -75,10 +75,7 @@ app.use("/quizzes", quizzesRoutes);
 
 app.get("/", (req, res) => {
   let user = req.session.user;
-  if (!user.id) {
-    user = undefined;
-  }
-  if (!req.session.user) {
+  if (!user) {
     user = undefined;
   } else {
     user = req.session.user;
@@ -90,7 +87,11 @@ app.get("/", (req, res) => {
 app.get('/login', (req, res) => {
   // TODO: Need to define the login form page here, instead of automatic redirect
   let user = req.session.user;
-  if (!user.id) {
+
+
+  // TODO: To delete this harcoded when login is implemented
+  let userId;
+  if (!user) {
     userId = 1;
   }
   getUserInfo([userId])

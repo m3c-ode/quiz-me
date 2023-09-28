@@ -6,10 +6,11 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
+//TODO: unused?
 router.get('/', (req, res) => {
   res.render('users');
-}); 
+});
 
 module.exports = router;
