@@ -74,9 +74,8 @@ app.use("/quizzes", quizzesRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  const userId = req.session.userId;
-  let user;
-  if (!userId) {
+  let user = req.session.user;
+  if (!user.id) {
     user = undefined;
   }
   if (!req.session.user) {
@@ -89,9 +88,9 @@ app.get("/", (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  // Need to define the login form page here, instead of automatic redirect
-  let userId = req.session.userId;
-  if (!userId) {
+  // TODO: Need to define the login form page here, instead of automatic redirect
+  let user = req.session.user;
+  if (!user.id) {
     userId = 1;
   }
   getUserInfo([userId])

@@ -16,10 +16,12 @@ const {
   startNewAttempt,
   deleteAttempt
 } = require('../db/queries/index');
+const { authMiddleware } = require('./authentication');
+
 
 const hardcodedUserID = 2;
 
-router.get("/", (req, res) => {
+router.get("/", authMiddleware, (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
@@ -33,7 +35,7 @@ router.get("/", (req, res) => {
   res.render("attempts", { user });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authMiddleware, (req, res) => {
   const user = req.session.user;
   const { quiz_id } = req.body;
 
@@ -56,7 +58,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authMiddleware, (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
@@ -70,7 +72,7 @@ router.get("/:id", (req, res) => {
   res.render("attempt", { user });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authMiddleware, (req, res) => {
   const user = req.session.user;
 
   // Set some default data

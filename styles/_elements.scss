@@ -1,4 +1,4 @@
-@mixin basicCard ($width, $marginY: 2em, $padding: 1.5em) {
+@mixin basicCard ($width: 80%, $marginY: 2em, $padding: 1.5em) {
   background-color: aliceblue;
   width: $width;
   border-radius: 10px;

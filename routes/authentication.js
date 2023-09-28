@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authMiddleware = (req, res, next) => {
-  if (!req.session.userId) {
+  if (!req.session.userId || !req.session.user) {
     return res.status(401).json({ message: "Unauthorized" });
   }
   next();

@@ -21,8 +21,10 @@ const {
   getNumberOfQuestionsForQuiz,
   createAttemptAnswer,
 } = require("../db/queries");
+const { authMiddleware } = require('./authentication');
 
-router.get("/", (req, res) => {
+
+router.get("/", authMiddleware, (req, res) => {
   const user = req.session.user;
 
   let queryParams = [user.id];
@@ -31,17 +33,17 @@ router.get("/", (req, res) => {
     .then((data) => {
       console.log("🚀 ~ file: attempts-api.js:40 ~ router.post ~ data:", data);
       if (data.length === 0) {
-        return res.json({attempts: data, user: user.id})
+        return res.json({ attempts: data, user: user.id });
       }
 
       getNumberOfQuestionsForQuiz(data[0].quiz_id).then((questions) => {
         let attemptsObj = {};
 
         data.forEach((attemptAnswer) => {
-            if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
+          if (!attemptsObj.hasOwnProperty(attemptAnswer.attempt_id)) {
             attemptsObj[attemptAnswer.attempt_id] = {};
             attemptsObj[attemptAnswer.attempt_id].attempt_id =
-            attemptAnswer.attempt_id;
+              attemptAnswer.attempt_id;
             attemptsObj[attemptAnswer.attempt_id].quiz_title = data[0].quiz_title;
             attemptsObj[attemptAnswer.attempt_id].quiz_id = data[0].quiz_id;
             attemptsObj[attemptAnswer.attempt_id].answers = [];
@@ -73,7 +75,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authMiddleware, (req, res) => {
   const user = req.session.user;
 
   console.log(req.body);
@@ -118,7 +120,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authMiddleware, (req, res) => {
   const queryParams = [req.params.id];
 
   getSpecificAttempt(queryParams)
@@ -196,7 +198,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authMiddleware, (req, res) => {
   const user = req.session.user;
 
   let queryParams = [req.params.id, user.id];
