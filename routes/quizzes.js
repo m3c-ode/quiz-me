@@ -18,28 +18,12 @@ const hardcodedUserID = 1;
 
 router.get("/", authRedirectMiddleware, (req, res) => {
   let user = req.session.user;
-  // Not logged in - redirect home or LOGIN when ready
-  if (!req.session.user) {
-    user = undefined;
-    return res.redirect("/");
-  } else {
-    user = req.session.user;
-  }
   // Else: fetch the user info
   res.render("quizzes", { user });
 });
 
 router.get("/new", authRedirectMiddleware, (req, res) => {
-  const userId = req.session.userId;
-  let user;
-  if (!userId) {
-    user = undefined;
-  }
-  if (!req.session.user) {
-    user = undefined;
-  } else {
-    user = req.session.user;
-  }
+  let user = req.session.user;
   // Else: fetch the user info
   res.render("new-quiz", { user });
 });
