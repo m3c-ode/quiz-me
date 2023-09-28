@@ -40,8 +40,8 @@
     }
 
     const $questionCard = $("<article class='question-card'>")
-      .append($("<h2>").text(`Question: ${question.text}`))
-      .append("<h2>Answers</h2>")
+      .append($("<h2 class='title'>").text(question.text))
+      .append("<h2 class='title'>Answers</h2>")
       .append($answers)
       .append(
         `<div class='score'>Score: ${

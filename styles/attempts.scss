@@ -1,0 +1,45 @@
+@import 'colors';
+@import 'elements';
+
+#questions-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-family: 'Pokemon';
+    font-size: 3em;
+    display: block;
+  }
+
+  .score {
+    font-family: 'DrMarz';
+  }
+
+  .answers {
+    font-family: 'DrMarz';
+    font-size: 1.5em;
+  }
+
+  label {
+    font-family: 'DrMarz';
+    font-size: 1em;
+    display: block;
+  }
+
+  .question-label {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .take-radio {
+    width: 10%;
+
+  }
+
+  .prev:hover, .next:hover {
+    	cursor: pointer;
+  }
+}
