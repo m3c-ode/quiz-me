@@ -1,6 +1,6 @@
 // Client facing scripts here
 {
-  const renderQuestions = function (data) {
+  const renderQuestions = function(data) {
     addHeader(data);
 
     for (const question of data.questions) {
@@ -12,7 +12,7 @@
     }
   };
 
-  const addHeader = function (data) {
+  const addHeader = function(data) {
     const $header = $("#questions-content")
       .empty()
       .append(
@@ -22,7 +22,7 @@
     return $header;
   };
 
-  const createQuestionElement = function (question) {
+  const createQuestionElement = function(question) {
     let $answers = $("<div class='answers'>");
 
     for (let answer of question.answers) {
@@ -41,18 +41,17 @@
 
     const $questionCard = $("<article class='question-card'>")
       .append($("<h2 class='title'>").text(question.text))
-      .append("<h2 class='title'>Answers</h2>")
+      // .append("<h2 class='title'>Answers</h2>")
       .append($answers)
       .append(
-        `<div class='score'>Score: ${
-          question.user_guessed_right ? "1" : "0"
+        `<div class='score'>Score: ${question.user_guessed_right ? "1" : "0"
         }</div>`
       );
     return $questionCard;
   };
 
   $(() => {
-    const loadAttempts = function () {
+    const loadAttempts = function() {
       let attempt = window.location.href.split("/").slice(-1)[0];
 
       $.ajax({

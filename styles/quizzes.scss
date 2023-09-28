@@ -14,10 +14,6 @@
     padding-bottom: 0.7em;
     font-size: 1.5em;
   }
-
-  div {
-    // display: inline-block;
-  }
 }
 
 .new-quizz {
@@ -29,5 +25,11 @@
     text-shadow: 2px 2px 20px $yellow-shadow;
     box-shadow: 0 0 20px 10px $yellow-shadow;
     cursor: pointer;
+  }
+}
+
+#new-quiz-button {
+  .quiz-card {
+    width: 100%;
   }
 }
