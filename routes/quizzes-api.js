@@ -127,17 +127,6 @@ router.get('/:id',
         quizData.questions.answers = [];
         quizData.quiz_title = data[0].quiz_title;
 
-        // getQuizQuestions(queryParams)
-        //   .then(quizQuestions => {
-        //     quizQuestions.forEach(question => {
-        //       quizData.questions.push({
-        //         question_title: quizQuestions.title
-        //       });
-        //     });
-
-
-        //   });
-
         data.forEach(item => {
           const existingQuestion = quizData.questions.find(q => q.question === item.question);
           if (!existingQuestion) {
