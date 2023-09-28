@@ -129,9 +129,9 @@
 
       // console.log("🚀 ~ file: new-quiz.js:69 ~ $ ~ isFormValidated():", isFormValidated());
       if (isFormValidated()) {
-
         console.log('form', $("#new-quizz").serializeArray());
         const formData = $("#new-quizz").serialize();
+
         console.log("🚀 ~ file: new-quiz.js:45 ~ formData:", formData);
 
         $.ajax({
