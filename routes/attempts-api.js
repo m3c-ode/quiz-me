@@ -120,7 +120,7 @@ router.post("/", authMiddleware, (req, res) => {
     });
 });
 
-router.get("/:id", authMiddleware, (req, res) => {
+router.get("/:id", (req, res) => {
   const queryParams = [req.params.id];
 
   getSpecificAttempt(queryParams)
