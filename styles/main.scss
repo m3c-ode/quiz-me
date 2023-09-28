@@ -13,7 +13,7 @@
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   min-height: 100vh;
 
@@ -37,7 +37,6 @@ body {
 }
 
 #attempts-content {
-  // border: 1px solid red;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -46,7 +45,6 @@ body {
 }
 
 #questions-content {
-  // border: 1px solid red;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -81,7 +79,8 @@ body {
   transition: background-color 0.6s ease;
 }
 
-.active, .dot:hover {
+.active,
+.dot:hover {
   background-color: #717171;
 }
 
@@ -116,11 +115,9 @@ body {
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
-    // margin-top: 1em;
   }
 
   button {
-    // margin-top: 1em;
     background-color: aqua;
     padding: 0.2em;
     border-radius: 10px;
