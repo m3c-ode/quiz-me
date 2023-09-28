@@ -11,18 +11,17 @@
  */
 
 const express = require("express");
+const { authRedirectMiddleware } = require("./authentication");
 const router = express.Router();
 
 const hardcodedUserID = 1;
 
-router.get("/", (req, res) => {
-  const userId = req.session.userId;
-  let user;
-  if (!userId) {
-    user = undefined;
-  }
+router.get("/", authRedirectMiddleware, (req, res) => {
+  let user = req.session.user;
+  // Not logged in - redirect home or LOGIN when ready
   if (!req.session.user) {
     user = undefined;
+    return res.redirect("/");
   } else {
     user = req.session.user;
   }
@@ -30,7 +29,7 @@ router.get("/", (req, res) => {
   res.render("quizzes", { user });
 });
 
-router.get("/new", (req, res) => {
+router.get("/new", authRedirectMiddleware, (req, res) => {
   const userId = req.session.userId;
   let user;
   if (!userId) {
@@ -45,30 +44,32 @@ router.get("/new", (req, res) => {
   res.render("new-quiz", { user });
 });
 
-router.post("/", (req, res) => {
-  // const { quiz_id, user_id } = req.body;
-  console.log("🚀 ~ file: quizzes.js:50 ~ router.post ~ req.body:", req.body);
 
-  // Set some default data
-  let queryParams = [1, hardcodedUserID];
+// TODO: Not in use?
+// router.post("/", (req, res) => {
+//   // const { quiz_id, user_id } = req.body;
+//   console.log("🚀 ~ file: quizzes.js:50 ~ router.post ~ req.body:", req.body);
 
-  if (quiz_id && user_id) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [quiz_id, user_id];
-  }
+//   // Set some default data
+//   let queryParams = [1, hardcodedUserID];
 
-  // startNewAttempt(queryParams)
-  //   .then((data) => {
-  //     console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
-  //     const attempts = data;
-  //     res.json({ attempts });
-  //   })
-  //   .catch((err) => {
-  //     res.status(500).json({ error: err.message });
-  //   });
-});
+//   if (quiz_id && user_id) {
+//     // Real data was sent so replace the fake data with the actual
+//     queryParams = [quiz_id, user_id];
+//   }
 
-router.get('/:id/take', (req, res) => {
+//   // startNewAttempt(queryParams)
+//   //   .then((data) => {
+//   //     console.log("🚀 ~ file: attempts-api.js:80 ~ router.post ~ data:", data);
+//   //     const attempts = data;
+//   //     res.json({ attempts });
+//   //   })
+//   //   .catch((err) => {
+//   //     res.status(500).json({ error: err.message });
+//   //   });
+// });
+
+router.get('/:id/take', authRedirectMiddleware, (req, res) => {
   const user = req.session.user;
   const quiz_id = req.params.id;
 
@@ -89,28 +90,29 @@ router.get('/:id/take', (req, res) => {
 //   res.render("attempt", { user });
 // });
 
-router.delete("/:id", (req, res) => {
-  const { user_id } = req.body;
+// TODO: Not in USE?
+// router.delete("/:id", (req, res) => {
+//   const { user_id } = req.body;
 
-  // Set some default data
-  const queryParams = [req.params.id, hardcodedUserID];
+//   // Set some default data
+//   const queryParams = [req.params.id, hardcodedUserID];
 
-  if (user_id) {
-    // Real data was sent so replace the fake data with the actual
-    queryParams = [user_id, req.params.id];
-  }
+//   if (user_id) {
+//     // Real data was sent so replace the fake data with the actual
+//     queryParams = [user_id, req.params.id];
+//   }
 
-  deleteAttempt(queryParams)
-    .then((data) => {
-      console.log(
-        "🚀 ~ file: attempts-api.js:168 ~ router.delete ~ data:",
-        data
-      );
-      res.json("Attempt successfully deleted");
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
-});
+//   deleteAttempt(queryParams)
+//     .then((data) => {
+//       console.log(
+//         "🚀 ~ file: attempts-api.js:168 ~ router.delete ~ data:",
+//         data
+//       );
+//       res.json("Attempt successfully deleted");
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: err.message });
+//     });
+// });
 
 module.exports = router;

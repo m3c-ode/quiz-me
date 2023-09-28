@@ -77,12 +77,8 @@ app.use("/quizzes", quizzesRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  const userId = req.session.userId;
-  let user;
-  if (!userId) {
-    user = undefined;
-  }
-  if (!req.session.user) {
+  let user = req.session.user;
+  if (!user) {
     user = undefined;
   } else {
     user = req.session.user;
@@ -93,12 +89,13 @@ app.get("/", (req, res) => {
 
 
 app.get('/login', (req, res) => {
-  // Need to define the login form page here, instead of automatic redirect
+  // If user is signed in already, just redirect to the homepage.
   let userId = req.session.userId;
   if (userId) {
     res.redirect('/');
   }
-
+  
+  // We don't have a logged in user so show them the login form
   res.render('login', {
     user: undefined,
     errorMessages: [],

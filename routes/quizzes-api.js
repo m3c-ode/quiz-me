@@ -10,6 +10,7 @@ const router = express.Router();
 const { db, dbQuery } = require('../db/connection');
 const { createQuestion, createAnswer, createQuiz, deleteQuiz, getQuiz, editQuiz, getAllPublicQuizzes, getQuizQuestionsAndAnswers } = require("../db/queries");
 const { handleNotFound } = require('../lib/middlewares');
+const { authMiddleware } = require('./authentication');
 const util = require('util');
 
 // Filter for private - all public quizzes
@@ -30,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 // m3: Insert all the questions and answers in appropriate tables as well.
-router.post('/', (req, res) => {
+router.post('/', authMiddleware, (req, res) => {
   // m3: note for frontend: send quizz in "quizz" object so that req.body.quizz...
 
   console.log('quizzes post req.body', req.body);
@@ -111,7 +112,7 @@ router.post('/', (req, res) => {
 });
 
 // GET single quizz
-router.get('/:id', (req, res) => {
+router.get('/:id', authMiddleware, (req, res) => {
   const queryParams = [req.params.id];
   getQuiz(queryParams)
     .then(data => {
@@ -131,7 +132,7 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', authMiddleware, (req, res, next) => {
   const queryParams = [req.params.id];
   deleteQuiz(queryParams)
     .then(data => {
@@ -147,7 +148,7 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', authMiddleware, (req, res) => {
   const { owner_id, is_public, title } = req.body;
   const queryParams = [owner_id, is_public, title, req.params.id];
   editQuiz(queryParams)
