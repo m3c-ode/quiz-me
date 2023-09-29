@@ -1,18 +1,9 @@
 <%- include('partials/_header') %>
-  <script type="text/javascript" src="/scripts/quizzes-public.js"></script>
-  <script>const userId = Number("<%= user ? user.id : undefined %>");</script>
+<script type="text/javascript" src="/scripts/quizzes-public.js"></script>
+<script>const userId = Number("<%= user ? user.id : undefined %>");</script>
 
-  <h1>Welcome to Quizme</h1>
-  <main id="main-content" class="card-grid">
-  </main>
-  <!-- <div class="flex items-center max-w-sm p-6 mx-auto space-x-4 bg-white shadow-md rounded-xl">
-  <div class="flex-shrink-0">
-    <img class="w-12 h-12" src="/img/logo.svg" alt="ChitChat Logo">
-  </div>
-  <div>
-    <div class="text-xl font-medium text-black">ChitChat</div>
-    <p class="text-gray-500">You have a new message!</p>
-  </div>
-</div> -->
+<h1>Welcome to Quizme</h1>
+<main id="main-content" class="card-grid">
+</main>
 
-  <%- include('partials/_footer') %>
+<%- include('partials/_footer') %>
