@@ -122,34 +122,34 @@ router.get('/:id',
           return res.status(404).json({ message: "Quizz Not found" });
         }
 
-        let quizData = {};
-        quizData.questions = [];
-        quizData.questions.answers = [];
-        quizData.quiz_title = data[0].quiz_title;
+        // let quizData = {};
+        // quizData.questions = [];
+        // quizData.questions.answers = [];
+        // quizData.quiz_title = data[0].quiz_title;
 
-        data.forEach(item => {
-          const existingQuestion = quizData.questions.find(q => q.question === item.question);
-          if (!existingQuestion) {
-            const newQuestion = {
-              question: item.question,
-              answers: []
-            };
-            newQuestion.answers.push({
-              answer: item.answer,
-              is_correct: item.is_correct
-            });
-            quizData.questions.push(newQuestion);
-          } else {
-            // question already in
-            existingQuestion.answers.push({
-              answer: item.answer,
-              is_correct: item.is_correct
-            });
-          }
-        });
+        // data.forEach(item => {
+        //   const existingQuestion = quizData.questions.find(q => q.question === item.question);
+        //   if (!existingQuestion) {
+        //     const newQuestion = {
+        //       question: item.question,
+        //       answers: []
+        //     };
+        //     newQuestion.answers.push({
+        //       answer: item.answer,
+        //       is_correct: item.is_correct
+        //     });
+        //     quizData.questions.push(newQuestion);
+        //   } else {
+        //     // question already in
+        //     existingQuestion.answers.push({
+        //       answer: item.answer,
+        //       is_correct: item.is_correct
+        //     });
+        //   }
+        // });
         // Gets quizz with all the information in it (including questions and answers)
-        // const quiz = data;
-        res.json({ quizData });
+        const quiz = data;
+        res.json({ quiz });
       })
       .catch(err => {
         console.log("🚀 ~ file: quizzes-api.js:81 ~ router.get ~ err:", err);
