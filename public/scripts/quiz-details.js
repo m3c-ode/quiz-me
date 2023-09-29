@@ -44,34 +44,35 @@
 
       $.ajax(`/api/quizzes/${quizId}`)
         .then(response => {
-          console.log("🚀 ~ file: quiz-details.js:175 ~ loadQuiz ~ response:", response);
-          renderQuiz(response);
-          let quizData = {};
-          quizData.questions = [];
-          quizData.questions.answers = [];
-          quizData.quiz_title = data[0].quiz_title;
+          console.log("🚀 ~ file: quiz-details.js:47 ~ loadQuiz ~ response:", response);
+          // console.log("🚀 ~ file: quiz-details.js:175 ~ loadQuiz ~ response:", response);
+          // renderQuiz(response);
+          // let quizData = {};
+          // quizData.questions = [];
+          // quizData.questions.answers = [];
+          // quizData.quiz_title = data[0].quiz_title;
 
-          response.quiz.forEach(item => {
-            const existingQuestion = quizData.questions.find(q => q.question === item.question);
-            if (!existingQuestion) {
-              const newQuestion = {
-                question: item.question,
-                answers: []
-              };
-              newQuestion.answers.push({
-                answer: item.answer,
-                is_correct: item.is_correct
-              });
-              quizData.questions.push(newQuestion);
-            } else {
-              // question already in
-              existingQuestion.answers.push({
-                answer: item.answer,
-                is_correct: item.is_correct
-              });
-            }
-          });
-          renderQuiz(quizData);
+          // response.quiz.forEach(item => {
+          //   const existingQuestion = quizData.questions.find(q => q.question === item.question);
+          //   if (!existingQuestion) {
+          //     const newQuestion = {
+          //       question: item.question,
+          //       answers: []
+          //     };
+          //     newQuestion.answers.push({
+          //       answer: item.answer,
+          //       is_correct: item.is_correct
+          //     });
+          //     quizData.questions.push(newQuestion);
+          //   } else {
+          //     // question already in
+          //     existingQuestion.answers.push({
+          //       answer: item.answer,
+          //       is_correct: item.is_correct
+          //     });
+          //   }
+          // });
+          renderQuiz(response.quizData);
         });
     };
     loadQuiz();
