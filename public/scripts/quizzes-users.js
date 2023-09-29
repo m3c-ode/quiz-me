@@ -28,16 +28,20 @@
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.title}`))
         .append($("<p>").text(`${quizObj.is_public ? "Public" : "Private"}`))
-        .append(`<button class="shareQuiz card-button"
+        .append(`<a class="card-button" href='/quizzes/${quizObj.quiz_id}'>View details</a>`)
+        .append(`
+        <div>
+        <button class="shareQuiz card-button"
         data-clipboard-text="I just made a Quiz on QuizMe! I'm challenging you to take it! ${quizUrl}. Good luck!"
-        >Share the quiz!</button>`)
-        .append($(`<button class='card-button card-delete-button' quiz-id=${quizObj.quiz_id}>`).text("Delete Me"));
+        >Share the quiz!</button>
+        <button class='card-button card-delete-button' quiz-id=${quizObj.quiz_id}>Delete Me</button>
+        </div>`);
 
       if (quizObj.is_public) {
         $quizCard.find("p").addClass("darker-green-tone");
       }
       else {
-        $quizCard.find("p").addClass("blue-tone");
+        $quizCard.find("p").addClass("darker-blue-tone");
 
       }
 

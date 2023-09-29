@@ -16,10 +16,25 @@ const createQuestion = (queryParams) => {
     .then(data => {
       return data;
     });
-  // .catch(error => {
-  //   console.error('Error creating question in createQuestion:', error.message);
-  //   return Promise.reject(error); // Return a rejected promise to propagate the error    });
-  // });
 };
 
-module.exports = { createQuestion };
+/**
+ *
+ * @param {any[]} queryParams
+ * @returns {Promise}
+ */
+const getQuizQuestions = (queryParams) => {
+  const questionQuery = `
+    SELECT text
+    FROM questions
+    JOIN quizzes on quizzes.id = quiz_id
+    WHERE quiz_id=$1
+    ORDER BY questions.id
+    ;`;
+  return dbQuery(questionQuery, queryParams)
+    .then(data => {
+      return data;
+    });
+};
+
+module.exports = { createQuestion, getQuizQuestions };

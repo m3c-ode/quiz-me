@@ -45,14 +45,6 @@ body {
   align-items: center;
 }
 
-#questions-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 #title {
   display: block;
   justify-content: center;
@@ -62,6 +54,7 @@ body {
   font-size: 1.5em;
   font-weight: bold;
   text-align: center;
+  font-family: 'DrMarz';
 }
 
 .dot-container {
@@ -106,12 +99,8 @@ body {
 }
 
 .question-card {
-  background-color: aliceblue;
-  // width: 70%;
-  border-radius: 10px;
-  margin: 2em;
-  padding: 2em;
-  text-align: center;
+  @include basicCard();
+  margin: 2em auto;
 
   h2 {
     padding-bottom: 0.5em;
@@ -151,12 +140,13 @@ body {
 
 .card-button {
   background-color: rgba(0, 255, 255, 0.152);
-  padding: 0.2em;
+  box-shadow: 0 0 5px 2px blue;
+  padding: 0.5em;
   border-radius: 10px;
   margin: 0 .9em;
 
   &:hover {
-    background-color: rgba(0, 255, 255, 0.658);
+    background-color: rgba(0, 255, 255, 0.31);
     box-shadow: 0 0 5px 5px rgb(109, 58, 248);
     text-shadow: 0 0 3px rgb(168, 145, 232);
   }
@@ -165,6 +155,7 @@ body {
 .attemptButton {
   padding: 0.5em;
 }
+
 a.card-button {
   display: inline-block;
   margin-bottom: 1em;
@@ -196,12 +187,6 @@ a.card-button {
 }
 
 .attempt-card {
-  // background-color: aliceblue;
-  // width: 70%;
-  // border-radius: 10px;
-  // margin: 2em 0;
-  // padding: 1em;
-  // text-align: center;
   @include basicCard;
   font-family: 'DrMarz';
 

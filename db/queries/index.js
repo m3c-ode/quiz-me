@@ -1,5 +1,5 @@
-const { createQuestion } = require("./questions");
-const { createAnswer } = require("./answers");
+const { createQuestion, getQuizQuestions } = require("./questions");
+const { createAnswer, getQuestionAnswers } = require("./answers");
 const {
   createQuiz,
   deleteQuiz,
@@ -43,5 +43,5 @@ module.exports = {
   deleteAttempt,
   getQuizWithGroupedAnswers,
   getUserInfo,
-  getNumberOfQuestionsForQuiz
+  getNumberOfQuestionsForQuiz,
 };

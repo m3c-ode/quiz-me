@@ -16,4 +16,23 @@ const createAnswer = (queryParams) => {
     .then(data => data);
 };
 
-module.exports = { createAnswer };
+/**
+ *
+ * @param {any[]} queryParams
+ * @returns {Promise}
+ */
+const getQuestionAnswers = (queryParams) => {
+  const questionQuery = `
+    SELECT text, is_correct
+    FROM answers
+    JOIN questions on questions.id = question_id
+    WHERE question_id=$1
+    ORDER BY answers.id
+    ;`;
+  return dbQuery(questionQuery, queryParams)
+    .then(data => {
+      return data;
+    });
+};
+
+module.exports = { createAnswer, getQuestionAnswers };
