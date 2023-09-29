@@ -1,37 +1,13 @@
 @import 'colors';
+@import 'elements';
 
 .quiz-card {
-  background-color: aliceblue;
-  width: 80%;
-  border-radius: 10px;
-  margin: 2em 0;
-  padding: 1em;
-  text-align: center;
+  @include basicCard;
   font-family: 'DrMarz';
 
   h2 {
     padding-bottom: 0.5em;
     font-size: 2em;
-  }
-
-  button {
-    background-color: rgba(0, 255, 255, 0.152);
-    padding: 0.2em;
-    border-radius: 10px;
-    margin: 0 1em;
-
-    &:hover {
-      background-color: rgba(0, 255, 255, 0.658);
-      box-shadow: 0 0 5px 5px rgb(109, 58, 248);
-      text-shadow: 0 0 3px rgb(168, 145, 232);
-    }
-  }
-
-  .delete-button {
-    &:hover {
-      box-shadow: 0 0 5px 5px rgb(248, 58, 125);
-      text-shadow: 0 0 10px rgb(232, 145, 189), 1px 1px 5px rgb(227, 160, 194), -1px -1px 5px rgb(227, 160, 194);
-    }
   }
 
   p {
@@ -49,5 +25,11 @@
     text-shadow: 2px 2px 20px $yellow-shadow;
     box-shadow: 0 0 20px 10px $yellow-shadow;
     cursor: pointer;
+  }
+}
+
+#new-quiz-button {
+  .quiz-card {
+    width: 100%;
   }
 }

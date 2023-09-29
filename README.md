@@ -32,6 +32,16 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 - Create your Quiz
 ![Create_quiz](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Create_quiz.png)
 
+- Share and Discover: Share your quizzes with others or explore a variety of quizzes created by the QuizMe community.
+
+- Challenge Friends: Challenge your friends to take your quiz and see who scores the highest.
+
+- Track Progress: Keep track of your quiz attempts and scores. See how you improve over time.
+
+- User-Friendly: QuizMe is designed with a clean and intuitive user interface, making it accessible to users of all ages and backgrounds.
+
+## Screen Shot
+-
 
 ## Getting Started
 

@@ -4,7 +4,7 @@
   integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<h1>Let's Create A New Quizz!</h1>
+<h1>Let's Create A New Quiz!</h1>
 <main id="main-content">
   <form autocomplete="off" id="new-quizz" action="/quizzes" method="post">
     <section class="title">
@@ -59,7 +59,9 @@
         <input type="text" name="answer4" required>
       </section>
     </section>
-    <button class="add-question">Add Another Question</button>
+    <button id="remove-question" class="question-button hidden">Remove Previous
+      Question</button>
+    <button id="add-question" class="question-button">Add Another Question</button>
     <button id="submit-quizz" type="submit">Let's Go!</button>
   </form>
 </main>

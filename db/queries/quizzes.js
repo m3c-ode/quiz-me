@@ -48,12 +48,14 @@ const getQuiz = (queryParams) => {
     questions.id AS question_id,
     answers.id AS answer_id,
     questions.text AS question,
-    answers.text AS answer
+    answers.text AS answer,
+    answers.is_correct AS is_correct
     FROM quizzes
     JOIN questions ON quizzes.id = questions.quiz_id
     JOIN answers ON questions.id = answers.question_id
     WHERE quizzes.id=$1
     GROUP BY quizzes.id, questions.id, answers.id
+    ORDER BY answers.id
   `;
   return dbQuery(queryString, queryParams)
     .then(data => {

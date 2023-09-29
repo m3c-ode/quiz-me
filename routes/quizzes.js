@@ -64,15 +64,11 @@ router.get('/:id/take', authRedirectMiddleware, (req, res) => {
   return res.render('take', { user, quiz_id });
 });
 
-// router.get("/:id", (req, res) => {
-//   const userId = req.session.userId;
-//   let user;
-//   if (!userId) {
-//     user = undefined;
-//   }
+router.get("/:id", (req, res) => {
+  let user = req.session.user;
 
-//   res.render("attempt", { user });
-// });
+  res.render("quiz", { user });
+});
 
 // TODO: Not in USE?
 // router.delete("/:id", (req, res) => {

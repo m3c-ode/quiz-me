@@ -2,7 +2,7 @@
   $(() => {
     let questionCounter = 1;
     // Dynamically add another question element on click
-    $(".add-question").on('click', function(event) {
+    $("#add-question").on('click', function(event) {
       event.preventDefault();
       questionCounter++;
       const $newQuestion = $(`
@@ -47,6 +47,16 @@
     </section>
     `);
 
+      if (questionCounter > 1) {
+        console.log("🚀 ~ file: new-quiz.js:52 ~ $ ~ questionCounter:", questionCounter);
+        // $(".remove-button").attr('hidden', false);
+        console.log("🚀 ~ file: new-quiz.js:54 ~ $ ~ #remove-button:", $("#remove-question"));
+        $("#remove-question").removeClass('hidden');
+        // $(".remove-button").classList.remove('hidden');
+      } else {
+        $("#remove-question").addClass('hidden');
+      }
+
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
@@ -60,6 +70,16 @@
       }
       return messages;
     }
+
+    $("#main-content").on('click', '#remove-question', function(event) {
+      event.preventDefault();
+      // $(this).before(".new-question").remove();
+      $(".new-question:last").remove();
+      questionCounter--;
+      if (questionCounter <= 1) {
+        $("#remove-question").addClass('hidden'); // Hide the "Remove Previous Question" button if there's only one question
+      }
+    });
 
 
     function isFormValidated() {
@@ -129,8 +149,9 @@
 
       // console.log("🚀 ~ file: new-quiz.js:69 ~ $ ~ isFormValidated():", isFormValidated());
       if (isFormValidated()) {
-        console.log('form', $(this).serializeArray());
-        const formData = $(this).serialize();
+        console.log('form', $("#new-quizz").serializeArray());
+        const formData = $("#new-quizz").serialize();
+
         console.log("🚀 ~ file: new-quiz.js:45 ~ formData:", formData);
 
         $.ajax({

@@ -59,19 +59,17 @@ router.post("/", authRedirectMiddleware, (req, res) => {
     });
 });
 
-router.get("/:id", authRedirectMiddleware, (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/');
-  }
+router.get("/:id",
+  // authRedirectMiddleware,
+  (req, res) => {
+    let user = req.session.user;
 
-  let user = req.session.user;
+    if (!user) {
+      user = undefined;
+    }
 
-  if (!user) {
-    user = undefined;
-  }
-
-  res.render("attempt", { user });
-});
+    res.render("attempt", { user });
+  });
 
 router.delete("/:id", authMiddleware, (req, res) => {
   const user = req.session.user;

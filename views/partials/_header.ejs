@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="/styles/quizzes.css" />
   <link rel="stylesheet" href="/styles/new-quiz.css" />
   <link rel="stylesheet" href="/styles/login.css">
+  <link rel="stylesheet" href="/styles/responsive.css">
+  <link rel="stylesheet" href="/styles/attempts.css">
+  <link rel="stylesheet" href="/styles/login.css">
+
 
 
   <script type="text/javascript" src="/vendor/jquery-3.4.0.min.js"></script>
@@ -27,23 +31,23 @@
 <body>
   <header id="header">
     <% if(!user) { %>
-      <ul>
-        <li><a href="/">QuizMe</a></li>
-        <li><a href="/login">Login</a></li>
-      </ul>
-      <% } else { %>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/quizzes">
-              <%= user.username %>'s Quizzes
-            </a></li>
-          <li><a href="/attempts">
-              <%= user.username %>'s Attempts
-            </a></li>
-          <!-- TODO: add avatar pic, name, and logout -->
-          <li>
-            <form action="/logout" method="post"><button href="/logout">Logout</button></form>
-          </li>
-        </ul>
-        <% }%>
+    <ul>
+      <li><a href="/">QuizMe</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+    <% } else { %>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/quizzes">
+          <%= user.username %>'s Quizzes
+        </a></li>
+      <li><a href="/attempts">
+          <%= user.username %>'s Attempts
+        </a></li>
+      <!-- TODO: add avatar pic, name, and logout -->
+      <li>
+        <form action="/logout" method="post"><button href="/logout">Logout</button></form>
+      </li>
+    </ul>
+    <% }%>
   </header>

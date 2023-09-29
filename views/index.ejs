@@ -3,16 +3,7 @@
 <script>const userId = Number("<%= user ? user.id : undefined %>");</script>
 
 <h1>Welcome to Quizme</h1>
-<main id="main-content">
+<main id="main-content" class="card-grid">
 </main>
-<!-- <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-  <div class="flex-shrink-0">
-    <img class="h-12 w-12" src="/img/logo.svg" alt="ChitChat Logo">
-  </div>
-  <div>
-    <div class="text-xl font-medium text-black">ChitChat</div>
-    <p class="text-gray-500">You have a new message!</p>
-  </div>
-</div> -->
 
 <%- include('partials/_footer') %>
