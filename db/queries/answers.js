@@ -23,7 +23,7 @@ const createAnswer = (queryParams) => {
  */
 const getQuestionAnswers = (queryParams) => {
   const questionQuery = `
-    SELECT text, is_correct
+    SELECT text, is_correct, id
     FROM answers
     JOIN questions on questions.id = question_id
     WHERE question_id=$1

@@ -44,12 +44,12 @@
 
     for (let answer of question.answers) {
       $answers.append(`<div><label class="question-label"><div class="take-radio">
-      <input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"></div><div>${answer.answer}</div></label></div>`);
+      <input type="radio" name="question-${question.question_id}" value="${answer.answer_id}"></div><div>${answer.answer}</div></label></div>`);
     }
 
     const $questionCard = $(`<article class='question-card glide__slide flex'>`)
       .append($("<h2 class='title'>")
-        .text(question.question.text))
+      .text(question.question))
       .append($answers);
 
     return $questionCard;
@@ -63,32 +63,10 @@
         url: `/api/quizzes/${quiz}`,
         method: "GET",
       }).then((response) => {
-        let title = '';
-        let grouped = {};
+        console.log(response)
+        let title = response.quizData.quiz_title;
+        let questions = response.quizData.questions;
 
-        for (let answer of response.quiz) {
-          if (!grouped[answer.question_id]) {
-            title = answer.quiz_title;
-
-            grouped[answer.question_id] = {};
-
-            let question = {
-              id: answer.question_id,
-              text: answer.question
-            };
-
-            grouped[answer.question_id].question = question;
-            grouped[answer.question_id].answers = [];
-          }
-          grouped[answer.question_id].answers.push(answer);
-        }
-
-        let questions = [];
-        for (let question in grouped) {
-          questions.push(grouped[question]);
-        }
-
-        console.log(questions);
         renderQuestions(title, questions);
 
         $(":radio").on('change', function() {

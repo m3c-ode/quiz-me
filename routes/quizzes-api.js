@@ -130,11 +130,14 @@ router.get('/:id',
         data.forEach(item => {
           const existingQuestion = quizData.questions.find(q => q.question === item.question);
           if (!existingQuestion) {
+            console.log(item)
             const newQuestion = {
+              question_id: item.question_id,
               question: item.question,
               answers: []
             };
             newQuestion.answers.push({
+              answer_id: item.answer_id,
               answer: item.answer,
               is_correct: item.is_correct
             });
@@ -142,6 +145,7 @@ router.get('/:id',
           } else {
             // question already in
             existingQuestion.answers.push({
+              answer_id: item.answer_id,
               answer: item.answer,
               is_correct: item.is_correct
             });
