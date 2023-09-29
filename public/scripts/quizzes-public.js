@@ -1,10 +1,12 @@
 // Client facing scripts here
 {
   $(() => {
+    $('#new-quiz-button').append($("<h2>").text(`Create a New Quizz!`));
+
     const $mainContent = $("#main-content");
 
-    const $newQuizElement = $("<article class='quiz-card new-quizz'>")
-      .append($("<h2>").text(`Create a New Quizz!`));
+    const $newQuizElement = $("<article class='quiz-card new-quizz'>");
+
 
     $newQuizElement.on('click', () => {
       window.location.href = "/quizzes/new";

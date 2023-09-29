@@ -2,8 +2,11 @@
   $(() => {
     const $mainContent = $("#main-content");
 
-    const $newQuizElement = $("<article class='quiz-card new-quizz'>")
+    const $button = $("<article class='quiz-card new-quizz'>")
       .append($("<h2>").text(`Create a New Quizz!`));
+
+    const $newQuizElement = $('#new-quiz-button')
+      .append($button);
 
     // Redirects to quiz creation page
     $newQuizElement.on('click', () => {
@@ -12,9 +15,7 @@
 
     const renderUsersQuizzesCards = function(data) {
       $mainContent.empty();
-      if (window.location.pathname === "/quizzes") {
-        $mainContent.append($newQuizElement);
-      }
+
       for (const quiz of data) {
         $mainContent.append(createUsersQuizElement(quiz));
       }
