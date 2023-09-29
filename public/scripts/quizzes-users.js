@@ -2,8 +2,11 @@
   $(() => {
     const $mainContent = $("#main-content");
 
-    const $newQuizElement = $("<article class='quiz-card new-quizz'>")
+    const $button = $("<article class='quiz-card new-quizz'>")
       .append($("<h2>").text(`Create a New Quizz!`));
+
+    const $newQuizElement = $('#new-quiz-button')
+      .append($button);
 
     // Redirects to quiz creation page
     $newQuizElement.on('click', () => {
@@ -12,9 +15,7 @@
 
     const renderUsersQuizzesCards = function(data) {
       $mainContent.empty();
-      if (window.location.pathname === "/quizzes") {
-        $mainContent.append($newQuizElement);
-      }
+
       for (const quiz of data) {
         $mainContent.append(createUsersQuizElement(quiz));
       }
@@ -27,10 +28,10 @@
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.title}`))
         .append($("<p>").text(`${quizObj.is_public ? "Public" : "Private"}`))
-        .append(`<button class="shareQuiz"
+        .append(`<button class="shareQuiz card-button"
         data-clipboard-text="I just made a Quiz on QuizMe! I'm challenging you to take it! ${quizUrl}. Good luck!"
         >Share the quiz!</button>`)
-        .append($(`<button class='delete-button' quiz-id=${quizObj.quiz_id}>`).text("Delete Me"));
+        .append($(`<button class='card-button card-delete-button' quiz-id=${quizObj.quiz_id}>`).text("Delete Me"));
 
       if (quizObj.is_public) {
         $quizCard.find("p").addClass("darker-green-tone");

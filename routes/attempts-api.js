@@ -44,8 +44,8 @@ router.get("/", authMiddleware, (req, res) => {
             attemptsObj[attemptAnswer.attempt_id] = {};
             attemptsObj[attemptAnswer.attempt_id].attempt_id =
               attemptAnswer.attempt_id;
-            attemptsObj[attemptAnswer.attempt_id].quiz_title = data[0].quiz_title;
-            attemptsObj[attemptAnswer.attempt_id].quiz_id = data[0].quiz_id;
+            attemptsObj[attemptAnswer.attempt_id].quiz_title = attemptAnswer.quiz_title;
+            attemptsObj[attemptAnswer.attempt_id].quiz_id = attemptAnswer.quiz_id;
             attemptsObj[attemptAnswer.attempt_id].answers = [];
             attemptsObj[attemptAnswer.attempt_id].score = 0;
             attemptsObj[attemptAnswer.attempt_id].total_possible_score = Number(questions[0].count);
@@ -120,7 +120,7 @@ router.post("/", authMiddleware, (req, res) => {
     });
 });
 
-router.get("/:id", authMiddleware, (req, res) => {
+router.get("/:id", (req, res) => {
   const queryParams = [req.params.id];
 
   getSpecificAttempt(queryParams)

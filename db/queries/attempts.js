@@ -112,7 +112,7 @@ const getNumberOfQuestionsForQuiz = (quiz_id) => {
     ;`;
 
   return dbQuery(answerQuery, queryParams).then((data) => {
-    console.log(data)
+    console.log('getNumberOfQuestionsForQuiz:', data);
     return data;
   });
 };

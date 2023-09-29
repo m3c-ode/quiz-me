@@ -1,10 +1,12 @@
 // Client facing scripts here
 {
   $(() => {
+    $('#new-quiz-button').append($("<h2>").text(`Create a New Quizz!`));
+
     const $mainContent = $("#main-content");
 
-    const $newQuizElement = $("<article class='quiz-card new-quizz'>")
-      .append($("<h2>").text(`Create a New Quizz!`));
+    const $newQuizElement = $("<article class='quiz-card new-quizz'>");
+
 
     $newQuizElement.on('click', () => {
       window.location.href = "/quizzes/new";
@@ -21,7 +23,7 @@
     const createPublicQuizElement = function(quizObj) {
       const $quizCard = $("<article class='quiz-card'>")
         .append($("<h2>").text(`Quiz Title: ${quizObj.quiz_title}`))
-        .append("<button>Take the Quiz!</button>");
+        .append("<button class='card-button'>Take the Quiz!</button>");
 
       const quizUrl = `${window.location.href}quizzes/${quizObj.quiz_id}/take`;
       $quizCard.find("button").on('click', function(e) {
