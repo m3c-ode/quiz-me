@@ -17,6 +17,20 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 
 ## Screenshots
 
+- Home-page
+![Home_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Home_page.png)
+
+- Login-page
+![Login_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Login_page.png)
+
+- Quiz
+![Take_quiz](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Take_Quiz.png)
+
+- Result
+![attempt_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Attempts_results.png)
+
+- Create your Quiz
+![Create_quiz](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Create_quiz.png)
 
 
 ## Getting Started
