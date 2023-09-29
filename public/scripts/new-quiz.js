@@ -69,7 +69,10 @@
     $("#main-content").on('click', '.remove-button', function(event) {
       event.preventDefault();
       $(this).before(".new-question").remove();
-
+      questionCounter--;
+      if (questionCounter <= 1) {
+        $(".remove-question").hide(); // Hide the "Remove Previous Question" button if there's only one question
+      }
     });
 
 
