@@ -10,7 +10,7 @@
 
   const createAttemptElement = function(attempt) {
 
-    const $attemptCard = $("<article class='attempt-card'>")
+    const $attemptCard = $("<article class='attempt-card quiz-card'>")
       .append($("<h2>").text(`Quiz Title: ${attempt.quiz_title}`))
       .append($("<p>").text(`Score: ${attempt.score} / ${attempt.total_possible_score}`))
       .append(`<a class="card-button" href='/attempts/${attempt.attempt_id}'>View details</a>`)
