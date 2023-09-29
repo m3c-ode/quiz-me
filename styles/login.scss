@@ -37,15 +37,14 @@ input[type="password"] {
   font-size: 16px;
 }
 
-button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+button {
+  // margin-top: 1em;
+  background-color: aqua;
+  padding: 0.2em;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 5px blue;
+  font-family: 'DrMarz';
+  font-size: 20px;
 }
 
 button[type="submit"]:hover {
