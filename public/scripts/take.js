@@ -43,7 +43,8 @@
     let $answers = $("<div class='answers'>");
 
     for (let answer of question.answers) {
-      $answers.append(`<div><label class="question-label"><input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"> ${answer.answer}</label></div>`);
+      $answers.append(`<div><label class="question-label"><div class="take-radio">
+      <input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"></div><div>${answer.answer}</div></label></div>`);
     }
 
     const $questionCard = $(`<article class='question-card glide__slide flex'>`)
