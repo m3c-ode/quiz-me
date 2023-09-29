@@ -1,31 +1,31 @@
 <%- include('partials/_header') %>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
-    integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="text/javascript" src="/scripts/quizzes-users.js"></script>
-  <script> const userId = "<%= user.id %>"; </script>
-  <h1>
-    <%= user.username %>'s Quizzes
-  </h1>
-  <div id="new-quiz-button"></div>
-  <main id="main-content" class="card-grid">
-  </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+  integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="/scripts/quizzes-users.js"></script>
+<script> const userId = "<%= user.id %>"; </script>
+<h1>
+  <%= user.username %>'s Quizzes
+</h1>
+<div id="new-quiz-button"></div>
+<main id="main-content" class="card-grid">
+</main>
 
-  <script>
-    let clipboard = new ClipboardJS('.shareQuiz');
+<script>
+  let clipboard = new ClipboardJS('.shareQuiz');
 
-    clipboard.on('success', function(e) {
-      let originalText = e.trigger.innerText;
+  clipboard.on('success', function(e) {
+    let originalText = e.trigger.innerText;
 
-      e.trigger.innerText = 'Copied! Now you can Share!';
-      e.trigger.disabled = true;
+    e.trigger.innerText = 'Copied! Now you can Share!';
+    e.trigger.disabled = true;
 
-      setTimeout(() => {
-        e.trigger.innerText = originalText;
-        e.trigger.disabled = false;
-      }, 3000);
-    });
+    setTimeout(() => {
+      e.trigger.innerText = originalText;
+      e.trigger.disabled = false;
+    }, 3000);
+  });
 
-  </script>
+</script>
 
-  <%- include('partials/_footer') %>
+<%- include('partials/_footer') %>
