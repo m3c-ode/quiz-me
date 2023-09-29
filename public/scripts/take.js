@@ -44,7 +44,7 @@
 
     for (let answer of question.answers) {
       $answers.append(`<div><label class="question-label"><div class="take-radio">
-      <input type="radio" name="question-${answer.question_id}" value="${answer.answer_id}"></div><div>${answer.answer}</div></label></div>`);
+      <input type="radio" name="question-${question.question_id}" value="${answer.answer_id}"></div><div>${answer.answer}</div></label></div>`);
     }
 
     const $questionCard = $(`<article class='question-card glide__slide flex'>`)
