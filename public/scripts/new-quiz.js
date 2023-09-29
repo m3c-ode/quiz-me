@@ -47,6 +47,11 @@
     </section>
     `);
 
+      if (questionCounter > 1) {
+        $(".remove-button").attr('hidden', false);
+        $(".remove-button").show();
+      }
+
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
@@ -60,6 +65,12 @@
       }
       return messages;
     }
+
+    $("#main-content").on('click', '.remove-button', function(event) {
+      event.preventDefault();
+      $(this).before(".new-question").remove();
+
+    });
 
 
     function isFormValidated() {
