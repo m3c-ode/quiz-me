@@ -1,6 +1,6 @@
 // Client facing scripts here
 {
-  const renderQuestions = function (title, questions) {
+  const renderQuestions = function(title, questions) {
     addHeader(title);
 
     $("#questions-content").append('<div class="glide__track flex items-center">');
@@ -29,7 +29,7 @@
 
   };
 
-  const addHeader = function (data) {
+  const addHeader = function(data) {
     const $header = $("#questions-content")
       .empty()
       .append(
@@ -39,7 +39,7 @@
     return $header;
   };
 
-  const createQuestionElement = function (question) {
+  const createQuestionElement = function(question) {
     let $answers = $("<div class='answers'>");
 
     for (let answer of question.answers) {
@@ -56,7 +56,7 @@
   };
 
   $(() => {
-    const loadQuestions = function () {
+    const loadQuestions = function() {
       let quiz = window.location.href.split("/").slice(-2)[0];
 
       $.ajax({
@@ -115,16 +115,16 @@
           let i;
           let slides = document.getElementsByClassName("glide__slide");
           let dots = document.getElementsByClassName("dot");
-          if (n > slides.length) {slideIndex = 1}
-          if (n < 1) {slideIndex = slides.length}
+          if (n > slides.length) { slideIndex = 1; }
+          if (n < 1) { slideIndex = slides.length; }
           for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
           }
           for (i = 0; i < dots.length; i++) {
             dots[i].className = dots[i].className.replace(" active", "");
           }
-          slides[slideIndex-1].style.display = "block";
-          dots[slideIndex-1].className += " active";
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].className += " active";
         }
 
       });

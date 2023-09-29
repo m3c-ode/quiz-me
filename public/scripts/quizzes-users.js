@@ -41,7 +41,7 @@
         $quizCard.find("p").addClass("darker-green-tone");
       }
       else {
-        $quizCard.find("p").addClass("blue-tone");
+        $quizCard.find("p").addClass("darker-blue-tone");
 
       }
 

@@ -99,7 +99,8 @@ body {
 }
 
 .question-card {
-  @include basicCard;
+  @include basicCard();
+  margin: 2em auto;
 
   h2 {
     padding-bottom: 0.5em;
