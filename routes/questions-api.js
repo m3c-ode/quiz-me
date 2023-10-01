@@ -2,6 +2,27 @@ const express = require('express');
 const router = express.Router();
 const { dbQuery } = require('../db/connection');
 const { authMiddleware } = require('./authentication');
+const { route } = require('./users-api');
+const axios = require('axios');
+
+const OPENAPI_KEY = process.env.OPENAPI_KEY;
+const OPENAPI_URL = "https://api.openai.com/v1/chat/completions";
+
+const queryOpenApi = (prompt) => {
+  const response = axios.post(OPENAPI_URL, {
+    model: 'gpt-3.5-turbo',
+    messages: [{
+      role: 'user',
+      content: promptContent
+    }],
+    temperature: 0.7
+  }, {
+    headers: {
+      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
 
 //TODO: unused routes?
 
@@ -47,6 +68,11 @@ router.post('/', authMiddleware, (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
+
+router.post("/generate", authMiddleware, (req, res) => {
+
+}
+);
 
 // Route to get a question by ID
 router.get('/:id', authMiddleware, (req, res) => {

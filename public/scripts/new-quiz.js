@@ -60,20 +60,8 @@
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
-    function generateValidationMessages(questionCount) {
-      const messages = {
-        title: "Give your Quizz a title!"
-      };
-      for (let i = 1; i <= questionCount; i++) {
-        const questionName = `question${i}`;
-        messages[questionName] = "Need a Question to Answer!";
-      }
-      return messages;
-    }
-
     $("#main-content").on('click', '#remove-question', function(event) {
       event.preventDefault();
-      // $(this).before(".new-question").remove();
       $(".new-question:last").remove();
       questionCounter--;
       if (questionCounter <= 1) {
@@ -133,14 +121,6 @@
       });
       return isValid;
     }
-
-
-    let question;
-
-    // $("#new-quizz").validate({
-    //   messages: generateValidationMessages(questionCounter),
-    //   errorElement: "div"
-    // });
 
     // On submit, format data
     $("#submit-quizz").on('click', function(event) {
