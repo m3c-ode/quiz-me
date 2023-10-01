@@ -8,20 +8,34 @@ const axios = require('axios');
 const OPENAPI_KEY = process.env.OPENAPI_KEY;
 const OPENAPI_URL = "https://api.openai.com/v1/chat/completions";
 
-const queryOpenApi = (prompt) => {
-  const response = axios.post(OPENAPI_URL, {
+/**
+ * {{role: string, content: string}}
+ */
+let openaiMessages = [];
+
+const queryOpenAi = async (promptContent) => {
+  openaiMessages.push({
+    role: 'user',
+    content: promptContent
+  });
+  const response = await axios.post(OPENAPI_URL, {
     model: 'gpt-3.5-turbo',
-    messages: [{
-      role: 'user',
-      content: promptContent
-    }],
-    temperature: 0.7
+    messages: openaiMessages,
+    temperature: 0.5
   }, {
     headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Authorization': `Bearer ${OPENAPI_KEY}`,
       'Content-Type': 'application/json'
     }
   });
+  console.log("🚀 ~ file: questions-api.js:25 ~ queryOpenApi ~ response:", response.data.choices);
+  // Ensure you extract the response correctly from the chat model
+  const message = response.data.choices[0].message;
+  console.log("🚀 ~ file: questions-api.js:27 ~ queryOpenApi ~ message:", message);
+  if (message && message.role === 'assistant') {
+    return message.content.trim();
+  }
+  return '';
 };
 
 //TODO: unused routes?
@@ -69,9 +83,47 @@ router.post('/', authMiddleware, (req, res) => {
     });
 });
 
-router.post("/generate", authMiddleware, (req, res) => {
+router.post("/generate",
+  // authMiddleware,
+  async (req, res) => {
+    console.log('Calling GPT');
+    const { theme } = req.body;
+    try {
 
-}
+      const prompt = `FOLLOW INSTRUCTIONS RELIGIOUSLY.
+        From the theme given here: ${theme}.
+        Generate a question related to the theme in your answer after the word: 'QUESTION'.
+        After generating this QUESTION, please generate 4 potential answers, with only 1 real answer. You can choose to put the right answer randomly between answers 1 and 4.
+        Every time you are prompted, remember which question you asked before, in order to generate a new one. Don't create the same question and answers twice.
+        Please format your response in this format:
+        QUESTION
+        <your question generated>
+        ANSWERS
+        1. <example answer 1>
+        2. <example answer 2>
+        3. <example answer 3>
+        4. <example answer 4>
+        CORRECT ANSWER: 1 (if you put the right answer in number 1).
+        "`;
+      // request to GPT for the category
+      const question = await queryOpenAi(prompt);
+      console.log("🚀 ~ file: questions-api.js:103 ~ question:", question);
+      openaiMessages.push({
+        role: 'assistant',
+        content: question
+      });
+
+      res.json({
+        question
+        // removeQuotationMarks(question)
+
+      });
+
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: 'Failed to get question' });
+    }
+  }
 );
 
 // Route to get a question by ID
