@@ -80,6 +80,12 @@
     @include yellowGlow;
   }
 
+  .generate-question {
+    display: block;
+    width: 100%;
+    box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.433);
+  }
+
   .new-answers {
     margin: 1em 0;
 

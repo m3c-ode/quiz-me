@@ -7,6 +7,7 @@
       questionCounter++;
       const $newQuestion = $(`
     <section class="new-question">
+      <button class="question-button generate-question">AI Generate</button>
       <label for="question${questionCounter}">
         Choose A Question
       </label>
@@ -57,6 +58,17 @@
         $("#remove-question").addClass('hidden');
       }
 
+      // Event listener on .generate-question button
+      $newQuestion.children("button.generate-question").on('click', function(event) {
+        console.log(`${questionCounter}generate button clicked`);
+        event.preventDefault();
+        const theme = $("input[name=title]").val();
+        // const $questionSection = $(this).closest(".new-question");
+        queryAi(theme)
+          .then(formattedResponse => {
+            assignQueryAnswersToFields(formattedResponse, $newQuestion);
+          });
+      });
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
@@ -69,6 +81,80 @@
       }
     });
 
+    // Event listener for the first button
+    $(".generate-question").on('click', function(event) {
+      event.preventDefault();
+      console.log('1st generate button clicked');
+      const theme = $("input[name=title]").val();
+      console.log("🚀 ~ file: new-quiz.js:88 ~ $ ~ theme:", theme);
+      const $questionSection = $(this).closest(".new-question");
+      queryAi(theme)
+        .then(formattedResponse => {
+          assignQueryAnswersToFields(formattedResponse, $questionSection);
+        });
+    });
+
+    const formatQueryAiResponse = (response) => {
+      const parts = response.split("\n");
+      const formattedResponse = {};
+      for (let i = 0; i < parts.length; i++) {
+        const element = parts[i];
+        if (element === 'QUESTION') {
+          formattedResponse.question = parts[i + 1];
+        } else if (element === 'ANSWERS') {
+          formattedResponse.answer1 = parts[i + 1].substring(3);
+          formattedResponse.answer2 = parts[i + 2].substring(3);
+          formattedResponse.answer3 = parts[i + 3].substring(3);
+          formattedResponse.answer4 = parts[i + 4].substring(3);
+        } else if (element.startsWith('CORRECT ANSWER:')) {
+          // Get the ID following the string
+          console.log('correct answer', element.substring('CORRECT ANSWER: '.length)[0]);
+          formattedResponse.correct = element.substring('CORRECT ANSWER: '.length)[0];
+        }
+      }
+      return formattedResponse;
+    };
+    const assignQueryAnswersToFields = function(queryResponse, $questionElement) {
+      const correctAnswerValue = `answer${queryResponse.correct}`;
+
+      // Find the correct radio button within the current question section
+      const $correctRadioButton = $questionElement.find(`input[type=radio][name=question${questionCounter}][value=${correctAnswerValue}]`);
+
+      // Uncheck all radio buttons in the current question section
+      $questionElement.find(`input[type=radio][name^=question${questionCounter}]`).prop('checked', false);
+
+      // Check the correct radio button
+      $correctRadioButton.prop('checked', true);
+      console.log("🚀 ~ file: new-quiz.js:130 ~ $ ~ IS CHECKED???:", $correctRadioButton);
+
+      // update each fields
+      $questionElement.find(`input[type=text][name=question${questionCounter}]`).val(queryResponse.question);
+      $questionElement.find(`input[type=radio][name=question${questionCounter}]`).val(`answer${queryResponse.correct}`);
+      $questionElement.find(`input[type=text][name=answer1]`).val(queryResponse.answer1);
+      $questionElement.find(`input[type=text][name=answer2]`).val(queryResponse.answer2);
+      $questionElement.find(`input[type=text][name=answer3]`).val(queryResponse.answer3);
+      $questionElement.find(`input[type=text][name=answer4]`).val(queryResponse.answer4);
+    };
+
+    const queryAi = function(theme) {
+      if (!theme) {
+        console.log('no theme');
+        return;
+      }
+      const requestUrl = window.location.origin + "/api/questions/generate";
+      console.log("🚀 ~ file: new-quiz.js:98 ~ queryAi ~ requestUrl:", requestUrl);
+      return $.ajax(requestUrl, {
+        method: 'POST',
+        // data: JSON.stringify({ theme: theme })
+        data: { theme: theme }
+      })
+        .then(response => {
+          // Manipulate response.question string
+          const formattedRes = formatQueryAiResponse(response.question);
+          console.log("🚀 ~ file: new-quiz.js:128 ~ queryAi ~ formattedRes:", formattedRes);
+          return formattedRes;
+        });
+    };
 
     function isFormValidated() {
       let isValid = true;

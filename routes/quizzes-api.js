@@ -79,9 +79,15 @@ router.post('/', authMiddleware, (req, res) => {
     .then(quizData => {
       quiz_id = quizData[0].id;
       const questions = formattedBodyData.questions;
+      // const questionPromises = [];
       for (const question of questions) {
         const questionText = question.text;
         const questionParams = [quiz_id, questionText];
+
+        // Try chain promises with Promise.All
+        // questionPromises.push(createQuestion(questionParams));
+
+        // Instead of:
         createQuestion(questionParams)
           .then(questionData => {
             //  m3: Had an error here (because returning data.rows in createQuestion instead of data, but it was not caught: why?)
@@ -92,14 +98,21 @@ router.post('/', authMiddleware, (req, res) => {
               createAnswer(answerParam)
                 .then(answerData => console.log("added answer: ", answerData));
             }
+          })
+          .catch(err => {
+            console.log("🚀 ~ file: quizzes-api.js:68 ~ router.post ~ err:", err);
+            return res
+              .status(500)
+              .json({ error: err.message });
           });
-        // .catch(err => {
-        //   console.log("🚀 ~ file: quizzes-api.js:68 ~ router.post ~ err:", err);
-        //   return res
-        //     .status(500)
-        //     .json({ error: err.message });
-        // });
       }
+      // return Promise.all(questionPromises);
+      // });
+      // .then(questionsDataArray => {
+      //   const answersPromises = []
+
+      // });
+
       // res.status(201).json({ quizData });
       res.status(201).json({ quizData });
     })
@@ -130,7 +143,7 @@ router.get('/:id',
         data.forEach(item => {
           const existingQuestion = quizData.questions.find(q => q.question === item.question);
           if (!existingQuestion) {
-            console.log(item)
+            console.log(item);
             const newQuestion = {
               question_id: item.question_id,
               question: item.question,

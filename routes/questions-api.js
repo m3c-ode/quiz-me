@@ -28,10 +28,10 @@ const queryOpenAi = async (promptContent) => {
       'Content-Type': 'application/json'
     }
   });
-  console.log("🚀 ~ file: questions-api.js:25 ~ queryOpenApi ~ response:", response.data.choices);
+  // console.log("🚀 ~ file: questions-api.js:25 ~ queryOpenApi ~ response:", response.data.choices);
   // Ensure you extract the response correctly from the chat model
   const message = response.data.choices[0].message;
-  console.log("🚀 ~ file: questions-api.js:27 ~ queryOpenApi ~ message:", message);
+  // console.log("🚀 ~ file: questions-api.js:27 ~ queryOpenApi ~ message:", message);
   if (message && message.role === 'assistant') {
     return message.content.trim();
   }
@@ -86,6 +86,7 @@ router.post('/', authMiddleware, (req, res) => {
 router.post("/generate",
   // authMiddleware,
   async (req, res) => {
+    console.log('body', req.body);
     console.log('Calling GPT');
     const { theme } = req.body;
     try {
@@ -93,8 +94,9 @@ router.post("/generate",
       const prompt = `FOLLOW INSTRUCTIONS RELIGIOUSLY.
         From the theme given here: ${theme}.
         Generate a question related to the theme in your answer after the word: 'QUESTION'.
-        After generating this QUESTION, please generate 4 potential answers, with only 1 real answer. You can choose to put the right answer randomly between answers 1 and 4.
+        After generating this QUESTION, please generate 4 potential answers, with only 1 real answer. You can choose to put the right answer randomly between answers position 1 and 4. Make sure to not always choose answer 1 as the correct answer, it needs to change at each request.
         Every time you are prompted, remember which question you asked before, in order to generate a new one. Don't create the same question and answers twice.
+        After 'CORRECT ANSWER: ', just input the number of the answer, not the content.
         Please format your response in this format:
         QUESTION
         <your question generated>
@@ -103,7 +105,7 @@ router.post("/generate",
         2. <example answer 2>
         3. <example answer 3>
         4. <example answer 4>
-        CORRECT ANSWER: 1 (if you put the right answer in number 1).
+        CORRECT ANSWER: <number of the answer that is correct>.
         "`;
       // request to GPT for the category
       const question = await queryOpenAi(prompt);
