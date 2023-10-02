@@ -18,19 +18,20 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 ## Screenshots
 
 - Home-page
-![Home_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Home_page.png)
+![Home_page](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-home.png)
 
 - Login-page
-![Login_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Login_page.png)
+![Login_page](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-login.png)
+
+- Create your Quiz with AI Integration
+![Create_quiz](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-create-with-ai.gif)
 
 - Quiz
-![Take_quiz](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Take_Quiz.png)
+![Take_quiz](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-take-quiz.png)
 
 - Result
-![attempt_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Attempts_results.png)
+![Attempt_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Attempts_results.png)
 
-- Create your Quiz
-![Create_quiz](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Create_quiz.png)
 
 - Share and Discover: Share your quizzes with others or explore a variety of quizzes created by the QuizMe community.
 
@@ -39,9 +40,6 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 - Track Progress: Keep track of your quiz attempts and scores. See how you improve over time.
 
 - User-Friendly: QuizMe is designed with a clean and intuitive user interface, making it accessible to users of all ages and backgrounds.
-
-## Screen Shot
--
 
 ## Getting Started
 
