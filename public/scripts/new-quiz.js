@@ -59,16 +59,16 @@
       }
 
       // Event listener on .generate-question button
-      $newQuestion.children("button.generate-question").on('click', function(event) {
-        console.log(`${questionCounter}generate button clicked`);
-        event.preventDefault();
-        const theme = $("input[name=title]").val();
-        // const $questionSection = $(this).closest(".new-question");
-        queryAi(theme)
-          .then(formattedResponse => {
-            assignQueryAnswersToFields(formattedResponse, $newQuestion);
-          });
-      });
+      // $newQuestion.children("button.generate-question").on('click', function(event) {
+      //   console.log(`${questionCounter}generate button clicked`);
+      //   event.preventDefault();
+      //   const theme = $("input[name=title]").val();
+      //   // const $questionSection = $(this).closest(".new-question");
+      //   queryAi(theme)
+      //     .then(formattedResponse => {
+      //       assignQueryAnswersToFields(formattedResponse, $newQuestion);
+      //     });
+      // });
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
@@ -82,15 +82,37 @@
     });
 
     // Event listener for the first button
-    $(".generate-question").on('click', function(event) {
+    $("#main-content").on('click', ".generate-question", function(event) {
       event.preventDefault();
       console.log('1st generate button clicked');
       const theme = $("input[name=title]").val();
       console.log("🚀 ~ file: new-quiz.js:88 ~ $ ~ theme:", theme);
-      const $questionSection = $(this).closest(".new-question");
+      const $generateButton = $(this);
+      const $questionSection = $generateButton.closest(".new-question");
+      const originalButtonText = $generateButton.text();
+
+      // Disable button and insert spinner
+      $generateButton.prop('disabled', true);
+      $generateButton.html('<span class="loader"></span>');
+
       queryAi(theme)
         .then(formattedResponse => {
           assignQueryAnswersToFields(formattedResponse, $questionSection);
+          // Restore button
+          $generateButton.html(originalButtonText);
+          $generateButton.prop("disabled", false);
+        })
+        .catch(err => {
+          console.log("🚀 ~ file: new-quiz.js:106 ~ $ ~ err:", err);
+          if (err.noTheme) {
+            //change button inside
+            $generateButton.text("Please provide a theme").addClass("error");
+            setTimeout(() => {
+              $generateButton.html(originalButtonText).removeClass("error");
+              $generateButton.prop("disabled", false);
+            }, 3000);
+          }
+
         });
     });
 
@@ -138,8 +160,10 @@
 
     const queryAi = function(theme) {
       if (!theme) {
-        console.log('no theme');
-        return;
+        console.log('no theme provided');
+        const noThemeError = new Error('No theme provided');
+        noThemeError.noTheme = true;
+        return Promise.reject(noThemeError);
       }
       const requestUrl = window.location.origin + "/api/questions/generate";
       console.log("🚀 ~ file: new-quiz.js:98 ~ queryAi ~ requestUrl:", requestUrl);
@@ -153,6 +177,10 @@
           const formattedRes = formatQueryAiResponse(response.question);
           console.log("🚀 ~ file: new-quiz.js:128 ~ queryAi ~ formattedRes:", formattedRes);
           return formattedRes;
+        })
+        .catch(error => {
+          console.error("An error occurred querying AI:", error);
+          throw error;
         });
     };
 
