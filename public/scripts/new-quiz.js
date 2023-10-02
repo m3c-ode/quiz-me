@@ -58,17 +58,6 @@
         $("#remove-question").addClass('hidden');
       }
 
-      // Event listener on .generate-question button
-      // $newQuestion.children("button.generate-question").on('click', function(event) {
-      //   console.log(`${questionCounter}generate button clicked`);
-      //   event.preventDefault();
-      //   const theme = $("input[name=title]").val();
-      //   // const $questionSection = $(this).closest(".new-question");
-      //   queryAi(theme)
-      //     .then(formattedResponse => {
-      //       assignQueryAnswersToFields(formattedResponse, $newQuestion);
-      //     });
-      // });
       $newQuestion.insertAfter($(".new-question:last"));
     });
 
@@ -81,7 +70,7 @@
       }
     });
 
-    // Event listener for the first button
+    // Delegation of the event listener on each button
     $("#main-content").on('click', ".generate-question", function(event) {
       event.preventDefault();
       console.log('1st generate button clicked');
