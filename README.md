@@ -30,7 +30,7 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 ![Take_quiz](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-take-quiz.png)
 
 - Result
-![Attempt_page](https://github.com/m3c-ode/quiz-me/blob/hinali-README/documents/screenshots/Attempts_results.png)
+![Attempt_page](https://github.com/m3c-ode/quiz-me/blob/documents/new-screens/documents/screenshots/quizme-attempts.png)
 
 
 - Share and Discover: Share your quizzes with others or explore a variety of quizzes created by the QuizMe community.
