@@ -80,6 +80,12 @@
     @include yellowGlow;
   }
 
+  .generate-question {
+    display: block;
+    width: 100%;
+    box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.433);
+  }
+
   .new-answers {
     margin: 1em 0;
 
@@ -119,5 +125,58 @@
     font-size: 2.2em;
     padding: .2em 0;
     @include yellowGlow;
+  }
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid $darker-blue-tone;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  animation: pulse 1s linear infinite;
+  margin: auto 0;
+  vertical-align: middle;
+}
+
+.loader:after {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 5px solid $darker-blue-tone;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: scaleUp 1s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: translate(-50%, -50%) scale(0)
+  }
+
+  60%,
+  100% {
+    transform: translate(-50%, -50%) scale(1)
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  60%,
+  100% {
+    transform: scale(1)
+  }
+
+  80% {
+    transform: scale(1.2)
   }
 }
