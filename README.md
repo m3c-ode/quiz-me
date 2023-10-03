@@ -3,9 +3,12 @@
 ## Description
 
 QuizMe is an interactive quiz platform that allows users to create, share, and participate in quizzes on a wide range of topics. Whether you're a student looking to test your knowledge, an educator creating quizzes for your class, or just someone who loves trivia, QuizMe provides a user-friendly and engaging experience for all.
+In addition, QuizMe integreated OpenAI's API in order to provide soem assistance with Questions and Answers generation, when provided with a Theme.
 
 ## Features
 - Create Quizzes: Easily create quizzes with multiple-choice questions and answers. Add questions to your quizzes and set correct answers.
+  
+- AI integration: Have a theme but would like to find inspiration for a Question and Answers? With "Ai Generation", you can generate content that will also choose the answer which is right. Be aware though, that it may not always be accurate. Double check before validating!
 
 - Share and Discover: Share your quizzes with others or explore a variety of quizzes created by the QuizMe community.
 
@@ -66,3 +69,4 @@ QuizMe is an interactive quiz platform that allows users to create, share, and p
 - Database: PostgreSQL
 - User Authentication: Cookie sessions, bcrypt for password hashing
 - Styling: SCSS/SASS
+- API: OpenAI API.
