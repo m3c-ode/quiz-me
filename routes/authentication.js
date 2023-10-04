@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const authMiddleware = (req, res, next) => {
+  console.log("🚀 ~ file: authentication.js:5 ~ authMiddleware ~ req.cookie:", req.cookie);
+  console.log("🚀 ~ file: authentication.js:5 ~ authMiddleware ~ req.cookies:", req.cookies);
+  console.log("🚀 ~ file: authentication.js:5 ~ authMiddleware ~ req.session:", req.session);
   if (!req.session.user) {
     return res.status(401).json({ message: "Unauthorized" });
   }
