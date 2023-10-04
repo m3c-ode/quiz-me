@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const util = require('util');
+
 
 const authMiddleware = (req, res, next) => {
+  console.log("🚀 ~ file: authentication.js:5 ~ authMiddleware ~ req.session:", util.inspect(req.session, { depth: 3, colors: true }));
   if (!req.session.user) {
     return res.status(401).json({ message: "Unauthorized" });
   }
