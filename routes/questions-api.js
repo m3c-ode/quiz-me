@@ -84,7 +84,7 @@ router.post('/', authMiddleware, (req, res) => {
 });
 
 router.post("/generate",
-  // authMiddleware,
+  authMiddleware,
   async (req, res) => {
     console.log('body', req.body);
     console.log('Calling GPT');
