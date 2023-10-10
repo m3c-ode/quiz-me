@@ -51,6 +51,11 @@ button {
   cursor: pointer;
 }
 
+h2 {
+  font-weight: inherit;
+  margin: 0.2em;
+}
+
 
 
 #main-content {
@@ -251,7 +256,7 @@ p {
 
 
 h1 {
-  margin-top: .25em;
+  margin: 0;
   font-size: 6em;
   font-weight: 800;
   font-family: 'Pokemon';
