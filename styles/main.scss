@@ -28,6 +28,7 @@ body {
       rgba(163, 208, 219, 1) 100%);
 }
 
+// Reset basic styles
 ul {
   list-style: none;
   padding: 0;
@@ -250,6 +251,7 @@ p {
 
 
 h1 {
+  margin-top: .25em;
   font-size: 6em;
   font-weight: 800;
   font-family: 'Pokemon';
