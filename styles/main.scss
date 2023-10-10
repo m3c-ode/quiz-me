@@ -28,6 +28,30 @@ body {
       rgba(163, 208, 219, 1) 100%);
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  text-decoration: none;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+
 #main-content {
   // border: 1px solid red;
   width: 90%;
