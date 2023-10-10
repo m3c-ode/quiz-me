@@ -28,7 +28,7 @@ body {
       rgba(163, 208, 219, 1) 100%);
 }
 
-// Reset basic styles
+// -----------RESET BASIC STYLES --------------------
 ul {
   list-style: none;
   padding: 0;
@@ -56,7 +56,11 @@ h2 {
   margin: 0.2em;
 }
 
+p {
+  margin: 0;
+}
 
+// -----------RESET BASIC STYLES --------------------
 
 #main-content {
   // border: 1px solid red;
