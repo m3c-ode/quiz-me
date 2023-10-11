@@ -28,6 +28,40 @@ body {
       rgba(163, 208, 219, 1) 100%);
 }
 
+// -----------RESET BASIC STYLES --------------------
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  text-decoration: none;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+h2 {
+  font-weight: inherit;
+  margin: 0.2em;
+}
+
+p {
+  margin: 0;
+}
+
+// -----------RESET BASIC STYLES --------------------
+
 #main-content {
   // border: 1px solid red;
   width: 90%;
@@ -226,6 +260,7 @@ p {
 
 
 h1 {
+  margin: 0;
   font-size: 6em;
   font-weight: 800;
   font-family: 'Pokemon';
